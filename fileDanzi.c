@@ -1,6 +1,6 @@
 #include "fileDanzi.h"
   
-int ipTest(char *ip){
+ int ipTest(char *ip){
 	if(ip==NULL){
 		perror("ipTest");
 		return -1;
