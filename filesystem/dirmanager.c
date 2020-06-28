@@ -5,9 +5,10 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <stdio.h>
-
+#include <stdlib.h>
 #include "dirmanager.h"
 #include <string.h>
+#include <wait.h>
 
 /////////////////////////////////////////////////////////////
 /// to make directory function
@@ -130,3 +131,71 @@ int cmd_rmdirs(const char *path, int force) {
     return rmdir(path);
 }
 
+/////////////////////////////////////////////////////////////
+/// to move directory function
+/// input1 : new path name
+/// input2 : force
+/// return : error
+/// -2 : there is no arumnet
+/// -1 : open failed
+/// 0 : done
+////////////////////////////////////////////////////////////
+int cmd_mvDir(char * srcDir, char * destDir, char ** errorMsg){
+    if (srcDir == NULL || destDir == NULL || errorMsg == NULL){
+        *errorMsg = "there is no argument";
+        return -2;
+    }
+
+    char * buf = "mv";
+
+    pid_t pid = fork();
+    if (pid > 0) {
+        if (waitpid(pid, NULL, 0) == -1)
+            exit(-1);
+    }
+    else if (pid == 0) {
+        execlp(buf, buf, srcDir, destDir, NULL);
+        exit(-1);
+    }
+    else {	// pid < 0
+        perror("fork");
+        exit(-1);
+    }
+    *errorMsg="done";
+    return 0;
+}
+
+
+/////////////////////////////////////////////////////////////
+/// to COPY directory function
+/// input1 : new path name
+/// input2 : force
+/// return : error
+/// -2 : there is no arumnet
+/// -1 : open failed
+/// 0 : done
+////////////////////////////////////////////////////////////
+int cmd_cpDir(char * srcDir, char * destDir, char ** errorMsg){
+    if (srcDir == NULL || destDir == NULL || errorMsg == NULL){
+        *errorMsg = "there is no argument";
+        return -2;
+    }
+
+    char * buf = "cp";
+
+    pid_t pid = fork();
+    if (pid > 0) {
+        if (waitpid(pid, NULL, 0) == -1)
+            exit(-1);
+    }
+    else if (pid == 0) {
+        execlp(buf, buf, "-r",srcDir, destDir, NULL);
+        exit(-1);
+    }
+    else {	// pid < 0
+        perror("fork");
+        exit(-1);
+    }
+    *errorMsg="done";
+    return 0;
+}
