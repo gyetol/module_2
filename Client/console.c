@@ -179,11 +179,13 @@ int main(){
     char * str = "";
     int rest = mainMenu(&str);
     if (rest == MENU_IP){
-
+        printf("%s", str);
+    } else if (rest == MENU_EXIT){
+        return 0;
     }
 
     //
     endwin();
-    printf("%s", str);
+
     return 0;
 }
