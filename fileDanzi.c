@@ -74,6 +74,7 @@ int notExist(char *ip,char *pwd){
 			fprintf(stderr, "wrong path\n");
 		else{
 			//홈경로를 자료구조에 등록한다
+			system("/bin/mkdir home");
 			break;
 		}
 	}
