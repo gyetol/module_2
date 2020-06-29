@@ -8,7 +8,7 @@ int execute(char *type, char *path, char *ip, int cSock){
 	}
 	if(strcmp(type, "ls")==0)
 	{
-		int fd=open("./list.txt", O_RDWR, O_CREAT, 0666);
+		int fd=open("./list.txt", O_RDWR, O_CREAT, O_TRUNC, 0666);
 		if(fd==-1)
 		{
 			perror("open");
@@ -16,7 +16,7 @@ int execute(char *type, char *path, char *ip, int cSock){
 		}
 	close(1);
 	dup(fd);
-		system("clear");
+		chdir("./home");
 		system("/bin/ls -alR");
 		char buf[BUFSIZ];
 		while(1){
