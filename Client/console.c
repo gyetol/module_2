@@ -4,6 +4,7 @@
 
 #include "console.h"
 #include <ncurses.h>
+#include <string.h>
 #define KEYBOARD_UP 65
 #define KEYBOARD_DOWN 66
 #define KEYBOARD_LEFT 68
@@ -28,14 +29,13 @@
 #define MENU_PLAYER1 23
 #define MENU_PLAYER2 24
 
-
-#define MENU_ID 100
-#define MENU_PASS 101
+#define MENU_IP 100
 
 #define MENU_WIN 200
 #define MENU_LOSE 201
 
-#define IDPASSLENGTH 15
+#define IPADDRESSLENGTH 15
+
 void init_scr()
 {
     initscr();
@@ -44,6 +44,7 @@ void init_scr()
     init_pair(2, COLOR_MAGENTA, COLOR_WHITE);
     init_pair(3, COLOR_WHITE, COLOR_MAGENTA);
 }
+
 void init_updownWindow(WINDOW *upWindow, WINDOW *middleWindow, WINDOW *downWindow)
 {
     upWindow = subwin(stdscr, 14, 80, 0, 0);
@@ -56,10 +57,18 @@ void init_updownWindow(WINDOW *upWindow, WINDOW *middleWindow, WINDOW *downWindo
     wbkgd(downWindow, COLOR_PAIR(3));
     attron(COLOR_PAIR(1));
 }
-int _mainMenu(){
+
+/////////////////////////////////////////////////////////////
+/// to show main menu
+/// input1 : ip Address space to store
+/// return : menunum
+////////////////////////////////////////////////////////////
+int mainMenu(char**ip){
     werase(stdscr); // Clear Window
     curs_set(0); // Not need Cursor pointer
     char key; // User Input
+    char ipAddress[IPADDRESSLENGTH] = "";
+
     int selectingMenu = MENU_CONNECT;
 
     WINDOW *upMenu, *middleWindow,*downMenu;
@@ -67,11 +76,17 @@ int _mainMenu(){
 
     mvprintw(3, 34, "FILE DANZI");
     mvprintw(7, 32, "cute FTP Cleint");
+
     attron(COLOR_PAIR(2));
     mvprintw(16, 27, "INSERT SERVER'S IP ADDRESS");
-    mvprintw(18, 27, "IP ADDRESS : ");
+    mvprintw(18, 36, " : ");
 
     while(1){
+        attron(COLOR_PAIR(2));
+        mvprintw(18, 26, "IP ADDRESS");
+        mvprintw(18, 39, "               ");
+        mvprintw(18, 39, ipAddress);
+
         attron(COLOR_PAIR(1));
         mvprintw(22, 15, "CONNECT IP");
         mvprintw(22, 36, "HISTORY");
@@ -98,35 +113,79 @@ int _mainMenu(){
 
         key = getchar();
 
-        switch(key){
+        switch(key) {
+            case KEYBOARD_UP:
+                if (selectingMenu == MENU_CONNECT || selectingMenu == MENU_EXIT || selectingMenu == MENU_HISTORY) {
+                    selectingMenu = MENU_IP;
+                }
+                break;
+            case KEYBOARD_DOWN:
+                if (selectingMenu == MENU_IP) {
+                    selectingMenu = MENU_CONNECT;
+                }
+                break;
             case KEYBOARD_RIGHT :
-                if(selectingMenu == MENU_CONNECT)
+                if (selectingMenu == MENU_CONNECT)
                     selectingMenu = MENU_HISTORY;
-                else if(selectingMenu == MENU_HISTORY)
+                else if (selectingMenu == MENU_HISTORY)
                     selectingMenu = MENU_EXIT;
-                else if(selectingMenu == MENU_EXIT)
+                else if (selectingMenu == MENU_EXIT)
                     selectingMenu = MENU_CONNECT;
                 break;
             case KEYBOARD_LEFT :
-                if(selectingMenu == MENU_HISTORY)
+                if (selectingMenu == MENU_HISTORY)
                     selectingMenu = MENU_CONNECT;
-                else if(selectingMenu == MENU_EXIT)
+                else if (selectingMenu == MENU_EXIT)
                     selectingMenu = MENU_HISTORY;
-                else if(selectingMenu == MENU_CONNECT)
+                else if (selectingMenu == MENU_CONNECT)
                     selectingMenu = MENU_EXIT;
                 break;
+            case KEYBOARD_BACKSPACE:
+                if (selectingMenu == MENU_IP) {
+                    ipAddress[strlen(ipAddress) - 1] = '\0';
+                }
+                break;
             case KEYBOARD_ENTER :
-                delwin(upMenu);
-                delwin(middleWindow);
-                delwin(downMenu);
-                return selectingMenu;
+                if (selectingMenu == MENU_IP){
+                    *ip=ipAddress;
+                    delwin(upMenu);
+                    delwin(middleWindow);
+                    delwin(downMenu);
+                    return selectingMenu;
+                }
+                else{
+                    *ip=ipAddress;
+                    delwin(upMenu);
+                    delwin(middleWindow);
+                    delwin(downMenu);
+                    return selectingMenu;
+                }
+            default:
+                if ((key >= '0' && key <= '9') || (key >= 'a' && key <= 'z') || (key == '.') ) {
+                    char tempKey[2];
+                    tempKey[0] = key;
+                    tempKey[1] = '\0';
+                    if ((selectingMenu == MENU_IP) && (strlen(ipAddress) < IPADDRESSLENGTH)) {
+                        strcat(ipAddress, tempKey);
+                    }
+                }
+                break;
         }
     }
 }
 
 int main(){
     init_scr();
-    _mainMenu();
+    char * str = "";
+    int rest = mainMenu(&str);
+    if (rest == MENU_IP){
+        printf("%s", str);
+    } else if (rest == MENU_EXIT){
+        return 0;
+    }
+
+    //
     endwin();
+
     return 0;
 }
