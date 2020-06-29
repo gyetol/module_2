@@ -178,7 +178,7 @@ int main(){
     init_scr();
     char * str = "";
     int rest = mainMenu(&str);
-    if (rest = MENU_IP){
+    if (rest == MENU_IP){
 
     }
 
