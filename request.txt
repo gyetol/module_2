@@ -1,0 +1,2 @@
+type:ls 		//type:download
+path:./home     //path:./home/~/file.txt
