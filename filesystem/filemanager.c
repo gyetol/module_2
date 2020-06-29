@@ -1,13 +1,4 @@
-//
-// Created by linux on 6/30/20.
-//
-#include <stdio.h>
-#include <string.h>
-#include "filemanager.h"
-
-/////////////////////////////////////////////////////////////
-/// to copy file function
-/// input : src file, dest file
+/v/ input : src file, dest file
 /// output data : error message
 /// return : error
 /// -1 : there is no argument
@@ -38,7 +29,7 @@ int cmd_fileCp(char * srcStr, char * destStr, char ** errorMsg)
         return -2;
     }
 
-    // 복사
+# #     // 복사
     while(!feof(src))
     {
         ch = (char) fgetc(src);
