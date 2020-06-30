@@ -5,57 +5,27 @@
 #include "console.h"
 #include <ncurses.h>
 #include <string.h>
-#define KEYBOARD_UP 65
-#define KEYBOARD_DOWN 66
-#define KEYBOARD_LEFT 68
-#define KEYBOARD_RIGHT 67
-#define KEYBOARD_ENTER 13
-#define KEYBOARD_BACKSPACE 127
-
-#define MENU_MAIN 0
-#define MENU_CONNECT 1
-#define MENU_HISTORY 2
-#define MENU_EXIT 3
-#define MENU_SIGNIN 4
-#define MENU_SIGNOUT 5
-#define MENU_PLAY 6
-#define MENU_INGAME 7
-#define MENU_STATISTICS 8
-#define MENU_2PLOGIN 9
-#define MENU_2PMAIN 10
-
-#define MENU_GAMESTART 21
-#define MENU_NEXTTURN 22
-#define MENU_PLAYER1 23
-#define MENU_PLAYER2 24
-
-#define MENU_IP 100
-
-#define MENU_WIN 200
-#define MENU_LOSE 201
-
-#define IPADDRESSLENGTH 15
 
 void init_scr()
 {
     initscr();
     start_color();
-    init_pair(1, COLOR_WHITE, COLOR_MAGENTA);
-    init_pair(2, COLOR_MAGENTA, COLOR_WHITE);
-    init_pair(3, COLOR_WHITE, COLOR_MAGENTA);
+    init_pair(MAIN1, COLOR_BLACK, COLOR_YELLOW);
+    init_pair(MAIN2, COLOR_BLACK, COLOR_WHITE);
+    init_pair(CLIENTBAR, COLOR_BLACK, COLOR_YELLOW);
 }
 
 void init_updownWindow(WINDOW *upWindow, WINDOW *middleWindow, WINDOW *downWindow)
 {
-    upWindow = subwin(stdscr, 14, 80, 0, 0);
-    wbkgd(upWindow, COLOR_PAIR(1));
+    upWindow = subwin(stdscr, 14, FTP_WIDE, 0, 0);
+    wbkgd(upWindow, COLOR_PAIR(MAIN1));
 
-    middleWindow = subwin(stdscr, 7, 80, 14, 0);
-    wbkgd(middleWindow, COLOR_PAIR(2));
+    middleWindow = subwin(stdscr, 7, FTP_WIDE, 14, 0);
+    wbkgd(middleWindow, COLOR_PAIR(MAIN2));
 
-    downWindow = subwin(stdscr, 3, 80, 21, 0);
-    wbkgd(downWindow, COLOR_PAIR(3));
-    attron(COLOR_PAIR(1));
+    downWindow = subwin(stdscr, 3, FTP_WIDE, 21, 0);
+    wbkgd(downWindow, COLOR_PAIR(MAIN1));
+    attron(COLOR_PAIR(MAIN1));
 }
 
 /////////////////////////////////////////////////////////////
@@ -69,7 +39,7 @@ int mainMenu(char**ip){
     char key; // User Input
     char ipAddress[IPADDRESSLENGTH] = "";
 
-    int selectingMenu = MENU_CONNECT;
+    int selectingMenu = MENU_BOOKMARKS;
 
     WINDOW *upMenu, *middleWindow,*downMenu;
     init_updownWindow(upMenu, middleWindow, downMenu);
@@ -77,27 +47,30 @@ int mainMenu(char**ip){
     mvprintw(3, 34, "FILE DANZI");
     mvprintw(7, 32, "cute FTP Cleint");
 
-    attron(COLOR_PAIR(2));
-    mvprintw(16, 27, "INSERT SERVER'S IP ADDRESS");
+    attron(COLOR_PAIR(MAIN2));
+    mvprintw(16, 16, "INSERT SERVER'S IP ADDRESS (press enter key)");
     mvprintw(18, 36, " : ");
 
     while(1){
-        attron(COLOR_PAIR(2));
+        attron(COLOR_PAIR(MAIN2));
         mvprintw(18, 26, "IP ADDRESS");
         mvprintw(18, 39, "               ");
         mvprintw(18, 39, ipAddress);
+        if (selectingMenu == MENU_IP){
+            attron(A_STANDOUT | A_UNDERLINE);
+            mvprintw(18, 39+strlen(ipAddress), " ");
+            attroff(A_STANDOUT | A_UNDERLINE);
+        }
 
-        attron(COLOR_PAIR(1));
-        mvprintw(22, 15, "CONNECT IP");
+        attron(COLOR_PAIR(MAIN1));
+        mvprintw(22, 15, "BOOK MARKS");
         mvprintw(22, 36, "HISTORY");
         mvprintw(22, 58, "EXIT");
 
         attron(A_STANDOUT | A_UNDERLINE); // selected effect
-
-        // Overwriting menu font
         switch(selectingMenu){
-            case MENU_CONNECT :
-                mvprintw(22, 15, "CONNECT IP");
+            case MENU_BOOKMARKS :
+                mvprintw(22, 15, "BOOK MARKS");
                 break;
             case MENU_HISTORY :
                 mvprintw(22, 36, "HISTORY");
@@ -106,7 +79,6 @@ int mainMenu(char**ip){
                 mvprintw(22, 58, "EXIT");
                 break;
         }
-
         attroff(A_STANDOUT | A_UNDERLINE);
 
         refresh();
@@ -115,29 +87,29 @@ int mainMenu(char**ip){
 
         switch(key) {
             case KEYBOARD_UP:
-                if (selectingMenu == MENU_CONNECT || selectingMenu == MENU_EXIT || selectingMenu == MENU_HISTORY) {
+                if (selectingMenu == MENU_BOOKMARKS || selectingMenu == MENU_EXIT || selectingMenu == MENU_HISTORY) {
                     selectingMenu = MENU_IP;
                 }
                 break;
             case KEYBOARD_DOWN:
                 if (selectingMenu == MENU_IP) {
-                    selectingMenu = MENU_CONNECT;
+                    selectingMenu = MENU_BOOKMARKS;
                 }
                 break;
-            case KEYBOARD_RIGHT :
-                if (selectingMenu == MENU_CONNECT)
+            case KEYBOARD_RIGHT:
+                if (selectingMenu == MENU_BOOKMARKS)
                     selectingMenu = MENU_HISTORY;
                 else if (selectingMenu == MENU_HISTORY)
                     selectingMenu = MENU_EXIT;
                 else if (selectingMenu == MENU_EXIT)
-                    selectingMenu = MENU_CONNECT;
+                    selectingMenu = MENU_BOOKMARKS;
                 break;
             case KEYBOARD_LEFT :
                 if (selectingMenu == MENU_HISTORY)
-                    selectingMenu = MENU_CONNECT;
+                    selectingMenu = MENU_BOOKMARKS;
                 else if (selectingMenu == MENU_EXIT)
                     selectingMenu = MENU_HISTORY;
-                else if (selectingMenu == MENU_CONNECT)
+                else if (selectingMenu == MENU_BOOKMARKS)
                     selectingMenu = MENU_EXIT;
                 break;
             case KEYBOARD_BACKSPACE:
@@ -152,8 +124,19 @@ int mainMenu(char**ip){
                     delwin(middleWindow);
                     delwin(downMenu);
                     return selectingMenu;
-                }
-                else{
+                } else if (selectingMenu == MENU_EXIT){
+                    *ip=NULL;
+                    delwin(upMenu);
+                    delwin(middleWindow);
+                    delwin(downMenu);
+                    return selectingMenu;
+                } else if (selectingMenu == MENU_HISTORY){
+                    *ip=ipAddress;
+                    delwin(upMenu);
+                    delwin(middleWindow);
+                    delwin(downMenu);
+                    return selectingMenu;
+                } else if (selectingMenu == MENU_BOOKMARKS){
                     *ip=ipAddress;
                     delwin(upMenu);
                     delwin(middleWindow);
@@ -174,18 +157,345 @@ int mainMenu(char**ip){
     }
 }
 
-int main(){
-    init_scr();
-    char * str = "";
-    int rest = mainMenu(&str);
-    if (rest == MENU_IP){
-        printf("%s", str);
-    } else if (rest == MENU_EXIT){
+void initFtpMainWindow(WINDOW*upWindow, WINDOW *middleWindow, WINDOW * downWindow,
+                       WINDOW * logWindow, WINDOW * pathWindow, WINDOW * firstWindow,
+                       WINDOW * secondWindow, WINDOW * thirdWindow, WINDOW * fourthWindow,
+                       WINDOW * xWindow, WINDOW * yWindow, WINDOW * zWindow){
+
+    upWindow = subwin(stdscr, MANUAL_SUBWINDOW_HEIGHT, FTP_WIDE, 0 , 0);
+    wbkgd(upWindow, COLOR_PAIR(CLIENTBAR));
+
+    logWindow = subwin(stdscr, LOG_SUBWINDOW_HEIGHT, FTP_WIDE, MANUAL_SUBWINDOW_HEIGHT, 0);
+    wbkgd(logWindow, COLOR_PAIR(MAIN2));
+
+    pathWindow = subwin(stdscr, BAR_HEIGHT, FTP_WIDE, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 0);
+    wbkgd(pathWindow, COLOR_PAIR(CLIENTBAR));
+
+    firstWindow = subwin(stdscr, UPPER_SUBWINDOW_HEIGHT, LEFT_SUBWINDOW_WIDE, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT, 0);
+    wbkgd(firstWindow, COLOR_PAIR(MAIN2));
+
+    xWindow = subwin(stdscr, UPPER_SUBWINDOW_HEIGHT, BAR_WIDE, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT, LEFT_SUBWINDOW_WIDE);
+    wbkgd(xWindow, COLOR_PAIR(CLIENTBAR));
+
+    secondWindow = subwin(stdscr, UPPER_SUBWINDOW_HEIGHT, RIGHT_SUBWINDOW_WIDE, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT, LEFT_SUBWINDOW_WIDE + BAR_WIDE);
+    wbkgd(secondWindow, COLOR_PAIR(MAIN2));
+
+    yWindow = subwin(stdscr, BAR_HEIGHT, FTP_WIDE, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT + UPPER_SUBWINDOW_HEIGHT, 0);
+    wbkgd(yWindow, COLOR_PAIR(CLIENTBAR));
+
+    thirdWindow = subwin(stdscr, DOWN_SUBWINDOW_HEIGHT, LEFT_SUBWINDOW_WIDE, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT + UPPER_SUBWINDOW_HEIGHT + BAR_HEIGHT, 0);
+    wbkgd(thirdWindow, COLOR_PAIR(MAIN2));
+
+    zWindow = subwin(stdscr, DOWN_SUBWINDOW_HEIGHT, BAR_WIDE, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT + UPPER_SUBWINDOW_HEIGHT + BAR_HEIGHT, LEFT_SUBWINDOW_WIDE);
+    wbkgd(zWindow, COLOR_PAIR(CLIENTBAR));
+
+    fourthWindow = subwin(stdscr, DOWN_SUBWINDOW_HEIGHT, RIGHT_SUBWINDOW_WIDE, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT + UPPER_SUBWINDOW_HEIGHT + BAR_HEIGHT, LEFT_SUBWINDOW_WIDE + BAR_WIDE);
+    wbkgd(fourthWindow, COLOR_PAIR(MAIN2));
+
+    downWindow = subwin(stdscr, BAR_HEIGHT, FTP_WIDE, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT + UPPER_SUBWINDOW_HEIGHT + BAR_HEIGHT + DOWN_SUBWINDOW_HEIGHT, 0);
+    wbkgd(downWindow, COLOR_PAIR(CLIENTBAR));
+
+    attron(COLOR_PAIR(CLIENTBAR));
+}
+
+int showManualBar(int mode){
+    ///print
+    char * str;
+    if (mode == MODE_CLIENT){
+        str = "DownloadFile";
+    }else if (mode == MODE_SERVER){
+        str = " UploadFile";
+    }
+    mvprintw(0, 2, "CopyFile");
+    mvprintw(0, 14, "MoveFile");
+    mvprintw(0, 26, "RemoveFile");
+    mvprintw(0, 40, "reNameFile");
+    mvprintw(0, 54, str);
+    mvprintw(0, 70, "IPManage");
+
+    int temp = FTP_HEIGHT-1;
+//    mvprintw(temp, 2, "NewDir");
+    mvprintw(temp, 12, "MoVeDir");
+    mvprintw(temp, 23, "RemovEDir");
+    mvprintw(temp, 36, "RenameDir");
+    mvprintw(temp, 49, "Help");
+    mvprintw(temp, 57, "MakeFolder");
+    mvprintw(temp, 71, "EXit");
+
+    ///underline
+    attron(A_UNDERLINE);
+    mvprintw(0, 2, "C");
+    mvprintw(0, 14, "M");
+    mvprintw(0, 26, "R");
+    mvprintw(0, 42, "N");
+    if (mode == MODE_CLIENT){
+        mvprintw(0, 62, "F");
+    } else if (mode == MODE_SERVER){
+        mvprintw(0, 60, "F");
+    }
+    mvprintw(0, 71, "P");
+
+//    mvprintw(23, 2, "D");
+    mvprintw(temp, 14, "V");
+    mvprintw(temp, 28, "E");
+    mvprintw(temp, 39, "A");
+    mvprintw(temp, 49, "H");
+    mvprintw(temp, 59, "K");
+    mvprintw(temp, 72, "X");
+
+    attroff(A_UNDERLINE);
+}
+
+int printFiles(int x, int y, char* *src, int * result, int totalCount){
+    int selected[10] = {0,};
+    int startPoint = 0;
+    int cursor = 0;
+
+    if (src == NULL){
+        for (int i = 0; i < totalCount; ++i) {
+            mvprintw(y+i, x, "                                       ");
+        }
         return 0;
     }
 
-    //
-    endwin();
+    while (1){
+        for (int i = 0; i < totalCount ; ++i) {
+            mvprintw(y+i, 0, "                                        ");
+        }
+        for (int j = 0; j < totalCount; ++j) {
+            mvprintw(y+j, x, src[startPoint+j]);
+        }
+        return 0;
+    }
+}
 
+int checkingInSubWindow(int x, int y, char* *src, int * result, int totalCount){
+
+}
+
+int printMonitor(int mode) {
+    werase(stdscr); // Clear Window
+    curs_set(0); // Not need Cursor pointer
+    char key; // User Input
+    int selectingMenu = MENU_FIRSTWINODW;
+    int selectedIndex[10];
+    int indexOfTab = 0;
+    ///
+    char *pathOfLeft = "CLIENT PATH";
+    char *pathOfRight = "SERVER PATH";
+    ///
+    WINDOW *upMenu, *middleWindow, *downMenu;
+    WINDOW *logWindow;
+    WINDOW *pathWindow;
+    WINDOW *firstWindow;
+    WINDOW *secondWindow;
+    WINDOW *thirdWindow;
+    WINDOW *fourthWindow;
+    WINDOW *xWindow;
+    WINDOW *yWindow;
+    WINDOW *zWindow;
+    initFtpMainWindow(upMenu, middleWindow, downMenu, logWindow, pathWindow, firstWindow,
+                      secondWindow, thirdWindow, fourthWindow,
+                      xWindow, yWindow, zWindow);
+
+    showManualBar(mode);
+
+    mvprintw(4, 2, "LOCAL FILE TREE");
+    mvprintw(4, 43, "SERVER FILE TREE");
+
+    while (1) {
+        attron(COLOR_PAIR(MAIN1));
+        mvprintw(4, 0, "                                        ");
+        mvprintw(4, 0, "LOCAL FILE TREE");
+        mvprintw(4, 41, "                                       ");
+        mvprintw(4, 41, "SERVER FILE TREE");
+        mvprintw(13, 0, "                                        ");
+        mvprintw(13, 0, pathOfLeft);
+        mvprintw(13, 41, "                                       ");
+        mvprintw(13, 41, pathOfRight);
+
+        attron(COLOR_PAIR(MAIN2));
+        printFiles(0, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT, NULL, selectedIndex,
+                   UPPER_SUBWINDOW_HEIGHT);
+        printFiles(0, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT + UPPER_SUBWINDOW_HEIGHT + BAR_HEIGHT,
+                   NULL, selectedIndex, DOWN_SUBWINDOW_HEIGHT);
+        printFiles(LEFT_SUBWINDOW_WIDE + BAR_WIDE, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT, NULL,
+                   selectedIndex, UPPER_SUBWINDOW_HEIGHT);
+        printFiles(LEFT_SUBWINDOW_WIDE + BAR_WIDE,
+                   MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT + UPPER_SUBWINDOW_HEIGHT + BAR_HEIGHT,
+                   NULL, selectedIndex, DOWN_SUBWINDOW_HEIGHT);
+
+
+        attron(A_STANDOUT | A_UNDERLINE); // selected effect
+        switch (selectingMenu) {
+            case MENU_FIRSTWINODW:
+                mvprintw(4, 0, "LOCAL FILE TREE (press enter)           ");
+                break;
+            case MENU_SECONDWINDOW:
+                mvprintw(4, 41, "SERVER FILE TREE (press enter)         ");
+                break;
+            case MENU_THIRDWINDOW:
+                mvprintw(13, 0, "                                        ");
+                mvprintw(13, strlen(pathOfLeft), " (press enter)");
+                mvprintw(13, 0, pathOfLeft);
+                break;
+            case MENU_FOURTHWINDOW:
+                mvprintw(13, 41, "                                       ");
+                mvprintw(13, 41+strlen(pathOfRight), " (press enter)");
+                mvprintw(13, 41, pathOfRight);
+                break;
+        }
+        attroff(A_STANDOUT | A_UNDERLINE);
+
+        attron(COLOR_PAIR(MAIN1));
+        refresh();
+
+        key = getchar();
+
+        switch (key) {
+            case KEYBOARD_TAB:
+                if (selectingMenu == MENU_FIRSTWINODW) {
+                    selectingMenu = MENU_SECONDWINDOW;
+                } else if (selectingMenu == MENU_SECONDWINDOW) {
+                    selectingMenu = MENU_THIRDWINDOW;
+                } else if (selectingMenu == MENU_THIRDWINDOW) {
+                    selectingMenu = MENU_FOURTHWINDOW;
+                } else if (selectingMenu == MENU_FOURTHWINDOW) {
+                    selectingMenu = MENU_FIRSTWINODW;
+                }
+                break;
+            case KEYBOARD_UP:
+                if (selectingMenu == MENU_FIRSTWINODW) {
+                    selectingMenu = MENU_SECONDWINDOW;
+                } else if (selectingMenu == MENU_SECONDWINDOW) {
+                    selectingMenu = MENU_THIRDWINDOW;
+                } else if (selectingMenu == MENU_THIRDWINDOW) {
+                    selectingMenu = MENU_FOURTHWINDOW;
+                } else if (selectingMenu == MENU_FOURTHWINDOW) {
+                    selectingMenu = MENU_FIRSTWINODW;
+                }
+                break;
+            case KEYBOARD_DOWN:
+                if (selectingMenu == MENU_FIRSTWINODW) {
+                    selectingMenu = MENU_SECONDWINDOW;
+                } else if (selectingMenu == MENU_SECONDWINDOW) {
+                    selectingMenu = MENU_THIRDWINDOW;
+                } else if (selectingMenu == MENU_THIRDWINDOW) {
+                    selectingMenu = MENU_FOURTHWINDOW;
+                } else if (selectingMenu == MENU_FOURTHWINDOW) {
+                    selectingMenu = MENU_FIRSTWINODW;
+                }
+                break;
+            case KEYBOARD_LEFT:
+                if (selectingMenu == MENU_FIRSTWINODW) {
+                    selectingMenu = MENU_SECONDWINDOW;
+                } else if (selectingMenu == MENU_SECONDWINDOW) {
+                    selectingMenu = MENU_THIRDWINDOW;
+                } else if (selectingMenu == MENU_THIRDWINDOW) {
+                    selectingMenu = MENU_FOURTHWINDOW;
+                } else if (selectingMenu == MENU_FOURTHWINDOW) {
+                    selectingMenu = MENU_FIRSTWINODW;
+                }
+                break;
+            case KEYBOARD_RIGHT:
+                if (selectingMenu == MENU_FIRSTWINODW) {
+                    selectingMenu = MENU_SECONDWINDOW;
+                } else if (selectingMenu == MENU_SECONDWINDOW) {
+                    selectingMenu = MENU_THIRDWINDOW;
+                } else if (selectingMenu == MENU_THIRDWINDOW) {
+                    selectingMenu = MENU_FOURTHWINDOW;
+                } else if (selectingMenu == MENU_FOURTHWINDOW) {
+                    selectingMenu = MENU_FIRSTWINODW;
+                }
+                break;
+            case KEYBOARD_ENTER:
+                if (selectingMenu == MENU_FIRSTWINODW) {
+                    selectingMenu = MENU_SECONDWINDOW;
+                } else if (selectingMenu == MENU_SECONDWINDOW) {
+                    selectingMenu = MENU_THIRDWINDOW;
+                } else if (selectingMenu == MENU_THIRDWINDOW) {
+                    selectingMenu = MENU_FOURTHWINDOW;
+                } else if (selectingMenu == MENU_FOURTHWINDOW) {
+                    selectingMenu = MENU_FIRSTWINODW;
+                }
+                break;
+            case KEYBOARD_SPACEBAR:
+                break;
+            case KEYBOARD_BACKSPACE:
+                break;
+//            case COPY_FILE_KEY1:
+//            case COPY_FILE_KEY2:
+//                break;
+            case MOVE_FILE_KEY1:
+            case MOVE_FILE_KEY2:
+                break;
+            case REMOVE_FILE_KEY1:
+            case REMOVE_FILE_KEY2:
+                break;
+            case RENAME_FILE_KEY1:
+            case RENAME_FILE_KEY2:
+                break;
+            case UP_AND_DOWN_FILE_KEY1:
+            case UP_AND_DOWN_FILE_KEY2:
+                break;
+            case IP_MANAGE_KEY1:
+            case IP_MANAGE_KEY2:
+                break;
+            case MOVE_DIR_KEY1:
+            case MOVE_DIR_KEY2:
+                break;
+            case REMOVE_DIR_KEY1:
+            case REMOVE_DIR_KEY2:
+                break;
+//            case RENAME_DIR_KEY1:
+//            case RENAME_DIR_KEY2:
+//                break;
+            case HELP_KEY1:
+            case HELP_KEY2:
+                break;
+            case MAKE_DIR_KEY1:
+            case MAKE_DIR_KEY2:
+                break;
+            case EXIT_KEY1:
+            case EXIT_KEY2:
+                delwin(upMenu);
+                delwin(middleWindow);
+                delwin(downMenu);
+                delwin(logWindow);
+                delwin(pathWindow);
+                delwin(firstWindow);
+                delwin(secondWindow);
+                delwin(thirdWindow);
+                delwin(fourthWindow);
+                delwin(xWindow);
+                delwin(yWindow);
+                delwin(zWindow);
+                return MENU_EXIT;
+        }
+    }
+}
+
+int main(){
+    init_scr();
+    char * ipAddress = "";
+    int thisMenu = MENU_MAIN;
+
+    while (thisMenu != MENU_EXIT){
+        switch (thisMenu) {
+            case MENU_MAIN :
+                thisMenu = mainMenu(&ipAddress);
+                break;
+            case MENU_BOOKMARKS :
+//                thisMenu = _loginMenu();
+                break;
+            case MENU_HISTORY :
+//                thisMenu = _signioMenu();
+                break;
+            case MENU_IP :
+                thisMenu = printMonitor(MODE_CLIENT);
+                break;
+        }
+    }
+    endwin();
     return 0;
 }
