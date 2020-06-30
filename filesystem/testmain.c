@@ -6,7 +6,8 @@
 
 int main(){
     char * msg = ".";
-    cmd_mkdir("test", msg);
+    cmd_mkdir("test", &msg);
+    printf("%s",msg);
     cmd_rmdir("test", &msg);
     printf("%s",msg);
 

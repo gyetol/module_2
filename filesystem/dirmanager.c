@@ -18,16 +18,16 @@
 /// -2 : wrong name
 /// -3 : mkdir fail
 ////////////////////////////////////////////////////////////
-int cmd_mkdir(char * newPath, char * errorMsg){
+int cmd_mkdir(char * newPath, char ** errorMsg){
     char str[100] = "./";
 
     if ( (strcmp(newPath, ".") == 0) || (strcmp(newPath, "..") == 0) ){
-        errorMsg = "wrong directory name";
+        *errorMsg = "wrong directory name";
         return -2;
     }
 
     if (newPath == NULL){
-        errorMsg = "please insert new directory name.";
+        *errorMsg = "please insert new directory name.";
         return -1;
     }
     strcat(str, newPath);
@@ -35,11 +35,11 @@ int cmd_mkdir(char * newPath, char * errorMsg){
     // 디렉토리를 생성한다.
     if(mkdir(str, 0755))
     {
-        errorMsg = "Make directory failed.";
+        *errorMsg = "Make directory failed.";
         return -3;
     }
 
-    errorMsg = "done";
+    *errorMsg = "mk dir done";
     return 0;
 }
 
@@ -72,7 +72,7 @@ int cmd_rmdir(char * wannaRemove, char ** errorMsg)
         fprintf(stderr, "Remove directory failed.\n");
     }
 
-    *errorMsg = "DONE";
+    *errorMsg = "rm dir done";
     return 0;
 }
 
