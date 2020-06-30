@@ -1,22 +1,23 @@
 //
 // Created by linux on 6/30/20.
 //
-#include <stdio.h>
-#include <stdlib.h>
-#include <dirent.h>
-#include <unistd.h>
 #include <sys/stat.h>
+#include <unistd.h>
+#include <dirent.h>
+#include <stdio.h>
+
 #include "dirmanager.h"
-#include "common.h"
 #include <string.h>
 
 /////////////////////////////////////////////////////////////
+/// to make directory function
 /// input : new path name
 /// output data : error message
 /// return : error
 /// -1 : there is no argument
 /// -2 : wrong name
 /// -3 : mkdir fail
+/// 0 : done
 ////////////////////////////////////////////////////////////
 int cmd_mkdir(char * newPath, char ** errorMsg){
     char str[100] = "./";
@@ -26,7 +27,7 @@ int cmd_mkdir(char * newPath, char ** errorMsg){
         return -2;
     }
 
-    if (newPath == NULL){
+    if (newPath == NULL || errorMsg == NULL){
         *errorMsg = "please insert new directory name.";
         return -1;
     }
@@ -44,12 +45,14 @@ int cmd_mkdir(char * newPath, char ** errorMsg){
 }
 
 /////////////////////////////////////////////////////////////
+/// to remove directory function
 /// input : new path name
 /// output data : error message
 /// return : error
 /// -1 : there is no argument
 /// -2 : wrong name
-/// -3 : mkdir fail
+/// -3 : rmdir fail
+/// 0 : done
 ////////////////////////////////////////////////////////////
 int cmd_rmdir(char * wannaRemove, char ** errorMsg)
 {
@@ -60,7 +63,7 @@ int cmd_rmdir(char * wannaRemove, char ** errorMsg)
         return -2;
     }
 
-    if (wannaRemove == NULL){
+    if (wannaRemove == NULL || errorMsg == NULL){
         *errorMsg = "please insert new directory name.";
         return -1;
     }
@@ -69,76 +72,61 @@ int cmd_rmdir(char * wannaRemove, char ** errorMsg)
     // 디렉토리를 삭제한다.
     if(rmdir(wannaRemove))
     {
-        fprintf(stderr, "Remove directory failed.\n");
+        int ret = cmd_rmdirs(wannaRemove, 1);
+        if (ret != 0){
+            *errorMsg = "Remove directory failed.";
+            return -3;
+        }
     }
 
     *errorMsg = "rm dir done";
     return 0;
 }
 
-void cmd_cd(int ac, char *av[])
-{
-    char *path;
-
-    // 인자가 있을 경우 path를 설정
-    if(ac > 1)
-    {
-        path = av[1];
+/////////////////////////////////////////////////////////////
+/// to remove directory function force
+/// input1 : new path name
+/// input2 : force
+/// return : error
+/// -1 : fail
+/// 0 : done
+////////////////////////////////////////////////////////////
+int cmd_rmdirs(const char *path, int force) {
+    DIR * dir_ptr = NULL;
+    struct dirent *file = NULL;
+    struct stat buf;
+    char filename[1024];
+    /* 목록을 읽을 디렉토리명으로 DIR *를 return 받습니다. */
+    if((dir_ptr = opendir(path)) == NULL) {
+        /* path가 디렉토리가 아니라면 삭제하고 종료합니다. */
+        return unlink(path);
     }
-
-        // 인자가 없을 경우 HOME디렉토리를 설정
-    else if((path = (char*)getenv("HOME")) == NULL)
-    {
-        // 환경 변수가 없을 경우 현재 디렉토리로 설정
-        path = ".";
-    }
-
-    // 디렉토리를 변경한다.
-    if(chdir(path) == ERROR)
-    {
-        fprintf(stderr, "%s: bad directory.\n", path);
-    }
-}
-
-
-void cmd_cp(int ac, char *av[])
-{
-    FILE *src;
-    FILE *dst;
-    char ch;
-
-    // 인자가 2개 이하일 경우 에러
-    if(ac < 3)
-    {
-        fprintf(stderr, "Not enough arguments.\n");
-        return;
-    }
-
-    // 복사할 소스 파일을 연다.
-    if((src = fopen(av[1], "r")) == NULL)
-    {
-        fprintf(stderr, "%s: Can't open file.\n", av[1]);
-        return;
-    }
-
-    // 쓰기를 할 파일을 연다.
-    if((dst = fopen(av[2], "w")) == NULL)
-    {
-        fprintf(stderr, "%s: Can't open file.\n", av[2]);
-        return;
-    }
-
-    // 복사
-    while(!feof(src))
-    {
-        ch = (char) fgetc(src);
-
-        if(ch != EOF)
-        {
-            fputc((int)ch, dst);
+    /* 디렉토리의 처음부터 파일 또는 디렉토리명을 순서대로 한개씩 읽습니다. */
+    while((file = readdir(dir_ptr)) != NULL) {
+        // readdir 읽혀진 파일명 중에 현재 디렉토리를 나타네는 . 도 포함되어 있으므로
+        // 무한 반복에 빠지지 않으려면 파일명이 . 이면 skip 해야 함
+        if(strcmp(file->d_name, ".") == 0 || strcmp(file->d_name, "..") == 0) {
+            continue;
+        }
+        sprintf(filename, "%s/%s", path, file->d_name);
+        /* 파일의 속성(파일의 유형, 크기, 생성/변경 시간 등을 얻기 위하여 */
+        if(lstat(filename, &buf) == -1) {
+            continue;
+        }
+        if(S_ISDIR(buf.st_mode)) {
+            // 검색된 이름의 속성이 디렉토리이면
+            // /* 검색된 파일이 directory이면 재귀호출로 하위 디렉토리를 다시 검색 */
+            if(cmd_rmdirs(filename, force) == -1 && !force) {
+                return -1;
+            }
+        } else if(S_ISREG(buf.st_mode) || S_ISLNK(buf.st_mode)) {
+            // 일반파일 또는 symbolic link 이면
+            if(unlink(filename) == -1 && !force) {
+                return -1;
+            }
         }
     }
-
-    fclose(src);
-    fclose(dst);
+    closedir(dir_ptr);
+    return rmdir(path);
 }
+
