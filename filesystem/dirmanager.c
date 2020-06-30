@@ -19,7 +19,7 @@
 /// -3 : mkdir fail
 ////////////////////////////////////////////////////////////
 int cmd_mkdir(char * newPath, char * errorMsg){
-    char * str = "./";
+    char str[100] = "./";
 
     if ( (strcmp(newPath, ".") == 0) || (strcmp(newPath, "..") == 0) ){
         errorMsg = "wrong directory name";
@@ -38,6 +38,42 @@ int cmd_mkdir(char * newPath, char * errorMsg){
         errorMsg = "Make directory failed.";
         return -3;
     }
+
+    errorMsg = "done";
+    return 0;
+}
+
+/////////////////////////////////////////////////////////////
+/// input : new path name
+/// output data : error message
+/// return : error
+/// -1 : there is no argument
+/// -2 : wrong name
+/// -3 : mkdir fail
+////////////////////////////////////////////////////////////
+int cmd_rmdir(char * wannaRemove, char ** errorMsg)
+{
+    char str[100] = "./";
+
+    if ( (strcmp(wannaRemove, ".") == 0) || (strcmp(wannaRemove, "..") == 0) ){
+        *errorMsg = "wrong directory name";
+        return -2;
+    }
+
+    if (wannaRemove == NULL){
+        *errorMsg = "please insert new directory name.";
+        return -1;
+    }
+    strcat(str, wannaRemove);
+
+    // 디렉토리를 삭제한다.
+    if(rmdir(wannaRemove))
+    {
+        fprintf(stderr, "Remove directory failed.\n");
+    }
+
+    *errorMsg = "DONE";
+    return 0;
 }
 
 void cmd_cd(int ac, char *av[])
@@ -64,35 +100,7 @@ void cmd_cd(int ac, char *av[])
     }
 }
 
-/////////////////////////////////////////////////////////////
-/// input : new path name
-/// output data : error message
-/// return : error
-/// -1 : there is no argument
-/// -2 : wrong name
-/// -3 : mkdir fail
-////////////////////////////////////////////////////////////
-int cmd_rmdir(char * wannaRemove, char * errorMsg)
-{
-    char * str = "./";
 
-    if ( (strcmp(wannaRemove, ".") == 0) || (strcmp(wannaRemove, "..") == 0) ){
-        errorMsg = "wrong directory name";
-        return -2;
-    }
-
-    if (wannaRemove == NULL){
-        errorMsg = "please insert new directory name.";
-        return -1;
-    }
-    strcat(str, wannaRemove);
-
-    // 디렉토리를 삭제한다.
-    if(rmdir(wannaRemove))
-    {
-        fprintf(stderr, "Remove directory failed.\n");
-    }
-}
 void cmd_cp(int ac, char *av[])
 {
     FILE *src;

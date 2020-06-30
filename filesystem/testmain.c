@@ -1,13 +1,14 @@
 //
 // Created by linux on 6/30/20.
 //
-//#include "dirmanager.h"
-//#include <stdio.h>
-//#include <dirent.h>
-#include <sys/stat.h>
+#include "dirmanager.h"
+#include <stdio.h>
 
 int main(){
-    mkdir("test", 0755);
+    char * msg = ".";
+    cmd_mkdir("test", msg);
+    cmd_rmdir("test", &msg);
+    printf("%s",msg);
 
     return 0;
 }
