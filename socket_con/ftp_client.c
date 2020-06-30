@@ -471,7 +471,7 @@ int main(int argc, char **argv){
 
     //set up data connection------------------------------------------------------
     if(listen_sock = socket(AF_INET, SOCK_STREAM, 0)==-1)
-		err_quit("socke");
+		err_quit("socket");
 
 	struct sockaddr_in data_addr={0,};
     data_addr.sin_family      = AF_INET;
