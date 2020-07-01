@@ -8,4 +8,5 @@
 int cmd_fileCp(char * srcStr, char * destStr, char **msg);
 int cmd_fileRm(char *srcStr, char **msg);
 int cmd_fileMv(char *srcStr, char *destStr, char **msg);
+int cmd_fileRn(char *srcStr, char *destStr, char **msg);
 #endif //MODULE_2_FILEMANAGER_H

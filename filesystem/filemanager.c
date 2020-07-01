@@ -1,13 +1,19 @@
-/v/ input : src file, dest file
+/// input : src file, dest file
 /// output data : error message
 /// return : error
 /// -1 : there is no argument
 /// -2 : can't open file
 /// 0 : done
 ////////////////////////////////////////////////////////////
-int cmd_fileCp(char * srcStr, char * destStr, char ** msg)
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include "filemanager.h"
+
+int cmd_fileCp(char * srcStr, char * destDir, char ** msg)
 {
-    if (srcStr == NULL || destStr == NULL || msg == NULL){
+    if (srcStr == NULL || destDir == NULL || msg == NULL){
         *msg = "there is no argument";
         return -1;
     }
@@ -29,7 +35,7 @@ int cmd_fileCp(char * srcStr, char * destStr, char ** msg)
         return -2;
     }
 
-# #     // 복사
+     // 복사
     while(!feof(src))
     {
         ch = (char) fgetc(src);
@@ -72,10 +78,16 @@ int cmd_fileMv(char *srcStr, char *destStr, char **msg){
 	return -1;
 }
 
-
-
-
-
-
+int cmd_fileRn(char *srcStr, char *destStr, char **msg){
+	if(srcStr == NULL || destStr == NULL || msg == NULL){
+		*msg = "there is no argument";
+		return -1;
+	}
+	if(rename(srcStr, destStr) == 0){
+		*msg = "renaming is done\n";
+		return 0;
+	}
+	return -1;
+}
 
 
