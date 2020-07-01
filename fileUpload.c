@@ -48,7 +48,10 @@ int main(int argc, char **argv){
 		strcat(command, argv[i]);
 		strcat(command, " ");
 		strcat(command, "./home");
-		system(command);
+		if(system(command)!=0){
+			fprintf("upload failed : consider disk space\n\n");
+			break;
+		}
 	}
 return 0;
 }
