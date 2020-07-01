@@ -1,4 +1,5 @@
 #include "getRequest.h"	
+
 int main(int cSock, int *conFlag, char **type, char **path, char **ip){
     int fd=open("./request.txt", O_RDONLY, 0444);
     if(fd==-1){

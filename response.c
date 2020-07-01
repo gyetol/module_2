@@ -1,5 +1,5 @@
 #include "response.h"
- 
+  
 int main(int cSock, int* conFlag, char **type, char **path, char **ip){
 	if(type==NULL||path==NULL||ip==NULL)
 	{
