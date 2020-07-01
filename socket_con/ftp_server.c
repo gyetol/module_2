@@ -1,18 +1,12 @@
-
 //Echo_server
-#include <sys/types.h>       
+#include <sys/types.h>     
 #include <sys/socket.h>
-#include<stdio.h>
-#include<unistd.h>
-#include<arpa/inet.h>
-#include<netinet/in.h>
-#include <fcntl.h>
-#include <sys/times.h>
-#include<stdlib.h>
-#include<string.h>
-#include <signal.h>
+#include <pthread.h>
 #include <sys/epoll.h>
-
+#include <stdio.h>
+#include <unistd.h>
+#include "getRequset.h"
+#include "response.h"
 void __quit(const char * msg,int line){
 	char buf[BUFSIZ];
 	sprintf(buf,"%s(%d)",msg,line);
@@ -23,6 +17,24 @@ void __quit(const char * msg,int line){
 #define err_quit(msg) __quit(msg,__LINE__)
 #define LISTENQ (10)
 #define EPOLL_SIZ (128)
+
+typedef struct {
+	char * type;
+	char * path;
+	char * ip;
+}RequestInfo;
+
+typedef struct{
+	Request reqInfo;
+	int sock;
+}ResponseInfo;
+
+void* responseThread(void * arg){
+	ResponseInfo* resInfo=(ResponseInfo*)arg;
+	if(response(resInfo.reqInfo.type,resInfo.reqInfo.path,resInfo.reqInfo.ip,resInfo.sock)==-1)
+		pthread_exit(-1);
+	pthread_exit(0);
+}
 
 int main(){
 	int ssock=socket(PF_INET,SOCK_STREAM,0);
@@ -56,7 +68,6 @@ int main(){
 		err_quit("epoll_ctl");
 
 	struct epoll_event events[EPOLL_SIZ];
-	char buf[BUFSIZ];
 	while(1){
 		int nEvent=epoll_wait(efd,events,128,-1);
 		if(nEvent<0)
@@ -64,26 +75,52 @@ int main(){
 		else if(nEvent==0)
 			continue;
 
-
 		for(int i=0;i<nEvent;i++){
-			if(events[i].data.fd=ssock){
-				struct sockaddr_in caddr={0,};
-				int caddr_len=sizeof(caddr);
-				int csock=accept(ssock,(struct sockaddr*)&caddr,&caddr_len);
-				if(csock<0)
-					err_quit("accept");
-				printf("[server]%s(client) is  connected...\n",inet_ntoa(caddr.sin_addr));	
+			if(events[i].data.fd=ssock) {
+                struct sockaddr_in caddr = {0,};
+                int caddr_len = sizeof(caddr);
+                int csock = accept(ssock, (struct sockaddr *) &caddr, &caddr_len);
+                if (csock < 0)
+                    err_quit("accept");
+                printf("[server]%s(client) is  connected...\n", inet_ntoa(caddr.sin_addr));
 
-				event.events=EPOLLIN;
-				event.data.fd=csock;
-				if(epoll_ctl(efd,EPOLL_CTL_ADD,csock,&event)==-1)
-					err_quit("epoll_ctl");
-				continue;
-				
-				if(get_command(csock)==-1)
-					err_quit("get_command");
+                event.events = EPOLLIN;
+                event.data.fd = csock;
+                if (epoll_ctl(efd, EPOLL_CTL_ADD, csock, &event) == -1)
+                    err_quit("epoll_ctl");
+                continue;
+            }
+			else { //this is for client
+				printf("[server] client connected ...\n");
+				int cSock=events[i].data.fd;
+				int conFlag;
+				char * type;
+				char * path;
+				char * ip;
+				ResponseInfo resInfo={0,};
 
+				while(1){
+					if(getReqeust(cSock,&conFlag,&type,&path,&ip)==-1)
+						continue;
+					if(conFlag!=1)
+						break;
 
+					resInfo.reqInfo.type=type;
+					resInfo.reqInfo.path=path;
+					resInfo.reqInfo.ip=ip;
+					resInfo.sock=cSock;
+
+					int * tret=0;
+					pthread_t tid;
+					if(pthread_create(&tid,NULL,responseThread,&resInfo)==EAGAIN)
+						err_quit("pthread_create");
+					if(pthread_join(tid,&tret)!=0)
+						err_quit("pthread_join");
+					if(*tret==0)
+						break;	
+				}
+				if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
+						err_quit("epoll_ctl");
 			}
 		}
 	}
