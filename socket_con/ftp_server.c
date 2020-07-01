@@ -66,19 +66,22 @@ int main(){
 
 
 		for(int i=0;i<nEvent;i++){
-			if(events[i].data.fd=ssock){
-				struct sockaddr_in caddr={0,};
-				int caddr_len=sizeof(caddr);
-				int csock=accept(ssock,(struct sockaddr*)&caddr,&caddr_len);
-				if(csock<0)
-					err_quit("accept");
-				printf("[server]%s(client) is  connected...\n",inet_ntoa(caddr.sin_addr));	
+			if(events[i].data.fd=ssock) {
+                struct sockaddr_in caddr = {0,};
+                int caddr_len = sizeof(caddr);
+                int csock = accept(ssock, (struct sockaddr *) &caddr, &caddr_len);
+                if (csock < 0)
+                    err_quit("accept");
+                printf("[server]%s(client) is  connected...\n", inet_ntoa(caddr.sin_addr));
 
-				event.events=EPOLLIN;
-				event.data.fd=csock;
-				if(epoll_ctl(efd,EPOLL_CTL_ADD,csock,&event)==-1)
-					err_quit("epoll_ctl");
-				continue;
+                event.events = EPOLLIN;
+                event.data.fd = csock;
+                if (epoll_ctl(efd, EPOLL_CTL_ADD, csock, &event) == -1)
+                    err_quit("epoll_ctl");
+                continue;
+            }
+			else { //this is for client
+
 				
 				if(get_command(csock)==-1)
 					err_quit("get_command");
