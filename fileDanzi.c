@@ -1,14 +1,41 @@
 #include "fileDanzi.h"
-  
+   
  int ipTest(char *ip){
 	if(ip==NULL){
 		perror("ipTest");
 		return -1;
 	}
 	inputIp(ip);
-	if(strcmp(ip,"192\n")==0)
-	 	return 0; //Exist호출	 
-	
+	//파일열고
+	int fd=open("./account.txt", O_RDONLY, O_CREAT, 0444);
+		if(fd==-1){
+			perror("open");
+			return -1;
+		}
+		char buf[BUFSIZ];
+		while(1){
+			int nRead=read(fd, buf, sizeof(buf));
+			if(nRead<0){
+				perror("read");
+				return -1;
+			}
+			else if(nRead==0){
+				break;
+			}
+		char *savePtr;
+		char *ptr=strtok_r(buf, "\n", &savePtr);
+			while(ptr!=NULL){
+			char *saveIp;
+			char *existIp=strtok_r(ptr, ":", &saveIp);
+			if(strcmp(ip, existIp)==0)
+			{	
+				close(fd);
+				return 0; //Exist 호출
+			}
+			ptr=strtok_r(NULL, "\n", &savePtr);
+			}
+		}
+close(fd);
 return -1;//notExist 호출
 }
 int inputIp(char *ip){
@@ -23,6 +50,8 @@ int inputIp(char *ip){
    	  perror("fgets");
    	  return -1;
  	}		
+	 ip[strlen(ip)-1]='\0';
+
 	return 0;
 }
 
@@ -44,14 +73,15 @@ int notExist(char *ip,char *pwd){
 			perror("fgets");
 			return -1;
 		}
-		
+		pwdSet[strlen(pwdSet)-1]='\0';	
+
 		printf("confirm your password : ");
 		if(fgets(pwdConfirm, 20, stdin)==NULL)
 		{
 			perror("fgets");
 			return -1;
 		}
-	
+		 pwdConfirm[strlen(pwdConfirm)-1]='\0';
 		if(strcmp(pwdSet, pwdConfirm)!=0)
 			fprintf(stderr, "passwords do not match\n");
 		else{
@@ -60,15 +90,16 @@ int notExist(char *ip,char *pwd){
 		}
 	}
 
-	char homePath[200]=" ";
+	char homePath[100]=" ";
 	while(1){
 		printf("set your home path : ");
-		if(fgets(homePath, 200, stdin)==NULL)
+		if(fgets(homePath, 100, stdin)==NULL)
 		{
 			perror("homePath");
 			return -1;
 		}
-		
+		homePath[strlen(homePath)-1]='\0';
+
 		if(0) //경로가 존재하지 않을경우 다시입력시켜야하는데 그냥
 			//항상 존재하는 경로라 치고 하겠음
 			fprintf(stderr, "wrong path\n");
@@ -78,6 +109,17 @@ int notExist(char *ip,char *pwd){
 			break;
 		}
 	}
+	strcpy(homePath,"./home");
+	FILE* fp=fopen("./account.txt", "a");//O_RDWR, O_CREAT, O_APPEND, 0666);
+		if(fp==NULL)
+		{
+			perror("fopen");
+	 		return -1;
+		}
+		//fprintf(fp, "\n");
+		rewind(fp);
+  	    fprintf(fp, "%s:%s:%s", ip, pwd, homePath);
+	fclose(fp);
 	printf("Registration success\n\n");
 	return 0;
 }
@@ -92,16 +134,15 @@ int exist(char *ip, char *pwd){
 	while(1){
 	  //비밀번호 입력시키기
       inputPassword(pwd);
-
-
-      //비밀번호 대조하여 맞을때까지 입력시키기
+      //비밀번호 대조하기
       if(pwdTest(ip, pwd)==-1)
-          fprintf(stderr, "passwords do not match");
-
-      else
+		  fprintf(stderr, "passwords do not match\n\n");
+	  else{
 		  printf("login success\n\n");
           break;
+	  }
       }
+
   return 0;
 }
 
@@ -117,17 +158,49 @@ int inputPassword(char *pwd){
 		perror("fgets");
 		return -1;
 	}
+	pwd[strlen(pwd)-1]='\0';
 	return 0;
 }
-
 
 int pwdTest(char *ip, char *pwd){
 	if(ip==NULL || pwd==NULL){
 		perror("pwdTest");
 		return -1;
 	}
-	//자료구조 써서 맞는 비번인지 확인
-	return 0;
+	int fd=open("./account.txt", O_RDONLY, 0444);
+	if(fd==-1)
+	{
+		perror("open");
+		return -1;
+	}
+	char buf[BUFSIZ];
+	while(1){
+		int nRead=read(fd, buf, sizeof(buf));
+		if(nRead<0){
+			perror("read");
+			return -1;
+		}
+		else if(nRead==0){
+			break;
+		}
+		char *savePtr;
+		char *saveThings;
+		char *ptr=strtok_r(buf, "\n", &savePtr);
+		while(ptr!=NULL){
+			char *existIp=strtok_r(ptr, ":", &saveThings);
+			if(strcmp(ip,existIp)==0){
+				char *existPwd=strtok_r(NULL, ":", &saveThings);
+					if(strcmp(pwd, existPwd)==0)
+					{
+						close(fd);
+						return 0;
+					}
+			}		
+			ptr=strtok_r(NULL, "\n", &savePtr);
+		}
+	}
+	close(fd);
+	return -1;
 }
 
 
@@ -155,11 +228,15 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	//존재하는 사용자임이 확인되었으면 서버 가동시키기
+	//존재하는 사용자임이 확인되었으면 쓰레드 분리 후
+	//한쪽에선 로컬 명령어 받고 한쪽에선 서버 가동시키기
+	pthread_t tid;
+	pthread_create(&tid, NULL, localCommand, NULL);
 	if(serverStart(ip)==-1){
 		perror("serverStart");
 		return -1;
 	}
-	
+	pthread_join(tid, NULL);
 	return 0;
 }
+
