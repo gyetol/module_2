@@ -1,5 +1,5 @@
 #include "getRequest.h"
-
+ 
 int executeCommand(int cSock, int* conFlag, char **type, char **path, char **ip){
 	if(type==NULL||path==NULL||ip==NULL)
 	{
