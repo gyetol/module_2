@@ -6,4 +6,4 @@
 #include<fcntl.h>
 #include<stdlib.h>
 
-int execute(char *type, char *path, char *ip, int cSock, int* conFlag);
+int executeCommand(int cSock, int* conFlag, char **type, char **path, char **ip);
