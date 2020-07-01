@@ -1,10 +1,11 @@
 //
-// Created by linux on 6/28/20.
+// Created by linux on 6/30/20.
 //
-#include <ncurses.h>
 
-#ifndef MODULE_2_CONSOLE_H
-#define MODULE_2_CONSOLE_H
+#ifndef TESTMODULE_COMMONNUCURSES_H
+#define TESTMODULE_COMMONNUCURSES_H
+
+#include <ncurses.h>
 
 #define FTP_WIDE 80
 #define FTP_HEIGHT 24
@@ -79,11 +80,4 @@
 #define EXIT_KEY1 'X'
 #define EXIT_KEY2 'x'
 
-
-void init_scr();
-void init_updownWindow(WINDOW *upWindow, WINDOW *middleWindow, WINDOW *downWindow);
-int mainMenu(char**ip);
-int printMonitor(int mode, char * pathOfLeft, char *pathOfRight);
-void showManualBar(int mode);
-
-#endif //MODULE_2_CONSOLE_H
+#endif //TESTMODULE_COMMONNUCURSES_H

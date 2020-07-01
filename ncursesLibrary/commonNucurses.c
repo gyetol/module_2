@@ -1,17 +1,18 @@
 //
-// Created by linux on 6/28/20.
+// Created by moosong on 6/30/20.
 //
-
-#include "console.h"
 #include <ncurses.h>
 #include <string.h>
+#include "commonNucurses.h"
 
+///////////////////////SAMPLE FILES/////////////////////////////////////////
 char * sampleFile[] = {
         "this is file 1", "this is file 2", "this is file 3", "this is file 4",
         "this is file 5", "this is file 6", "this is file 7", "this is file 8",
         "this is file 9", "this is file 10", "this is file 11", "this is file 12",
         "this is file 13", "this is file 14", "this is file 15", "this is file 16"
 };
+///////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////
 /// to make env for ncurses and color pairs
@@ -29,6 +30,7 @@ void init_scr()
     init_pair(MAIN1, COLOR_BLACK, COLOR_YELLOW);
     init_pair(MAIN2, COLOR_BLACK, COLOR_WHITE);
     init_pair(CLIENTBAR, COLOR_BLACK, COLOR_YELLOW);
+    ///insert color pairs you want
 }
 
 /////////////////////////////////////////////////////////////
@@ -36,7 +38,7 @@ void init_scr()
 /// inputs : upwindow, middlewindow, downWindow
 /// return : void
 ////////////////////////////////////////////////////////////
-void init_updownWindow(WINDOW *upWindow, WINDOW *middleWindow, WINDOW *downWindow)
+void init_IP_insert_Page(WINDOW *upWindow, WINDOW *middleWindow, WINDOW *downWindow)
 {
     upWindow = subwin(stdscr, 14, FTP_WIDE, 0, 0);
     wbkgd(upWindow, COLOR_PAIR(MAIN1));
@@ -46,7 +48,6 @@ void init_updownWindow(WINDOW *upWindow, WINDOW *middleWindow, WINDOW *downWindo
 
     downWindow = subwin(stdscr, 3, FTP_WIDE, 21, 0);
     wbkgd(downWindow, COLOR_PAIR(MAIN1));
-    attron(COLOR_PAIR(MAIN1));
 }
 
 /////////////////////////////////////////////////////////////
@@ -54,7 +55,7 @@ void init_updownWindow(WINDOW *upWindow, WINDOW *middleWindow, WINDOW *downWindo
 /// input1 : ip Address space to store
 /// return : menunum
 ////////////////////////////////////////////////////////////
-int mainMenu(char**ip){
+int show_IP_insert_Page(char**ip){
     werase(stdscr); // Clear Window
     curs_set(0); // Not need Cursor pointer
     char key; // User Input
@@ -63,8 +64,9 @@ int mainMenu(char**ip){
     int selectingMenu = MENU_BOOKMARKS;
 
     WINDOW *upMenu, *middleWindow,*downMenu;
-    init_updownWindow(upMenu, middleWindow, downMenu);
+    init_IP_insert_Page(upMenu, middleWindow, downMenu);
 
+    attron(COLOR_PAIR(MAIN1));
     mvprintw(3, 34, "FILE DANZI");
     mvprintw(7, 32, "cute FTP Cleint");
 
@@ -183,7 +185,7 @@ int mainMenu(char**ip){
 /// input : all windows to make FTP main
 /// return : void
 ////////////////////////////////////////////////////////////
-void initFtpMainWindow(WINDOW*upWindow, WINDOW *middleWindow, WINDOW * downWindow,
+void init_FTP_Main_Page(WINDOW*upWindow, WINDOW * downWindow,
                        WINDOW * logWindow, WINDOW * pathWindow, WINDOW * firstWindow,
                        WINDOW * secondWindow, WINDOW * thirdWindow, WINDOW * fourthWindow,
                        WINDOW * xWindow, WINDOW * yWindow, WINDOW * zWindow){
@@ -220,8 +222,6 @@ void initFtpMainWindow(WINDOW*upWindow, WINDOW *middleWindow, WINDOW * downWindo
 
     downWindow = subwin(stdscr, BAR_HEIGHT, FTP_WIDE, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT + UPPER_SUBWINDOW_HEIGHT + BAR_HEIGHT + DOWN_SUBWINDOW_HEIGHT, 0);
     wbkgd(downWindow, COLOR_PAIR(CLIENTBAR));
-
-    attron(COLOR_PAIR(CLIENTBAR));
 }
 
 /////////////////////////////////////////////////////////////
@@ -229,7 +229,7 @@ void initFtpMainWindow(WINDOW*upWindow, WINDOW *middleWindow, WINDOW * downWindo
 /// input : mode (MODE_CLIENT or MODE_SERVER)
 /// return : void
 ////////////////////////////////////////////////////////////
-void showManualBar(int mode){
+void show_Manual_Bar(int mode){
     ///print
     char * str;
     if (mode == MODE_CLIENT){
@@ -278,92 +278,11 @@ void showManualBar(int mode){
 }
 
 /////////////////////////////////////////////////////////////
-/// to print subfiles for up and down window
-/// input : location x and y, src char* 's ary, checked index array wanna get, a number total line
+/// to print Main Page
+/// input : mode MODE_CLIENT or MODE_SERVER
 /// return : void
 ////////////////////////////////////////////////////////////
-void printFiles(int x, int y, char* *src, int * result, int totalCount){
-    int selected[10] = {0,};
-    int startPoint = 0;
-    int cursor = 0;
-
-    if (src == NULL){
-        for (int i = 0; i < totalCount; ++i) {
-            mvprintw(y+i, x, "                                       ");
-        }
-        return;
-    }
-
-    while (1){
-        for (int i = 0; i < totalCount ; ++i) {
-            mvprintw(y+i, 0, "                                        ");
-        }
-        for (int j = 0; j < totalCount; ++j) {
-            mvprintw(y+j, x, src[startPoint+j]);
-        }
-        return;
-    }
-}
-
-void printFilesAndSelect(int x, int y, char* *src, int * result, int totalCount, int numOfSrc){
-    int selected[12]={0,};
-    int startPoint = 0;
-    int cursor = 0;
-    char * forNullStr = "                                       ";
-    char key;
-
-    if (src == NULL){
-        for (int i = 0; i < totalCount; ++i) {
-            mvprintw(y+i, x, forNullStr);
-        }
-        return;
-    }
-
-    while (1){
-        for (int i = 0; i < totalCount ; ++i) {
-            mvprintw(y+i, 0, forNullStr);
-        }
-        if (numOfSrc-startPoint > totalCount){
-            numOfSrc = totalCount+startPoint;
-        }
-        for (int j = startPoint; j < numOfSrc; ++j) {
-            if (cursor == j){
-                attron(A_STANDOUT | A_UNDERLINE);
-                mvprintw(y+j, x, src[startPoint+j]);
-                attroff(A_STANDOUT | A_UNDERLINE);
-            }
-            else{
-                mvprintw(y+j, x, src[startPoint+j]);
-            }
-            if (selected[j] != 0){
-                attron(A_STANDOUT);
-                mvprintw(y+j, x, src[startPoint+j]);
-                attroff(A_STANDOUT);
-            }
-        }
-        refresh();
-        key = getchar();
-        switch (cursor) {
-            case KEYBOARD_UP:
-                if (cursor == 0){
-                    cursor = 0;
-                }
-                break;
-            case KEYBOARD_DOWN:
-                if (cursor == numOfSrc-1){
-                    cursor = numOfSrc-1;
-                }
-                break;
-            case KEYBOARD_ENTER:
-                /////////
-                break;
-            case KEYBOARD_BACKSPACE:
-                return;
-        }
-    }
-}
-
-int printMonitor(int mode, char * pathOfLeft, char *pathOfRight) {
+int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight) {
     werase(stdscr); // Clear Window
     curs_set(0); // Not need Cursor pointer
     char key; // User Input
@@ -374,7 +293,8 @@ int printMonitor(int mode, char * pathOfLeft, char *pathOfRight) {
     pathOfLeft = "CLIENT PATH";
     pathOfRight = "SERVER PATH";
     ///
-    WINDOW *upMenu, *middleWindow, *downMenu;
+    WINDOW *upMenu;
+    WINDOW *downMenu;
     WINDOW *logWindow;
     WINDOW *pathWindow;
     WINDOW *firstWindow;
@@ -384,21 +304,24 @@ int printMonitor(int mode, char * pathOfLeft, char *pathOfRight) {
     WINDOW *xWindow;
     WINDOW *yWindow;
     WINDOW *zWindow;
-    initFtpMainWindow(upMenu, middleWindow, downMenu, logWindow, pathWindow, firstWindow,
+
+    init_FTP_Main_Page(upMenu, downMenu, logWindow, pathWindow, firstWindow,
                       secondWindow, thirdWindow, fourthWindow,
                       xWindow, yWindow, zWindow);
 
-    showManualBar(mode);
-
-    mvprintw(4, 2, "LOCAL FILE TREE");
-    mvprintw(4, 43, "SERVER FILE TREE");
+    attron(COLOR_PAIR(CLIENTBAR));
+    show_Manual_Bar(mode);
 
     while (1) {
         attron(COLOR_PAIR(MAIN1));
-        mvprintw(4, 0, "                                        ");
-        mvprintw(4, 0, "LOCAL FILE TREE");
-        mvprintw(4, 41, "                                       ");
-        mvprintw(4, 41, "SERVER FILE TREE");
+        mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 0, "                                        ");
+        mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 41, "                                       ");
+        mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 2, "LOCAL FILE TREE");
+        if (mode == MODE_CLIENT){
+            mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 43, "SERVER FILE TREE");
+        } else if (mode == MODE_SERVER){
+            mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 43, "REMOTE FILE TREE");
+        }
         mvprintw(13, 0, "                                        ");
         mvprintw(13, 0, pathOfLeft);
         mvprintw(13, 41, "                                       ");
@@ -563,29 +486,4 @@ int printMonitor(int mode, char * pathOfLeft, char *pathOfRight) {
                 return MENU_EXIT;
         }
     }
-}
-
-int main(){
-    init_scr();
-    char * ipAddress = "";
-    int thisMenu = MENU_MAIN;
-
-    while (thisMenu != MENU_EXIT){
-        switch (thisMenu) {
-            case MENU_MAIN :
-                thisMenu = mainMenu(&ipAddress);
-                break;
-            case MENU_BOOKMARKS :
-//                thisMenu = _loginMenu();
-                break;
-            case MENU_HISTORY :
-//                thisMenu = _signioMenu();
-                break;
-            case MENU_IP :
-                thisMenu = printMonitor(MODE_CLIENT, NULL, NULL);
-                break;
-        }
-    }
-    endwin();
-    return 0;
 }
