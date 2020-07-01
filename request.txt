@@ -3,5 +3,9 @@ path:./home
 ip:192.168.30.141
 
 //type:download
-//path:./home/~file.txt
+//path: file.txt
 //ip:192.168.30.141
+
+//type:exit
+//path:./home //exit때는 path필요 없지만 그냥 통일하는걸로 확정
+//ip:192.168.30.141     //자신의 ip
