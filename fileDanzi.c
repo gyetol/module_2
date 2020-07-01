@@ -228,11 +228,15 @@ int main(int argc, char **argv){
 		return -1;
 	}
 
-	//존재하는 사용자임이 확인되었으면 서버 가동시키기
+	//존재하는 사용자임이 확인되었으면 쓰레드 분리 후
+	//한쪽에선 로컬 명령어 받고 한쪽에선 서버 가동시키기
+	pthread_t tid;
+	pthread_create(&tid, NULL, localCommand, NULL);
 	if(serverStart(ip)==-1){
 		perror("serverStart");
 		return -1;
-	}	
+	}
+	pthread_join(tid, NULL);
 	return 0;
 }
 
