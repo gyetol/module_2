@@ -55,7 +55,7 @@ void init_IP_insert_Page(WINDOW *upWindow, WINDOW *middleWindow, WINDOW *downWin
 /// input1 : ip Address space to store
 /// return : menunum
 ////////////////////////////////////////////////////////////
-int show_IP_insert_Page(char**ip){
+int IP_insert_Page(char**ip){
     werase(stdscr); // Clear Window
     curs_set(0); // Not need Cursor pointer
     char key; // User Input
@@ -63,7 +63,9 @@ int show_IP_insert_Page(char**ip){
 
     int selectingMenu = MENU_BOOKMARKS;
 
-    WINDOW *upMenu, *middleWindow,*downMenu;
+    WINDOW *upMenu = NULL;
+    WINDOW *middleWindow = NULL;
+    WINDOW *downMenu = NULL;
     init_IP_insert_Page(upMenu, middleWindow, downMenu);
 
     attron(COLOR_PAIR(MAIN1));
@@ -229,7 +231,7 @@ void init_FTP_Main_Page(WINDOW*upWindow, WINDOW * downWindow,
 /// input : mode (MODE_CLIENT or MODE_SERVER)
 /// return : void
 ////////////////////////////////////////////////////////////
-void show_Manual_Bar(int mode){
+void print_Manual_Bar(int mode){
     ///print
     char * str;
     if (mode == MODE_CLIENT){
@@ -278,8 +280,76 @@ void show_Manual_Bar(int mode){
 }
 
 /////////////////////////////////////////////////////////////
+/// to print subfiles for up and down window
+/// input : mode (MODE_FIRST, MODE_SECOND, MODE_THIRD, MODE_FOURTH), src char* 's ary, a number total line
+/// return : void
+////////////////////////////////////////////////////////////
+void print_Sub_Block(int mode, char** srcArray){
+    int x;
+    int y;
+    int totalCount;
+    switch (mode) {
+        case MODE_FIRST:
+            x=0;
+            y=MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT;
+            totalCount = UPPER_SUBWINDOW_HEIGHT;
+            break;
+        case MODE_SECOND:
+            x=LEFT_SUBWINDOW_WIDE + BAR_WIDE;
+            y=MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT;
+            totalCount = UPPER_SUBWINDOW_HEIGHT;
+            break;
+        case MODE_THIRD:
+            x=0;
+            y=MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT + UPPER_SUBWINDOW_HEIGHT + BAR_HEIGHT;
+            totalCount=DOWN_SUBWINDOW_HEIGHT;
+            break;
+        case MODE_FOURTH:
+            x=LEFT_SUBWINDOW_WIDE + BAR_WIDE;
+            y=MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT + UPPER_SUBWINDOW_HEIGHT + BAR_HEIGHT;
+            totalCount = DOWN_SUBWINDOW_HEIGHT;
+            break;
+        default:
+            return;
+    }
+    for (int i = 0; i < totalCount; ++i) {
+        mvprintw(y+i, x, "                                       ");
+    }
+    if (srcArray == NULL){
+        return;
+    }
+
+    for (int j = 0; j < totalCount; ++j) {
+        mvprintw(y+j, x, srcArray[j]);
+    }
+    return;
+}
+
+/////////////////////////////////////////////////////////////
+/// to print Log Block
+/// input : log ary
+/// return : void
+////////////////////////////////////////////////////////////
+void print_Log_Block(char  ** srcArray){
+    int x =0;
+    int y = MANUAL_SUBWINDOW_HEIGHT;
+    int totalCount = LOG_SUBWINDOW_HEIGHT;
+    char * nullStr = "                                                                                ";
+    for (int i = 0; i < totalCount; ++i) {
+        mvprintw(y+i, x, nullStr);
+    }
+    if (srcArray == NULL){
+        return;
+    }
+    for (int j = 0; j < totalCount; ++j) {
+        mvprintw(y+j, x, srcArray[j]);
+    }
+    return;
+}
+
+/////////////////////////////////////////////////////////////
 /// to print Main Page
-/// input : mode MODE_CLIENT or MODE_SERVER
+/// input : mode MODE_CLIENT or MODE_SERVER, path1, path2
 /// return : void
 ////////////////////////////////////////////////////////////
 int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight) {
@@ -288,39 +358,39 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight) {
     char key; // User Input
     int selectingMenu = MENU_FIRSTWINODW;
     int selectedIndex[10];
-    int indexOfTab = 0;
+    int selectedSubBlock = 0;
     ///
     pathOfLeft = "CLIENT PATH";
     pathOfRight = "SERVER PATH";
     ///
-    WINDOW *upMenu;
-    WINDOW *downMenu;
-    WINDOW *logWindow;
-    WINDOW *pathWindow;
-    WINDOW *firstWindow;
-    WINDOW *secondWindow;
-    WINDOW *thirdWindow;
-    WINDOW *fourthWindow;
-    WINDOW *xWindow;
-    WINDOW *yWindow;
-    WINDOW *zWindow;
+    WINDOW *upMenu = NULL;
+    WINDOW *downMenu = NULL;
+    WINDOW *logWindow = NULL;
+    WINDOW *pathWindow = NULL;
+    WINDOW *firstWindow = NULL;
+    WINDOW *secondWindow =NULL;
+    WINDOW *thirdWindow = NULL;
+    WINDOW *fourthWindow = NULL;
+    WINDOW *xWindow = NULL;
+    WINDOW *yWindow = NULL;
+    WINDOW *zWindow = NULL;
 
     init_FTP_Main_Page(upMenu, downMenu, logWindow, pathWindow, firstWindow,
                       secondWindow, thirdWindow, fourthWindow,
                       xWindow, yWindow, zWindow);
 
     attron(COLOR_PAIR(CLIENTBAR));
-    show_Manual_Bar(mode);
+    print_Manual_Bar(mode);
 
     while (1) {
         attron(COLOR_PAIR(MAIN1));
         mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 0, "                                        ");
         mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 41, "                                       ");
-        mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 2, "LOCAL FILE TREE");
+        mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 0, "LOCAL FILE TREE");
         if (mode == MODE_CLIENT){
-            mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 43, "SERVER FILE TREE");
+            mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 41, "SERVER FILE TREE");
         } else if (mode == MODE_SERVER){
-            mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 43, "REMOTE FILE TREE");
+            mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 41, "REMOTE FILE TREE");
         }
         mvprintw(13, 0, "                                        ");
         mvprintw(13, 0, pathOfLeft);
@@ -328,16 +398,12 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight) {
         mvprintw(13, 41, pathOfRight);
 
         attron(COLOR_PAIR(MAIN2));
-        printFiles(0, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT, NULL, selectedIndex,
-                   UPPER_SUBWINDOW_HEIGHT);
-        printFiles(0, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT + UPPER_SUBWINDOW_HEIGHT + BAR_HEIGHT,
-                   NULL, selectedIndex, DOWN_SUBWINDOW_HEIGHT);
-        printFiles(LEFT_SUBWINDOW_WIDE + BAR_WIDE, MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT, NULL,
-                   selectedIndex, UPPER_SUBWINDOW_HEIGHT);
-        printFiles(LEFT_SUBWINDOW_WIDE + BAR_WIDE,
-                   MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT + BAR_HEIGHT + UPPER_SUBWINDOW_HEIGHT + BAR_HEIGHT,
-                   NULL, selectedIndex, DOWN_SUBWINDOW_HEIGHT);
-
+        print_Log_Block(sampleFile);
+//        if (selectedSubBlock)
+        print_Sub_Block(MODE_FIRST, sampleFile);
+        print_Sub_Block(MODE_SECOND, sampleFile);
+        print_Sub_Block(MODE_THIRD, sampleFile);
+        print_Sub_Block(MODE_FOURTH, sampleFile);
 
         attron(A_STANDOUT | A_UNDERLINE); // selected effect
         switch (selectingMenu) {
@@ -472,7 +538,6 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight) {
             case EXIT_KEY1:
             case EXIT_KEY2:
                 delwin(upMenu);
-                delwin(middleWindow);
                 delwin(downMenu);
                 delwin(logWindow);
                 delwin(pathWindow);

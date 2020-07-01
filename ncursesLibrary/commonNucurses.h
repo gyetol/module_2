@@ -80,4 +80,8 @@
 #define EXIT_KEY1 'X'
 #define EXIT_KEY2 'x'
 
+void init_scr();
+int IP_insert_Page(char**ip);
+int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight);
+
 #endif //TESTMODULE_COMMONNUCURSES_H
