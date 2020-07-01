@@ -11,12 +11,23 @@
 int main(){
     int sock;
     pthread_t tid;
+    char * ip;
+    char * localPath;
+    char * serverPath;
+
+    //function : IP_INSERT_PAGE(&ip)
+
     //make connection
-    int result = clientStart(IP_ADDRESS, &sock);
+    int result = clientStart(ip, &sock);
     if (result != 0){
         return -1;
     }
-    //mainpage;
+    //mainpage
+    //function : listopen()
+    //function : do parse .txt -> return char ** srcArray
+    //function : FTP_Main_Page(MODE_CLIENT, localPath, serverPath) -> return
+
+
     pthread_create(&tid, NULL, localThread, NULL);
 
 
