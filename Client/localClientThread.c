@@ -5,8 +5,9 @@
 /// input : pthread_create에서 전달해주는 arg
 /// return : 내부에서 동적할당
 void * localClientThread(void *arg){
+	char* ip=(char*)arg;
 	int * retVal=calloc(1,sizeof(int));
-	if(clientStart()==-1){
+	if(clientStart(ip)==-1){
 		fprintf(stderr,"clientStart()");
 		*retVal=-1;
 	}

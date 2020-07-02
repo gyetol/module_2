@@ -17,10 +17,10 @@ typedef struct ResponseInfo{
 }ResponseInfo;
 */
 
-int clientStart(const char * ip, int * sock){
+int clientStart(const char * ip){
 
     //make socket for client
-    sock=socket(PF_INET,SOCK_STREAM,0);
+    int sock=socket(PF_INET,SOCK_STREAM,0);
     if(sock==-1){
         perror("socket");
         return -1;
