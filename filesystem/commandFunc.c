@@ -4,6 +4,7 @@
 #include<unistd.h>
 #include<sys/types.h>
 #include<sys/wait.h>
+#include <fcntl.h>
 #include "commandFunc.h"
 
 ////////////////////////////////////////////////////
@@ -13,6 +14,10 @@
 // newPath : directory name to make
 // msg : we can write message in it
 int doMkdir(char *newPath, char **msg){
+    int fd1 = open("news.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+    char cmd [BUFSIZ] = "/usr/bin/find -name ";
+    strcat(cmd, newPath);
+    strcat(cmd, " >> news.txt");
 	if(newPath == NULL || msg == NULL){
 		*msg = "argument is null";
 		return -1;
@@ -22,29 +27,37 @@ int doMkdir(char *newPath, char **msg){
 		*msg = "wrong directory name";
 		return -1;
 	}
-	
-	int fds[2];
+    //현재 디렉토리 안에 같은 디렉토리명이 있는지 검사
+    system(cmd);
 
-	pid_t pid;
-	pipe(fds);
-	pid=fork();
-	if(pid==0){
-		
-	}
-	
 
-	//현재 디렉토리 안에 같은 디렉토리명이 있는지 검사
-	
+    fd1 = open("news.txt", O_RDONLY);
+    char * str[BUFSIZ];
+    int result = read(fd1, str, BUFSIZ);
+    close(fd1);
+
+    if (result == 0){
+        *msg="success make directory";
+        pid_t pid;
+        pid = fork();
+        if (pid == 0){
+            //새디렉터리 생성
+            if(execl("/bin/mkdir","mkdir",newPath,NULL)==-1){
+                perror("execl");
+                *msg = "error occurrence!";
+                return -1;
+            }
+        }
+    }
+    else{
+        *msg="there is already exit";
+    }
+
 
 	//디스크 용량 확인
 	
-	//새디렉터리 생성
 
-	if(execl("/bin/mkdir","mkdir",newPath,NULL)==-1){
-		perror("execl");
-		*msg = "error occurrence!";
-		return -1;
-	}
+
 	return 0;
 }
 
