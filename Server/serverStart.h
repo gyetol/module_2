@@ -14,6 +14,7 @@
  #define err_quit(msg) __quit(msg,__LINE__)
  #define LISTENQ (10)
  #define EPOLL_SIZ (128)
+ #define PORT (20629)
 
 
 
