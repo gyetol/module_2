@@ -1,0 +1,1246 @@
+[3J[H[2J.:
+total 228
+drwxrwxr-x 12 linux linux  4096 Jun 29 05:03 .
+drwxr-xr-x 35 linux linux  4096 Jun 29 05:02 ..
+drwxrwxr-x  2 linux linux  4096 Jun 28 19:03 회의_기록
+-rwxrwxr-x  1 linux linux 12880 Jun 29 05:01 a.out
+-rw-rw-r--  1 linux linux     0 Jun 29 01:16 cFile.c
+drwxrwxr-x  2 linux linux  4096 Jun 29 02:10 Client
+-rwxrwxr-x  1 linux linux 13032 Jun 28 18:01 fileDanzi
+-rwxrwxr-x  1 linux linux  2939 Jun 28 18:00 fileDanzi.c
+-rw-rw-r--  1 linux linux   211 Jun 28 18:00 fileDanzi.h
+-rw-rw-r--  1 linux linux   666 Jun 28 18:02 fileDanzi_README.MD
+-rw-rw-r--  1 linux linux     0 Jun 28 21:57 fileName
+drwxrwxr-x  3 linux linux  4096 Jun 29 02:10 filesystem
+-rwxrwxr-x  1 linux linux 12880 Jun 29 05:03 getRequest
+-rw-rw-r--  1 linux linux  2262 Jun 29 05:02 getRequest.c
+-rw-rw-r--  1 linux linux   195 Jun 29 05:02 getRequest.h
+drwxrwxr-x  8 linux linux  4096 Jun 29 02:53 .git
+-rw-rw-r--  1 linux linux  9628 Jun 29 02:10 .gitignore
+-rw-rw-r--  1 linux linux     0 Jun 29 00:42 header.h
+-rw-rw-r--  1 linux linux    14 Jun 29 03:20 hoho.txt
+drwxrwxr-x  3 linux linux  4096 Jun 29 02:05 home
+drwxrwxr-x  2 linux linux  4096 Jun 29 02:10 .idea
+drwxrwxr-x  3 linux linux  4096 Jun 28 19:54 list
+-rwxrwxr-x  1 linux linux 12848 Jun 29 02:10 listOpen
+-rw-rw-r--  1 linux linux  2644 Jun 29 02:09 listOpen.c
+-rw-rw-r--  1 linux linux   136 Jun 29 02:09 listOpen.h
+-rw-rw-r--  1 linux linux   583 Jun 28 22:09 list_sample.txt
+-rw-rw-r--  1 linux linux 48706 Jun 29 05:03 list.txt
+-rw-rw-r--  1 linux linux    77 Jun 26 00:00 README.MD
+-rw-rw-r--  1 linux linux    99 Jun 29 04:04 request.txt
+-rw-rw-r--  1 linux linux  3236 Jun 29 01:19 result.txt
+drwxrwxr-x  2 linux linux  4096 Jun 29 02:10 sample
+drwxrwxr-x  2 linux linux  4096 Jun 28 19:03 Server
+-rw-rw-r--  1 linux linux   163 Jun 28 18:00 serverStart.c
+-rw-rw-r--  1 linux linux    45 Jun 28 18:00 serverStart.h
+drwxrwxr-x  3 linux linux  4096 Jun 29 01:50 testD
+
+./회의_기록:
+total 64
+drwxrwxr-x  2 linux linux  4096 Jun 28 19:03 .
+drwxrwxr-x 12 linux linux  4096 Jun 29 05:03 ..
+-rw-rw-r--  1 linux linux   937 Jun 28 19:03 파일관리
+-rw-rw-r--  1 linux linux 46348 Jun 28 19:03 0624_FTP서버프로젝트_기능요구서_1차안.docx
+-rw-rw-r--  1 linux linux  2260 Jun 28 19:03 0625_CLIENT_팀회의_세부시나리오,단축키.txt
+
+./Client:
+total 20
+drwxrwxr-x  2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 12 linux linux 4096 Jun 29 05:03 ..
+-rw-rw-r--  1 linux linux 3410 Jun 29 02:10 console.c
+-rw-rw-r--  1 linux linux  122 Jun 29 02:10 console.h
+-rw-rw-r--  1 linux linux 2870 Jun 29 02:10 mousesample.c
+-rw-rw-r--  1 linux linux    0 Jun 28 19:03 클라이언트기능요구서.txt
+
+./filesystem:
+total 60
+drwxrwxr-x  3 linux linux  4096 Jun 29 02:10 .
+drwxrwxr-x 12 linux linux  4096 Jun 29 05:03 ..
+-rwxrwxr-x  1 linux linux 13360 Jun 29 02:10 a.out
+-rw-rw-r--  1 linux linux   504 Jun 29 02:10 common.h
+-rw-rw-r--  1 linux linux  5654 Jun 29 02:10 dirmanager.c
+-rw-rw-r--  1 linux linux   406 Jun 29 02:10 dirmanager.h
+-rw-rw-r--  1 linux linux  1675 Jun 29 02:10 filemanager.c
+-rw-rw-r--  1 linux linux   292 Jun 29 02:10 filemanager.h
+drwxrwxr-x  2 linux linux  4096 Jun 29 02:10 temp
+-rw-rw-r--  1 linux linux    47 Jun 29 02:10 test.c
+-rw-rw-r--  1 linux linux   296 Jun 29 02:10 testmain.c
+
+./filesystem/temp:
+total 8
+drwxrwxr-x 2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 3 linux linux 4096 Jun 29 02:10 ..
+-rw-rw-r-- 1 linux linux    0 Jun 29 02:10 a.c
+
+./.git:
+total 64
+drwxrwxr-x   8 linux linux 4096 Jun 29 02:53 .
+drwxrwxr-x  12 linux linux 4096 Jun 29 05:03 ..
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 branches
+-rw-rw-r--   1 linux linux   20 Jun 29 02:53 COMMIT_EDITMSG
+-rw-rw-r--   1 linux linux  265 Jun 28 19:03 config
+-rw-rw-r--   1 linux linux   73 Jun 28 19:03 description
+-rw-rw-r--   1 linux linux  100 Jun 29 02:53 FETCH_HEAD
+-rw-rw-r--   1 linux linux   27 Jun 28 19:04 HEAD
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 hooks
+-rw-rw-r--   1 linux linux 4056 Jun 29 02:53 index
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 info
+drwxrwxr-x   3 linux linux 4096 Jun 28 19:03 logs
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 objects
+-rw-rw-r--   1 linux linux   41 Jun 29 02:53 ORIG_HEAD
+-rw-rw-r--   1 linux linux  324 Jun 28 19:03 packed-refs
+drwxrwxr-x   5 linux linux 4096 Jun 28 19:03 refs
+
+./.git/branches:
+total 8
+drwxrwxr-x 2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 8 linux linux 4096 Jun 29 02:53 ..
+
+./.git/hooks:
+total 56
+drwxrwxr-x 2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 8 linux linux 4096 Jun 29 02:53 ..
+-rwxrwxr-x 1 linux linux  478 Jun 28 19:03 applypatch-msg.sample
+-rwxrwxr-x 1 linux linux  896 Jun 28 19:03 commit-msg.sample
+-rwxrwxr-x 1 linux linux 3327 Jun 28 19:03 fsmonitor-watchman.sample
+-rwxrwxr-x 1 linux linux  189 Jun 28 19:03 post-update.sample
+-rwxrwxr-x 1 linux linux  424 Jun 28 19:03 pre-applypatch.sample
+-rwxrwxr-x 1 linux linux 1642 Jun 28 19:03 pre-commit.sample
+-rwxrwxr-x 1 linux linux 1492 Jun 28 19:03 prepare-commit-msg.sample
+-rwxrwxr-x 1 linux linux 1348 Jun 28 19:03 pre-push.sample
+-rwxrwxr-x 1 linux linux 4898 Jun 28 19:03 pre-rebase.sample
+-rwxrwxr-x 1 linux linux  544 Jun 28 19:03 pre-receive.sample
+-rwxrwxr-x 1 linux linux 3610 Jun 28 19:03 update.sample
+
+./.git/info:
+total 12
+drwxrwxr-x 2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 8 linux linux 4096 Jun 29 02:53 ..
+-rw-rw-r-- 1 linux linux  240 Jun 28 19:03 exclude
+
+./.git/logs:
+total 16
+drwxrwxr-x 3 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 8 linux linux 4096 Jun 29 02:53 ..
+-rw-rw-r-- 1 linux linux 1541 Jun 29 02:53 HEAD
+drwxrwxr-x 4 linux linux 4096 Jun 28 19:03 refs
+
+./.git/logs/refs:
+total 16
+drwxrwxr-x 4 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 3 linux linux 4096 Jun 28 19:03 ..
+drwxrwxr-x 2 linux linux 4096 Jun 28 19:04 heads
+drwxrwxr-x 3 linux linux 4096 Jun 28 19:03 remotes
+
+./.git/logs/refs/heads:
+total 16
+drwxrwxr-x 2 linux linux 4096 Jun 28 19:04 .
+drwxrwxr-x 4 linux linux 4096 Jun 28 19:03 ..
+-rw-rw-r-- 1 linux linux  184 Jun 28 19:03 develop
+-rw-rw-r-- 1 linux linux 1342 Jun 29 02:53 tlfzgjadyd
+
+./.git/logs/refs/remotes:
+total 12
+drwxrwxr-x 3 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 4 linux linux 4096 Jun 28 19:03 ..
+drwxrwxr-x 2 linux linux 4096 Jun 29 02:10 origin
+
+./.git/logs/refs/remotes/origin:
+total 20
+drwxrwxr-x 2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 3 linux linux 4096 Jun 28 19:03 ..
+-rw-rw-r-- 1 linux linux  167 Jun 29 02:10 develop
+-rw-rw-r-- 1 linux linux  184 Jun 28 19:03 HEAD
+-rw-rw-r-- 1 linux linux  910 Jun 29 02:54 tlfzgjadyd
+
+./.git/objects:
+total 528
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 .
+drwxrwxr-x   8 linux linux 4096 Jun 29 02:53 ..
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 01
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 02
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 04
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 05
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 06
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 07
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 09
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 0a
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 0e
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 11
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 13
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 14
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 15
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 1b
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 1c
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 21
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 24
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 25
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:36 27
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:36 28
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 2a
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 2d
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:36 2e
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:06 32
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:41 36
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 37
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 3c
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 3e
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 3f
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 41
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:11 42
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 43
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 4a
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 4b
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:41 4d
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:36 50
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 58
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 5a
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 5b
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 5d
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 5f
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 63
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 64
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 65
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:41 67
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 68
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:06 69
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 6a
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 6c
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:06 6d
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 6f
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 70
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 71
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 73
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 74
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 75
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 77
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 79
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 7d
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 7e
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 80
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 81
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 83
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 86
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:53 87
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 88
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 8e
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 8f
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 91
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 92
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 93
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 94
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 98
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 9c
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 9d
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 a2
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:53 a3
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 a5
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 a6
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 a7
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 a8
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 aa
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 ab
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:36 ac
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 ae
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 b5
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 b6
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 b7
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 b8
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 b9
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 ba
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 bb
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 be
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:34 c0
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:06 c2
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 c3
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 c4
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 c5
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 c6
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 c7
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:06 c8
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 ca
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 cc
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 cd
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 cf
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 d6
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 d8
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 de
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 e0
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:53 e1
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 e2
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 e3
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 e5
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 e6
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 e7
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 e8
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:36 e9
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 ea
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 ec
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 f0
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 f2
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 f3
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 f4
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 f5
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 f8
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 fc
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 ff
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 info
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 pack
+
+./.git/objects/01:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  105 Jun 28 19:03 5ed4d4963e5416af454c2fbd48f5da3192b6e7
+-r--r--r--   1 linux linux  166 Jun 29 02:10 efe511b51b63fa5e036d5fe2f4238e4e4345ed
+
+./.git/objects/02:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  182 Jun 28 19:03 a6d56dab474da2581251cb0b368ef315a596e4
+
+./.git/objects/04:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  297 Jun 29 02:10 db566795069c64cecdd60b70f9489628404508
+
+./.git/objects/05:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  162 Jun 29 02:10 551853b70cdf9d7d7b1cb230181ba21b709cd7
+
+./.git/objects/06:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 1615 Jun 28 19:03 e2caf4d66cccae00e1cf740ec7fd6389174b85
+
+./.git/objects/07:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  554 Jun 28 19:03 17dfd89c9564952c629262ae0d0ecd04f1553b
+-r--r--r--   1 linux linux  323 Jun 29 02:10 6b4d4f265576928979af6aa5d8d2241c0cf691
+
+./.git/objects/09:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 1046 Jun 29 02:10 dbd8c97db4068e2a3fba0243ce3b2366464dd1
+
+./.git/objects/0a:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  537 Jun 29 02:10 8a752bc99a5a663561623f2a9dbebe8da6d8f3
+
+./.git/objects/0e:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  550 Jun 28 19:03 17988704e5dabdd2fa1dd08ff89197ab2fe72e
+
+./.git/objects/11:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  156 Jun 29 02:10 6191ddcecc277a5e74ae7536f5d8de8f183f19
+
+./.git/objects/12:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  295 Jun 29 02:10 16ac1611ee4b85324a85c27dc92729db39b482
+-r--r--r--   1 linux linux  372 Jun 28 19:03 3181f6203891a6d293b3e57a3490e4fde66b9e
+
+./.git/objects/13:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  372 Jun 28 19:03 9cd75f910c8bf2b4002db6c804588a71dea0a3
+
+./.git/objects/14:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 1431 Jun 29 02:10 6655d7634721c5950c5d467ab1384aebc0af20
+
+./.git/objects/15:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  152 Jun 28 19:36 25f5e2844692585d4677d90b0454b1bc91dedd
+-r--r--r--   1 linux linux  222 Jun 29 02:10 ee9808c372a6e39b1051907f306b960d35d11f
+
+./.git/objects/1b:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  228 Jun 29 02:10 e93ccc6192d6cc0ba52afab5e80d9acbf74108
+
+./.git/objects/1c:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  175 Jun 29 02:10 4186505cab4e4af879521cf2e9e7358df14dfc
+
+./.git/objects/21:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  101 Jun 29 02:10 7c29204e0909c2aa0fb4b03b8b1fd81634dcdc
+
+./.git/objects/24:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  216 Jun 29 02:10 9ccf263d9af923af29827d954cffb23c28eac5
+
+./.git/objects/25:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  216 Jun 29 02:10 ca3df855759092b4967edaead05bcf0abada59
+
+./.git/objects/27:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:36 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  522 Jun 28 19:36 e6b1c9d3c18f77802918c350450c076e8ffa39
+
+./.git/objects/28:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:36 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  551 Jun 28 19:36 0d36585063fea3348dbe3168766be0854e018e
+
+./.git/objects/2a:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  346 Jun 28 19:03 474aa65328bb0bdd429dbe1893edfc92a4e1a7
+
+./.git/objects/2d:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  296 Jun 29 02:10 29edfd00ac26f68ed84f2016d148fe1e433ae6
+
+./.git/objects/2e:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:36 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  488 Jun 28 19:36 94cfa52f81e37188737cb574e7764ac95eeb00
+
+./.git/objects/32:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:06 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 2896 Jun 28 19:06 47285373ab9bfb0dc8d1cf146f0f3e589cffe0
+
+./.git/objects/36:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:41 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  548 Jun 28 19:41 26d2ae34c24ffb768b34f3fd8fab144ebf65a1
+
+./.git/objects/37:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  244 Jun 29 02:10 6e2adac13d75fcea22d1b0a36c56d0fc5e06ad
+
+./.git/objects/3c:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  284 Jun 29 02:10 30ad9f78b9c61242ac716a4fd139efc748f1de
+
+./.git/objects/3e:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  135 Jun 28 19:03 fb351c263e2e714d99db4bb096b2ec59e200f0
+
+./.git/objects/3f:
+total 208
+drwxrwxr-x   2 linux linux   4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux   4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 202144 Jun 29 02:10 ce6e98b8bed973becb26eafc502e3657289ddf
+
+./.git/objects/41:
+total 20
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  229 Jun 29 02:10 36d4dd0b03a3420493f3b3e7fcab4b95a4cf63
+-r--r--r--   1 linux linux 1249 Jun 29 02:10 6208146e706dcc6cbf5005ffc788f37d4de759
+-r--r--r--   1 linux linux   72 Jun 29 02:10 979e36fd25c6a4c76966d061486742d63b329d
+
+./.git/objects/42:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:11 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  230 Jun 29 02:11 348d56b48c5e17bda2569bd3ba52873ab54cff
+
+./.git/objects/43:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  169 Jun 28 19:03 4f6fa0c1292e4b02f0522fd5549e90140d25d5
+-r--r--r--   1 linux linux   44 Jun 28 19:03 b4bd9c4bc36155637fd7cc7e84a77191367f7b
+
+./.git/objects/4a:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  284 Jun 29 02:10 588ae455a52c66d33c827409f8f3b6527256da
+
+./.git/objects/4b:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  285 Jun 29 02:10 00a382806dc30c1b76b9b0010f8e3879fd6937
+
+./.git/objects/4d:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:41 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  183 Jun 28 19:41 300cf708338c9952f5326b579db527d2a65e8a
+-r--r--r--   1 linux linux  281 Jun 28 19:03 f8a7ecb46a48f0effac2180ba91b95ea9f61c3
+
+./.git/objects/50:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:36 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  553 Jun 28 19:36 370a41ec2b70bb86fdd3d5d8a260414b37134e
+
+./.git/objects/58:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  619 Jun 28 19:03 62babd8f75f8a965dc1489887051df59c9f80b
+
+./.git/objects/5a:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  180 Jun 29 02:10 34484facb810aa2bc082bf18cb5ef907dd2a81
+-r--r--r--   1 linux linux  694 Jun 29 02:10 9c1489aa78814f7e1e1739b9f13c0056c3aeb1
+
+./.git/objects/5b:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   88 Jun 28 19:03 4fccc49d4e8eae7c469b9bec6db0b9c4fef2cb
+-r--r--r--   1 linux linux  176 Jun 29 02:10 f5a2ef6c956bc3407502bac7e8a74fc7bca306
+
+./.git/objects/5d:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  149 Jun 29 02:10 0bb4d2c970da09389230887df2a6f354f2cd69
+-r--r--r--   1 linux linux  158 Jun 29 02:10 396eaefeab599ad9b87ec9b17a55a0dc910b06
+
+./.git/objects/5f:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  160 Jun 28 19:03 8dd3def3d25b0245dc5db9c05a1180b8379e76
+-r--r--r--   1 linux linux  157 Jun 29 02:10 f81c45d4f2c3bdafb4c7ba566078bb409a2df7
+
+./.git/objects/63:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  207 Jun 29 02:10 1df1856891095772f457087bfbba108321d368
+-r--r--r--   1 linux linux  322 Jun 29 02:10 e0e66d89c9976af57f6f0e30863049ef2c2230
+
+./.git/objects/64:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  245 Jun 29 02:10 ec1be22c005d48a3a178c157888d0f5aff5cd3
+
+./.git/objects/65:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   57 Jun 29 02:10 0056564ef6744d07a9db452ba2dcd919506ec6
+-r--r--r--   1 linux linux 1133 Jun 28 19:03 c572bcf49a3b338e866c3bdc596ec2e914374d
+
+./.git/objects/67:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:41 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  563 Jun 28 19:03 2868b8236ee0168a4efc5edd73c759fd887924
+-r--r--r--   1 linux linux  162 Jun 28 19:41 7c8e12b97219b91ae1be5e09e31c983be6f588
+
+./.git/objects/68:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   64 Jun 29 02:10 c64a6bd63f8b833aff727656b4e102ee6eadea
+
+./.git/objects/69:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:06 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  771 Jun 28 19:06 7d307ddeb3867155fe7c8b139326b471026098
+
+./.git/objects/6a:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  335 Jun 29 02:10 cb576005082ab3586a91fb041e15c3826691ae
+
+./.git/objects/6c:
+total 20
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   60 Jun 29 02:10 41dd5492f2ccc7d0d42823f6c43c66207e019f
+-r--r--r--   1 linux linux  581 Jun 28 19:03 85b76c0da0767f7951f3afc6a7fab8b151f180
+-r--r--r--   1 linux linux  231 Jun 29 02:10 f69afe23cb3582164f65f1aeea30a0dff70657
+
+./.git/objects/6d:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:06 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  302 Jun 28 19:06 893bdfce6ed597c205c576bda489bd52a78b6c
+
+./.git/objects/6f:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  176 Jun 29 02:10 2260ba1df126cdd01b38d4a50388c60b6692ff
+
+./.git/objects/70:
+total 20
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  161 Jun 29 02:10 06b51d80a50d96c9e26931aa001c859b6f801f
+-r--r--r--   1 linux linux 4429 Jun 29 02:10 d898a3b5f53caeeaaca4ab04bf153eecba8954
+
+./.git/objects/71:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 1689 Jun 29 02:10 65cecc13bb02a85915a61b7624652982a42f2a
+-r--r--r--   1 linux linux  155 Jun 29 02:10 bea38727143ad1b070b64dc710257ef4c4629e
+
+./.git/objects/73:
+total 20
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  546 Jun 28 19:36 5d0ae6784ee4c954e6d80a02d89ceb4fcf01eb
+-r--r--r--   1 linux linux   61 Jun 28 19:06 d7e5f50cabb9593f4177f12615aa69dc648af0
+-r--r--r--   1 linux linux  140 Jun 29 02:10 f69e0958611ac6e00bde95641f6699030ad235
+
+./.git/objects/74:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   84 Jun 28 19:06 ef16b913dc549cb450c17abc3bf060f4a6a45a
+
+./.git/objects/75:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  266 Jun 29 02:10 1eb6a4cd1aa409bcf08200829844a8302082a5
+-r--r--r--   1 linux linux  559 Jun 28 19:06 d72fa6b3d25cda94d4bd417819ab24c0019730
+
+./.git/objects/77:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  566 Jun 29 02:10 6802c2c229fe7ab7fbd13032342e26c7cd87ed
+
+./.git/objects/79:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  227 Jun 28 19:36 095e3027c20d8e4f7d4dc0656da9d241e70cf6
+-r--r--r--   1 linux linux  199 Jun 29 02:10 6bfb3258d1ef90e8055fac4bfd48d9ba5f90b3
+
+./.git/objects/7d:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 4056 Jun 28 19:06 131f6a0f5b7459fd57a5ad94e4f1b4c12970ba
+
+./.git/objects/7e:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 1208 Jun 28 19:06 000510a2c230f89fb68c72905e25a02d5b87ef
+
+./.git/objects/80:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  324 Jun 29 02:10 80ad28f23498a2b05c76771486ecabec243884
+
+./.git/objects/81:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  291 Jun 29 02:10 671b7f8d9383a19f8315d7cfb4b28b8ca00be9
+-r--r--r--   1 linux linux  161 Jun 28 19:06 9c0685d6811832b36055e1210caf0b8243e2fe
+
+./.git/objects/83:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  162 Jun 29 02:10 4133c15a7dd4b1570024569b8f159363798af2
+
+./.git/objects/86:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   65 Jun 28 19:03 25d5c120f127f8a84be8b9a990e9e5c4d6c324
+-r--r--r--   1 linux linux  559 Jun 28 19:03 58168c87ec88ba1f30f5fcc4b857a10ff53643
+
+./.git/objects/87:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:53 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   68 Jun 29 02:53 4b12e19db07c2642bcea5cac8e24dec223bb28
+
+./.git/objects/88:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  183 Jun 29 02:10 22db8f1c2b8ceffb5d86c69dd1952cf6552980
+-r--r--r--   1 linux linux  319 Jun 29 02:10 e8d55fee7e8920376c05b03e3261e1b8f968fd
+
+./.git/objects/8e:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  322 Jun 29 02:10 84bd55282289677d8e8b6b28d4ca2c9dfa65dc
+
+./.git/objects/8f:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  501 Jun 28 19:03 dba963eab5ace5ca413c056073338a4ee0cf7c
+
+./.git/objects/91:
+total 20
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  564 Jun 28 19:03 5910834426848cd112e23669931dbc48b55fcb
+-r--r--r--   1 linux linux  284 Jun 29 02:10 84e44d78f6034d120d8277719a289c7203f808
+-r--r--r--   1 linux linux   81 Jun 29 02:10 eddab30be98dde3f1e6e36afe4f8c2c24d15d3
+
+./.git/objects/92:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  122 Jun 28 19:03 57b7db9948a4a7e0b1946409f3d24eb1099da6
+
+./.git/objects/93:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  221 Jun 28 19:03 47a93778b5e73e7984a0142238656dddb96c9b
+
+./.git/objects/94:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  155 Jun 29 02:10 a25f7f4cb416c083d265558da75d457237d671
+
+./.git/objects/98:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  608 Jun 29 02:10 a1c1caefd971162595a46095699852c4e2ba04
+
+./.git/objects/9c:
+total 28
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  149 Jun 28 19:06 445907c5de77c8030b74c86ed2c938a8b20ce2
+-r--r--r--   1 linux linux  590 Jun 28 19:34 a246aa339ead48ae0438c100e8eed7d014c9ff
+-r--r--r--   1 linux linux  164 Jun 29 02:10 befb2ea5168ccd2fd80c36c4e052c7c2c6cab2
+-r--r--r--   1 linux linux 2978 Jun 28 19:06 d0b2fcd0815272876d68203c8531217d03a064
+-r--r--r--   1 linux linux  185 Jun 29 02:10 ed5b61d6f94df232744091a411d951db7f6862
+
+./.git/objects/9d:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  284 Jun 29 02:10 1a8351c88c43b70f17fd554053827563b7b802
+-r--r--r--   1 linux linux  255 Jun 28 19:03 a5926beb77dd5388fe53c8ea205f6626693184
+
+./.git/objects/a2:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 1173 Jun 29 02:10 094eb62d80895f9f5b6b72fb8a71bf64f092a1
+-r--r--r--   1 linux linux  565 Jun 28 19:03 29c564ee19acace443cc0ff64fa460fb2bbfee
+
+./.git/objects/a3:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:53 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  185 Jun 29 02:10 78be45c0c87e35f4c8ce369ab5e11e7f0511e9
+-r--r--r--   1 linux linux  175 Jun 29 02:53 a0450dc9794d1fcb95237e02beca37ce805036
+
+./.git/objects/a5:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  291 Jun 29 02:10 ade9a5141bb666eb417e4d1b66db20e1d86a97
+
+./.git/objects/a6:
+total 20
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  130 Jun 28 19:03 2816ffc97f582f88d40e20a863d3e19f6d35ad
+-r--r--r--   1 linux linux   48 Jun 29 02:10 9b09c46c56177b271a23d068652d1bf729d8ec
+-r--r--r--   1 linux linux  632 Jun 29 02:10 9b2546d235ce39f4fad6efde104e55da92b4b1
+
+./.git/objects/a7:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  284 Jun 29 02:10 f73676660194998c9da3ad714c0db4d69b427e
+
+./.git/objects/a8:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   88 Jun 28 19:03 ff228aafa0e2fc70381c6029240c31435fee15
+
+./.git/objects/aa:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 3990 Jun 29 02:10 a37d9ef214ef4d1a4fe32fec3c5ecffc17a700
+
+./.git/objects/ab:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  297 Jun 29 02:10 ae9f236d9c1143f90bf245c929585508ea2b5b
+
+./.git/objects/ac:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:36 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  520 Jun 28 19:36 e3ba84361aaf72d5a90eb7a8763d8e6d35e145
+
+./.git/objects/ae:
+total 56
+drwxrwxr-x   2 linux linux  4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux  4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 45861 Jun 28 19:03 7f2057b59c0df2dc4b1f7f2e9339499f75e3f2
+
+./.git/objects/b5:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 1208 Jun 28 19:03 d4b4c7cc6144677d23392caaf9f0da54da6a52
+
+./.git/objects/b6:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  157 Jun 29 02:10 8336e57739ef5f337dcaa1bcde4b5204dddd28
+
+./.git/objects/b7:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 1070 Jun 29 02:10 27582beb88f2f6db495daf03adea416c322964
+-r--r--r--   1 linux linux 1134 Jun 29 02:10 2e01099783809caf11f0a4186120e861d9fb2d
+
+./.git/objects/b8:
+total 216
+drwxrwxr-x   2 linux linux   4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux   4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux    186 Jun 28 19:03 cca4f38aedbbdfb5090e403f0d210bcf8f6a55
+-r--r--r--   1 linux linux 202715 Jun 29 02:10 dded085bf5ec40a4960021e9962a34d2a9b186
+-r--r--r--   1 linux linux    162 Jun 28 19:03 e878be6df25358a81eda23be9a2943a5f498a0
+
+./.git/objects/b9:
+total 24
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  158 Jun 28 19:34 0ea2efee7b38b0d84262aa030798d7a9258b84
+-r--r--r--   1 linux linux  160 Jun 29 02:10 882e5fa429f37f38dc9838f453e10402d042d3
+-r--r--r--   1 linux linux  192 Jun 29 02:10 98c10b75f6926888aa0907d8f359a4fd0c9abc
+-r--r--r--   1 linux linux  182 Jun 29 02:10 fe1b69f625cec9aefd91cddf3b58f7c6e062e1
+
+./.git/objects/ba:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  323 Jun 29 02:10 101f046fdd19c498c3f63f886dd3e7e5f9ce8d
+
+./.git/objects/bb:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  135 Jun 29 02:10 5cc0bae87b794e5df16c7a3bc4b8f45737da0e
+-r--r--r--   1 linux linux 3098 Jun 29 02:10 5ec11b7a0cac91dffd9d565d8cd42507d2e0d0
+
+./.git/objects/be:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  188 Jun 29 02:10 20917f54151500d5c30f887aedf362bdfb00ab
+
+./.git/objects/c0:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:34 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 4041 Jun 28 19:34 db8afe8c72b8b4b51e3bc3e018123ea90f67b3
+
+./.git/objects/c2:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:06 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  129 Jun 28 19:06 13872674ab01f7ab3d22f38b73e0b0cf7396fd
+
+./.git/objects/c3:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   88 Jun 28 19:03 1522cad70438ce9d020c6fae8b973abf9e8e7a
+-r--r--r--   1 linux linux   85 Jun 28 19:03 42a46a0e1e6c1b7005e9ec412ef15ef281bcd1
+
+./.git/objects/c4:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  155 Jun 29 02:10 89088490f1032f9a2fa0cd8bac00ed70bfc68f
+
+./.git/objects/c5:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   36 Jun 28 19:03 82962b218a93fb96674cef095bb52f0b47b6bd
+
+./.git/objects/c6:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   88 Jun 28 19:03 88be1ff995afbca96a5048d157f243f74ce09c
+
+./.git/objects/c7:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  322 Jun 29 02:10 cea11cc2f4ac347aa12b2efcba76e0edb6e73c
+
+./.git/objects/c8:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:06 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  418 Jun 28 19:06 e453457869bc2472a58ccfa6b449292e843ae9
+
+./.git/objects/ca:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 3662 Jun 29 02:10 f2ef3ffc3eb7e7e802d0240454e0f96714a6d1
+
+./.git/objects/cc:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  186 Jun 29 02:10 7519d598c7221f3f66521029493aa36f97a4a4
+-r--r--r--   1 linux linux  284 Jun 29 02:10 a9754141e1409f458b7de1f44bb90f02dbc3f0
+
+./.git/objects/cd:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  323 Jun 29 02:10 876d815a90d04a0ed6909977d5c54a516721a2
+-r--r--r--   1 linux linux  646 Jun 28 19:03 a9148948275c1c45e079b56600a81b1c295e17
+
+./.git/objects/cf:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  316 Jun 28 19:03 5b18d8a73f1807feec7e2e67795d239a11259c
+-r--r--r--   1 linux linux  167 Jun 29 02:10 9fce59ac075adb65985aee9d935789d847ec33
+
+./.git/objects/d6:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  182 Jun 28 19:03 1e6ee6a0eb5e6407f41d19c09262858a8543c5
+-r--r--r--   1 linux linux  673 Jun 29 02:10 5ba6176e7d0c5c2edd8de591ac2aa841235d9b
+
+./.git/objects/d8:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  153 Jun 29 02:10 3661141bc9d97a4215fbda35aa431cf064153a
+
+./.git/objects/de:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  322 Jun 29 02:10 ccd4ea57ee98488546e250762276db70945a5b
+-r--r--r--   1 linux linux  167 Jun 29 02:10 ddffdb4d1af335876102d57cf8139a8b3801be
+
+./.git/objects/e0:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  173 Jun 28 19:03 04f80f4243ff3a34ab6fe4b7b7b8b6c2ee6937
+-r--r--r--   1 linux linux   35 Jun 28 19:03 2aacdbf5c8ce6f5577b1acf23fef11f400fbc4
+
+./.git/objects/e1:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:53 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  723 Jun 29 02:53 f8b4afcd8257d003cf1f84a9be3b88a1e05dd7
+
+./.git/objects/e2:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   39 Jun 29 02:10 9472169985bd0c4e8e1af31025f5ee7299078c
+
+./.git/objects/e3:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  232 Jun 29 02:10 a8d1874dad045b7c79adec53a3689f4a1d63e9
+
+./.git/objects/e5:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   61 Jun 29 02:10 4dd045a19c80074d53767407bde5642837c1a9
+
+./.git/objects/e6:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  559 Jun 28 19:03 778d5ff9b0c6b8256bbea13698aebd9fef44a3
+-r--r--r--   1 linux linux   15 Jun 28 19:06 9de29bb2d1d6434b8b29ae775ad8c2e48c5391
+
+./.git/objects/e7:
+total 20
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 9264 Jun 28 19:03 cceb68dc010aa0dccb5164e17ed040f446574d
+
+./.git/objects/e8:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  221 Jun 28 19:03 b778349e0b1df6f17887f4a7af557dcabe0fbd
+
+./.git/objects/e9:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:36 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  560 Jun 28 19:36 322750f2038668d43970964610f8ceb78c7c07
+
+./.git/objects/ea:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  183 Jun 29 02:10 5e790013058f62e80f5cbbd9f2b35b34d911a1
+
+./.git/objects/ec:
+total 208
+drwxrwxr-x   2 linux linux   4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux   4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 202878 Jun 29 02:10 9534d9b9148ac35ddca02aa8f8cfb9a8dd2601
+
+./.git/objects/f0:
+total 20
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  160 Jun 29 02:10 323c2de6995e8f18a33cf7fb355b033e71b4f3
+-r--r--r--   1 linux linux  104 Jun 29 02:10 8604bb65b25149b195f9e9f282f9683a428592
+-r--r--r--   1 linux linux  552 Jun 28 19:36 bbacd29847ef5220c2eceb030456f5a6b80357
+
+./.git/objects/f2:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 3982 Jun 29 02:10 3d26fd086302e6044d05878e9f82b74b053763
+-r--r--r--   1 linux linux  284 Jun 29 02:10 a70a7d3c9a5b72328cb873a2b6e763e3622cc3
+
+./.git/objects/f3:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  163 Jun 29 02:10 a7d324f6dcf73f3230afdc1582dc25665c03d5
+
+./.git/objects/f4:
+total 20
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 4348 Jun 29 02:10 06be53d09a48f2c9ee31f96dc6bf20055a8852
+-r--r--r--   1 linux linux  171 Jun 28 19:03 3dae41ac7c90e200ef9d1fbc0756c6a28d27af
+
+./.git/objects/f5:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux   81 Jun 28 19:36 ed8e7a88985bef8f4ebfee3b13f55297783360
+
+./.git/objects/f8:
+total 12
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  255 Jun 29 02:10 12e7fa05d4f9b0cf3b996bb60a4a33b796922e
+
+./.git/objects/fc:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux  254 Jun 29 02:10 5777030f3c2c29db2bc337000de1db723903cf
+-r--r--r--   1 linux linux  555 Jun 28 19:36 59f11915b117c4404376d24c462fd70e74abfc
+
+./.git/objects/ff:
+total 16
+drwxrwxr-x   2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+-r--r--r--   1 linux linux 1076 Jun 29 02:10 a61d0644fe31990566350f9f1d36a2c5e14de0
+-r--r--r--   1 linux linux  160 Jun 29 02:10 c1fc2a0e9c24ff4f6b79eb882fac431f11e360
+
+./.git/objects/info:
+total 8
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+
+./.git/objects/pack:
+total 8
+drwxrwxr-x   2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 132 linux linux 4096 Jun 29 02:53 ..
+
+./.git/refs:
+total 20
+drwxrwxr-x 5 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 8 linux linux 4096 Jun 29 02:53 ..
+drwxrwxr-x 2 linux linux 4096 Jun 29 02:53 heads
+drwxrwxr-x 3 linux linux 4096 Jun 28 19:03 remotes
+drwxrwxr-x 2 linux linux 4096 Jun 28 19:03 tags
+
+./.git/refs/heads:
+total 16
+drwxrwxr-x 2 linux linux 4096 Jun 29 02:53 .
+drwxrwxr-x 5 linux linux 4096 Jun 28 19:03 ..
+-rw-rw-r-- 1 linux linux   41 Jun 28 19:03 develop
+-rw-rw-r-- 1 linux linux   41 Jun 29 02:53 tlfzgjadyd
+
+./.git/refs/remotes:
+total 12
+drwxrwxr-x 3 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 5 linux linux 4096 Jun 28 19:03 ..
+drwxrwxr-x 2 linux linux 4096 Jun 29 02:54 origin
+
+./.git/refs/remotes/origin:
+total 20
+drwxrwxr-x 2 linux linux 4096 Jun 29 02:54 .
+drwxrwxr-x 3 linux linux 4096 Jun 28 19:03 ..
+-rw-rw-r-- 1 linux linux   41 Jun 29 02:10 develop
+-rw-rw-r-- 1 linux linux   33 Jun 28 19:03 HEAD
+-rw-rw-r-- 1 linux linux   41 Jun 29 02:54 tlfzgjadyd
+
+./.git/refs/tags:
+total 8
+drwxrwxr-x 2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 5 linux linux 4096 Jun 28 19:03 ..
+
+./home:
+total 12
+drwxrwxr-x  3 linux linux 4096 Jun 29 02:05 .
+drwxrwxr-x 12 linux linux 4096 Jun 29 05:03 ..
+-rw-rw-r--  1 linux linux    0 Jun 29 02:05 cFile.c
+drwxrwxr-x  2 linux linux 4096 Jun 29 02:05 Directory
+-rw-rw-r--  1 linux linux    0 Jun 29 02:05 exec.out
+-rw-rw-r--  1 linux linux    0 Jun 29 02:05 header.h
+-rw-rw-r--  1 linux linux    0 Jun 29 02:05 list_sample.txt
+
+./home/Directory:
+total 8
+drwxrwxr-x 2 linux linux 4096 Jun 29 02:05 .
+drwxrwxr-x 3 linux linux 4096 Jun 29 02:05 ..
+-rw-rw-r-- 1 linux linux    0 Jun 29 02:05 DFile1
+-rw-rw-r-- 1 linux linux    0 Jun 29 02:05 DFile2
+
+./.idea:
+total 28
+drwxrwxr-x  2 linux linux 4096 Jun 29 02:10 .
+drwxrwxr-x 12 linux linux 4096 Jun 29 05:03 ..
+-rw-rw-r--  1 linux linux  176 Jun 29 02:10 .gitignore
+-rw-rw-r--  1 linux linux  240 Jun 29 02:10 misc.xml
+-rw-rw-r--  1 linux linux   97 Jun 29 02:10 module_2.iml
+-rw-rw-r--  1 linux linux  268 Jun 29 02:10 modules.xml
+-rw-rw-r--  1 linux linux  180 Jun 29 02:10 vcs.xml
+
+./list:
+total 16
+drwxrwxr-x  3 linux linux 4096 Jun 28 19:54 .
+drwxrwxr-x 12 linux linux 4096 Jun 29 05:03 ..
+-rw-rw-r--  1 linux linux    0 Jun 28 19:40 cFile.c
+drwxrwxr-x  2 linux linux 4096 Jun 28 19:40 Directory
+-rw-rw-r--  1 linux linux    0 Jun 28 19:40 exec.out
+-rw-rw-r--  1 linux linux    0 Jun 28 19:40 header.h
+-rw-rw-r--  1 linux linux  583 Jun 28 19:41 list_sample.txt
+
+./list/Directory:
+total 8
+drwxrwxr-x 2 linux linux 4096 Jun 28 19:40 .
+drwxrwxr-x 3 linux linux 4096 Jun 28 19:54 ..
+-rw-rw-r-- 1 linux linux    0 Jun 28 19:40 DFile1
+-rw-rw-r-- 1 linux linux    0 Jun 28 19:40 DFile2
+
+./sample:
+total 84
+drwxrwxr-x  2 linux linux  4096 Jun 29 02:10 .
+drwxrwxr-x 12 linux linux  4096 Jun 29 05:03 ..
+-rw-rw-r--  1 linux linux    73 Jun 28 19:03 1.sh
+-rw-rw-r--  1 linux linux 56336 Jun 28 19:03 2013726011_ChoiEunJoo.c
+-rw-rw-r--  1 linux linux    35 Jun 28 19:03 2.sh
+-rw-rw-r--  1 linux linux    80 Jun 29 02:10 info
+-rw-rw-r--  1 linux linux  5285 Jun 28 19:03 test.c
+
+./Server:
+total 8
+drwxrwxr-x  2 linux linux 4096 Jun 28 19:03 .
+drwxrwxr-x 12 linux linux 4096 Jun 29 05:03 ..
+-rw-rw-r--  1 linux linux    0 Jun 28 19:03 서버기능요구서.txt
+
+./testD:
+total 36
+drwxrwxr-x  3 linux linux  4096 Jun 29 01:50 .
+drwxrwxr-x 12 linux linux  4096 Jun 29 05:03 ..
+-rwxrwxr-x  1 linux linux 12928 Jun 29 01:50 a.out
+drwxrwxr-x  3 linux linux  4096 Jun 29 01:50 home
+-rw-rw-r--  1 linux linux  2612 Jun 29 01:50 listOpen.c
+-rw-rw-r--  1 linux linux   583 Jun 28 22:08 list_sample.txt
+
+./testD/home:
+total 12
+drwxrwxr-x 3 linux linux 4096 Jun 29 01:50 .
+drwxrwxr-x 3 linux linux 4096 Jun 29 01:50 ..
+-rw-rw-r-- 1 linux linux    0 Jun 29 01:50 cFile.c
+drwxrwxr-x 2 linux linux 4096 Jun 29 01:50 Directory
+-rw-rw-r-- 1 linux linux    0 Jun 29 01:50 exec.out
+-rw-rw-r-- 1 linux linux    0 Jun 29 01:50 header.h
+-rw-rw-r-- 1 linux linux    0 Jun 29 01:50 list_sample.txt
+
+./testD/home/Directory:
+total 8
+drwxrwxr-x 2 linux linux 4096 Jun 29 01:50 .
+drwxrwxr-x 3 linux linux 4096 Jun 29 01:50 ..
+-rw-rw-r-- 1 linux linux    0 Jun 29 01:50 DFile1
+-rw-rw-r-- 1 linux linux    0 Jun 29 01:50 DFile2

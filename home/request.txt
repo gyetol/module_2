@@ -1,0 +1,7 @@
+type:ls
+path:./home
+ip:192.168.30.141
+
+//type:download
+//path:./home/~file.txt
+//ip:192.168.30.141

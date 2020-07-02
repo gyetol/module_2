@@ -1,6 +1,3 @@
-#ifndef MODULE_2_FILEDANZI_H
-#define MODULE_2_FILEDANZI_H
-
  #include<stdio.h>
  #include<string.h>
  #include<sys/stat.h>
@@ -8,8 +5,6 @@
  #include<fcntl.h>
  #include<unistd.h>
  #include<stdlib.h>
- #include<pthread.h>
- #include"localCommand.h"
  #include"serverStart.h"
  int ipTest();
  int inputIp();
@@ -18,5 +13,3 @@
  int inputPassword();
  int pwdTest();
  int serverStart();
-
-#endif

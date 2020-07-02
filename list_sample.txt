@@ -1,0 +1,16 @@
+.:
+total 12
+drwxrwxr-x 3 linux linux 4096 Jun 28 19:41 .
+drwxrwxr-x 8 linux linux 4096 Jun 28 19:39 ..
+-rw-rw-r-- 1 linux linux    0 Jun 28 19:40 cFile.c
+drwxrwxr-x 2 linux linux 4096 Jun 28 19:40 Directory
+-rw-rw-r-- 1 linux linux    0 Jun 28 19:40 exec.out
+-rw-rw-r-- 1 linux linux    0 Jun 28 19:40 header.h
+-rw-rw-r-- 1 linux linux    0 Jun 28 19:41 list_sample.txt
+
+./Directory:
+total 8
+drwxrwxr-x 2 linux linux 4096 Jun 28 19:40 .
+drwxrwxr-x 3 linux linux 4096 Jun 28 19:41 ..
+-rw-rw-r-- 1 linux linux    0 Jun 28 19:40 DFile1
+-rw-rw-r-- 1 linux linux    0 Jun 28 19:40 DFile2
