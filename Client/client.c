@@ -14,7 +14,6 @@ int main(){
 		return -1;
 	}
 
-	myListOpen();
 	doCommand();
 
 	return 0;

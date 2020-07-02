@@ -65,6 +65,7 @@ int clientStart(const char * ip, int * sock){
 //    buf[nRead]='\0';
 //    fputs(buf,stdout);
 
+	/*
 	char * work[BUFSIZ]={0,};
 	while(1){
 		printf("어떤 작업을 수행하실건가요?(LIST:출력,DOWNLOAD:다운로드,QUIT:작업종료):");
@@ -99,6 +100,7 @@ int clientStart(const char * ip, int * sock){
 
 	int * retVal;
 	pthread_join(&tid,(void **)&retval);
+	*/
 
     return 0;
 }
