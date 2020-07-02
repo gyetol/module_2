@@ -42,8 +42,12 @@ int serverStart(char *ip){
 	struct sockaddr_in saddr={0,};
 	saddr.sin_family=AF_INET;
 	saddr.sin_port=htons(PORT); 
+<<<<<<< HEAD
 	//saddr.sin_addr.s_addr=htonl(INADDR_ANY);
 	saddr.sin_addr.s_addr=htonl(ip);
+=======
+	saddr.sin_addr.s_addr=inet_addr(ip);
+>>>>>>> 09e224a75d9eec4efe215e731aa0faa84f576976
 	
 	int value=1;
 	if(setsockopt(ssock,SOL_SOCKET,SO_REUSEADDR,(char*)&value,sizeof(value))==-1)
