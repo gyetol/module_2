@@ -29,12 +29,14 @@ void __quit(const char * msg,int line){
 /// input : char * ip (서버의 ip)
 /// return : int (오류코드)
 ////////////////////////////////////////////////////////////////////
-int serverStart(char *ip){
-	if(ip==NULL){
+void* serverStart(void *arg){
+	int* retValue=calloc(1,sizeof(int));
+	if(arg==NULL){
 		perror("serverIp");
-		return -1;
+		*retValue=-1;
+		return retValue;
 	}
-
+	char * ip=(char *)arg;
 	int ssock=socket(PF_INET,SOCK_STREAM,0);
 	if(ssock==-1)
 		err_quit("socket");
@@ -126,5 +128,6 @@ int serverStart(char *ip){
 	}
 	close(ssock);
 	*/
-	return 0;
+	*retValue=0;
+	return retValue;
 }

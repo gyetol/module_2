@@ -33,4 +33,4 @@ typedef struct{
 
 
  void __quit(const char * msg,int line);
- int serverStart(char *ip);
+ void* serverStart(void *arg);
