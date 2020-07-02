@@ -43,6 +43,7 @@ int serverStart(char *ip){
 	saddr.sin_family=AF_INET;
 	saddr.sin_port=htons(DATA_PORT); 
 	saddr.sin_addr.s_addr=inet_addr(ip);	
+	
 	int value=1;
 	if(setsockopt(ssock,SOL_SOCKET,SO_REUSEADDR,(char*)&value,sizeof(value))==-1)
 		err_quit("setsockopt");
