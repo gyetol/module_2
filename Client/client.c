@@ -14,7 +14,10 @@ int main(){
 		return -1;
 	}
 
-	doCommand();
+	if(clientCommand()==-1){
+		perror("clientCommad");
+		return -1;
+	}
 
 	return 0;
 }
