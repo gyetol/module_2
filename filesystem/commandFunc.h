@@ -4,6 +4,7 @@
 int doRemove(char **srcPath, int len, char **msg);
 int doMkdir(char *newPath, char **msg);
 int doMove(char **srcPath, int len, char *destPath, char **msg);
+int doCopy(char **srcPath, int len, char *destPath, char **msg);
 void myflush();
 
 #endif //MODULE_2_COMMANDFUNC_H
