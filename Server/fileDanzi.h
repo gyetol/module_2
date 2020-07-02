@@ -9,7 +9,7 @@
  #include<unistd.h>
  #include<stdlib.h>
  #include<pthread.h>
- #include"localServerThread.h"
+ #include"serverCommand.h"
  #include"serverStart.h"
 int ipTest(char *ip); 
 int inputIp(char *ip);
