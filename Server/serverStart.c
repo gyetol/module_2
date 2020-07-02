@@ -41,8 +41,8 @@ int serverStart(char *ip){
 
 	struct sockaddr_in saddr={0,};
 	saddr.sin_family=AF_INET;
-	saddr.sin_port=htons(8080); 
-	saddr.sin_addr.s_addr=htonl(INADDR_ANY);
+	saddr.sin_port=htons(PORT); 
+	saddr.sin_addr.s_addr=inet_addr(ip);
 	
 	int value=1;
 	if(setsockopt(ssock,SOL_SOCKET,SO_REUSEADDR,(char*)&value,sizeof(value))==-1)
