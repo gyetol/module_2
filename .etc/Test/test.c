@@ -1,5 +1,5 @@
-
 #include<stdio.h>
+
 int test(){
 while(1){
 	buf[BUFSIZ];
