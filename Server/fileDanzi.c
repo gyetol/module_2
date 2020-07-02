@@ -203,7 +203,6 @@ int pwdTest(char *ip, char *pwd){
 	return -1;
 }
 
-
 int main(int argc, char **argv){
 	if(argc!=2||(strcmp(argv[1],"start")!=0)){
 		fprintf(stderr, "usage : ./fileDanzi start\n");
@@ -231,13 +230,13 @@ int main(int argc, char **argv){
 	//존재하는 사용자임이 확인되었으면 쓰레드 분리 후
 	//한쪽에선 로컬 명령어 받고 한쪽에선 서버 가동시키기
 	pthread_t tid;
-	if(pthread_create(&tid, NULL, serverStart,ip)==-1)
+	if(pthread_create(&tid, NULL, serverStart, ip)==-1)
 	{
-		perror("thread create failed\n\n");
+		perror("pthread_create");
 		return -1;
 	}
-	if(localServerThread()==-1){
-		perror("serverStart");
+	if(serverCommand()==-1){
+		perror("serverCommand");
 		return -1;
 	}
 	if(pthread_join(tid, NULL)==-1)
