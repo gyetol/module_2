@@ -2,6 +2,6 @@
 #define MODULE_2_LOCALCOMMAND_H
 
 #include<stdio.h>
-void* localServerThread(void *arg);
+int localServerThread();
 
 #endif

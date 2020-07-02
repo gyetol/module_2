@@ -231,12 +231,12 @@ int main(int argc, char **argv){
 	//존재하는 사용자임이 확인되었으면 쓰레드 분리 후
 	//한쪽에선 로컬 명령어 받고 한쪽에선 서버 가동시키기
 	pthread_t tid;
-	if(pthread_create(&tid, NULL, localServerThread, NULL)==-1)
+	if(pthread_create(&tid, NULL, serverStart,ip)==-1)
 	{
 		perror("thread create failed\n\n");
 		return -1;
 	}
-	if(serverStart(ip)==-1){
+	if(localServerThread()==-1){
 		perror("serverStart");
 		return -1;
 	}
