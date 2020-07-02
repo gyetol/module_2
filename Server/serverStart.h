@@ -14,12 +14,8 @@
  #define err_quit(msg) __quit(msg,__LINE__)
  #define LISTENQ (10)
  #define EPOLL_SIZ (128)
- #define PORT (20629)
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 09e224a75d9eec4efe215e731aa0faa84f576976
+ #define DATA_PORT (20629)
+ #define CONTROL_PORT (20630)
 
 typedef struct {
      char * type;
