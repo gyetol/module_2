@@ -2,8 +2,8 @@
 // Created by linux on 6/30/20.
 //
 
-#ifndef TESTMODULE_COMMONNUCURSES_H
-#define TESTMODULE_COMMONNUCURSES_H
+#ifndef MODULE_2_COMMONNUCURSES_H
+#define MODULE_2_COMMONNUCURSES_H
 
 #include <ncurses.h>
 

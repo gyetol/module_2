@@ -6,6 +6,7 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <pthread.h>
+#include "ftp_client.h"
 //#include "listOpen.h"
 
 void localThread(void * arg){

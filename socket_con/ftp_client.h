@@ -2,8 +2,8 @@
 // Created by linux on 7/1/20.
 //
 
-#ifndef MODULE_22_FTP_CLIENT_H
-#define MODULE_22_FTP_CLIENT_H
+#ifndef MODULE_2_FTP_CLIENT_H
+#define MODULE_2_FTP_CLIENT_H
 
 
 #define PORT_NUM 20629
@@ -12,4 +12,4 @@
 int clientStart(const char * ip, int * sock);
 void localThread(void * arg);
 
-#endif //MODULE_22_FTP_CLIENT_H
+#endif //MODULE_2_FTP_CLIENT_H
