@@ -2,8 +2,8 @@
 // Created by linux on 6/30/20.
 //
 
-#ifndef MODULE_COMMON_H
-#define MODULE_COMMON_H
+#ifndef MODULE_2_COMMON_H
+#define MODULE_2_COMMON_H
 
 #define ERROR		(-1)
 #define BADFD		(-2)
