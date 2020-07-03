@@ -8,12 +8,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "ClientSocket.h"
-#include "listOpen.h"
-#define BUFSIZ 1024
-#define END_OF_PROTOCOL "\r\n"
 
-
-int fileDownload(char *type, char *path, char *ip, int cSock);
-int listDownload(char *type, char *path, char *ip, int cSock);
-int quit(char *type, char *path, char *ip, int cScok);
+int fileDownload(int cSock, char *ip, char *fname);
+int listDownload(int cSock, char *ip);
+int quit(int cSock, char *ip);

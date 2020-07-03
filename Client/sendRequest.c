@@ -13,6 +13,7 @@
 #define BUFFER_SIZE 1024
 #define END_OF_PROTOCOL "\r\n"
 
+
 int listDownload(int cSock, char *ip){
 
    if (ip == NULL){
@@ -27,7 +28,7 @@ int listDownload(int cSock, char *ip){
 		return -1;
 	}
 
-	char buf[BUFSIZ]=" ";
+	char buf[BUFFER_SIZE]=" ";
 	strcat(buf,"type:");
     strcat(buf,"ls\n");
 	strcat(buf,"path:");
@@ -68,7 +69,7 @@ int fileDownload(int cSock, char *ip){
 		return -1;
 	}
 
-	char requestBuf[BUFSIZ]=" ";
+	char requestBuf[BUFFER_SIZE]=" ";
 	strcat(requestBuf,"type:");
 	strcat(requestBuf,"download\n");
 	strcat(requestBuf,"path:");
@@ -86,7 +87,7 @@ int fileDownload(int cSock, char *ip){
 
 	close(fd);
 
-	char actBuf[BUFSIZ]=" ";
+	char actBuf[BUFFER_SIZE]=" ";
  	strcat(actBuf,"./");
 	strcat(actBuf,path);
 
@@ -129,7 +130,7 @@ int clientQuit(int cSock, char *ip){
 		return -1;
 	}
 
-	char buf[BUFSIZ];
+	char buf[BUFFER_SIZE];
 	strcat(buf,"type:");
 	strcat(buf,"quit\n");
 	strcat(buf,"path:");
