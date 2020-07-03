@@ -4,4 +4,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+int myListOpen();
+
 #endif

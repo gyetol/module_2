@@ -41,6 +41,7 @@ void *serverStart(void *arg){
 	if(listen(ssock,LISTENQ)==-1)
 		err_quit("listen");
 	 printf("[server] is running : %s\n\n", ip);
+
 	int efd=epoll_create(1); 
 	if(efd==-1)
 		err_quit("epoll_create");
