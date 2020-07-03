@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "myListOpen.h"
 #include "clientStart.h"
@@ -13,6 +14,7 @@ typedef struct ResInfo{
 }ResInfo;
 
 void * subThread(void *arg){
+	printf("reached at subThread\n");
 	if(arg==NULL){
 		fprintf(stderr,"subThread:argument is null\n");
 		return NULL;
@@ -30,7 +32,7 @@ void * subThread(void *arg){
 }
 
 int main(){
-	char * ip;
+	char ip[BUFSIZ];
 	ResInfo resInfo={0,};
 
 	/*
@@ -70,6 +72,7 @@ int main(){
 		fprintf(stderr,"error in doCommand\n");
 		return -1;
 	}
+	free(retVal);
 
 	int sock=0;
 	if(clientStart(ip,&sock)==-1||sock==0){
