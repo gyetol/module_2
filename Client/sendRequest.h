@@ -7,9 +7,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include <signal.h>
 #include <stdlib.h>
-#include "FtpCommand.h"
 #include "ClientSocket.h"
 #include "listOpen.h"
 #define BUFSIZ 1024
