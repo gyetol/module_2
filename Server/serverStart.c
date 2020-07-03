@@ -53,7 +53,7 @@ void *serverStart(void *arg){
 	if(bind(ssock,(struct sockaddr *)&saddr,sizeof(saddr))==-1)
 		err_quit("bind");
 
-	if(listen(ssock,LISTENQ)==-1)
+	if(listen(ssock,10)==-1)
 		err_quit("listen");
 	 printf("[server] is running : %s\n\n", ip);
 	///////////////////////////////////////////////////////////////////////////////////////
@@ -71,27 +71,31 @@ void *serverStart(void *arg){
 
 	struct epoll_event events[EPOLL_SIZ];
 	while(1){
-		int nEvent=epoll_wait(efd,events,128,-1);
+		int nEvent=epoll_wait(efd,events,EPOLL_SIZ,-1);
 		if(nEvent<0)
 			err_quit("epoll_wait");
 		else if(nEvent==0)
 			continue;
 
 		for(int i=0;i<nEvent;i++){
+			printf("for문 진입\n");
 			if(events[i].data.fd=ssock) {
+				printf("if문 진입\n");
                 struct sockaddr_in caddr = {0,};
                 int caddr_len = sizeof(caddr);
                 int csock = accept(ssock, (struct sockaddr *) &caddr, &caddr_len);
                 if (csock < 0)
                     err_quit("accept");
                 printf("[server]%s(client) is  connected...\n", inet_ntoa(caddr.sin_addr));
-			}}	}//////////////////////////////////////////////////////////////////////////////////////////////////////////나중에 이괄호 지워야됨		
-                /*event.events = EPOLLIN;
+                event.events = EPOLLIN;
                 event.data.fd = csock;
                 if (epoll_ctl(efd, EPOLL_CTL_ADD, csock, &event) == -1)
                     err_quit("epoll_ctl");
                 continue;
+
             }
+		}} /////나중에 이 줄 삭제
+	/*
 			else { //this is for client
 				printf("[server] client connected ...\n");
 				int cSock=events[i].data.fd;
