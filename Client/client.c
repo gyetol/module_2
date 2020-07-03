@@ -17,12 +17,17 @@ int main(){
 		perror("scanf");
 		return -1;
 	}
+	printf("서버 IP입력성공\n");
 
 	pthread_t tid;
-	if(pthread_create(&tid,NULL,localClientThread,(void*)ip)==EAGAIN){
-		fprintf(stderr,"client_main:thread생성 실패\n");
+	if(pthread_create(&tid,NULL,localClientThread,(void*)ip)!=0){
+		printf("client_main:thread생성 실패\n");
 		return -1;
 	}
+
+
+	int *retVal;
+	pthread_join(tid,(void**)&retVal);
 
 	/*
 	if(clientCommand()==-1){

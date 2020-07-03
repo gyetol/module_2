@@ -18,6 +18,7 @@ typedef struct ResponseInfo{
 */
 
 int clientStart(const char * ip){
+	printf("clientStart진입\n");//
 
     //make socket for client
     int sock=socket(PF_INET,SOCK_STREAM,0);
@@ -25,17 +26,20 @@ int clientStart(const char * ip){
         perror("socket");
         return -1;
     }
+	printf("socket 연결 성공\n");
 
     struct sockaddr_in addr = {0,};
     addr.sin_family=AF_INET;
-    addr.sin_port=htons((int)PORT_NUM);
-    addr.sin_addr.s_addr=inet_addr((char * )ip);
+    addr.sin_port=htons(PORT_NUM);
+    addr.sin_addr.s_addr=inet_addr(ip);
+	printf("주소 설정 완료\n");
 
     //try to connect to server
     if(connect(sock,(struct sockaddr*)&addr,sizeof(addr))==-1){
         perror("connect");
         return -1;
     }
+	printf("connect성공\n");
 
 //    //get command from keyboard
 //    char buf[BUFSIZ];
@@ -102,5 +106,6 @@ int clientStart(const char * ip){
 	pthread_join(&tid,(void **)&retval);
 	*/
 
+	close(sock);
     return 0;
 }
