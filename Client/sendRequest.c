@@ -1,7 +1,4 @@
 #include "sendRequest.h"
-#define BUFFER_SIZE 1024
-#define END_OF_PROTOCOL "\r\n"
-
 
 int listDownload(int cSock, char *ip){
 
@@ -39,7 +36,8 @@ int listDownload(int cSock, char *ip){
 
 }
 
-int fileDownload(int cSock, char *ip, char *fname){
+
+int fileDownload(int cSock, char *ip, char *fName){
 
 	int readBytes, totalBytes;
 

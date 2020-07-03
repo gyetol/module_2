@@ -14,10 +14,10 @@ char * sampleFiles[] = {
 
 int main(){
     init_scr();
-    int sock;
+    int sock = 0;
     char * ipAddress = "";
     int thisMenu = MENU_MAIN;
-    int * selected;
+    int * selected =NULL;
 
     while (thisMenu != MENU_EXIT){
         switch (thisMenu) {
