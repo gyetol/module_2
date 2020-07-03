@@ -1,18 +1,4 @@
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "listOpen.h"
 #include "sendRequest.h"
-#define BUFFER_SIZE 1024
-#define END_OF_PROTOCOL "\r\n"
-
 
 int listDownload(int cSock, char *ip){
 
@@ -50,7 +36,7 @@ int listDownload(int cSock, char *ip){
 
 }
 
-int fileDownload(int cSock, char *ip){
+int fileDownload(int cSock, char *ip, char *fName){
 
 	int readBytes, totalBytes;
 
