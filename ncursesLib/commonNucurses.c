@@ -229,6 +229,11 @@ void init_FTP_Main_Page(WINDOW*upWindow, WINDOW * downWindow,
     wbkgd(downWindow, COLOR_PAIR(CLIENTBAR));
 }
 
+/////////////////////////////////////////////////////////////
+/// to destory_FTP_Main_Page
+/// input1 : all windows for Main
+/// return : void
+////////////////////////////////////////////////////////////
 void destroy_FTP_Main_Page(WINDOW*upWindow, WINDOW * downWindow,
                         WINDOW * logWindow, WINDOW * pathWindow, WINDOW * firstWindow,
                         WINDOW * secondWindow, WINDOW * thirdWindow, WINDOW * fourthWindow,
@@ -297,7 +302,12 @@ void print_Manual_Bar(int mode){
     attroff(A_UNDERLINE);
 }
 
-void print_Tile_Block(int mode){
+/////////////////////////////////////////////////////////////
+/// to print title
+/// input : mode (MODE_CLIENT or MODE_SERVER)
+/// return : void
+////////////////////////////////////////////////////////////
+void print_Title_Block(int mode){
     mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 0, "                                        ");
     mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, LEFT_SUBWINDOW_WIDE+BAR_WIDE, "                                       ");
     mvprintw(MANUAL_SUBWINDOW_HEIGHT + LOG_SUBWINDOW_HEIGHT, 0, "LOCAL FILE TREE");
@@ -395,8 +405,12 @@ void print_Log_Block(char  ** srcArray, int aryCount){
     return;
 }
 
+/////////////////////////////////////////////////////////////
+/// to print path
+/// input : pathOfLeft, pathOfRight
+/// return : void
+////////////////////////////////////////////////////////////
 void print_Path_Block(char * pathOfLeft, char *pathOfRight){
-
     mvprintw(MANUAL_SUBWINDOW_HEIGHT+LOG_SUBWINDOW_HEIGHT+BAR_HEIGHT+UPPER_SUBWINDOW_HEIGHT, 0, "                                        ");
     mvprintw(MANUAL_SUBWINDOW_HEIGHT+LOG_SUBWINDOW_HEIGHT+BAR_HEIGHT+UPPER_SUBWINDOW_HEIGHT, 0, pathOfLeft);
     mvprintw(MANUAL_SUBWINDOW_HEIGHT+LOG_SUBWINDOW_HEIGHT+BAR_HEIGHT+UPPER_SUBWINDOW_HEIGHT, LEFT_SUBWINDOW_WIDE + BAR_WIDE, "                                       ");
@@ -406,7 +420,7 @@ void print_Path_Block(char * pathOfLeft, char *pathOfRight){
 /////////////////////////////////////////////////////////////
 /// to print Main Page
 /// input : mode MODE_CLIENT or MODE_SERVER, path1, path2
-/// return : void
+/// return : selectMenu
 ////////////////////////////////////////////////////////////
 int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight) {
     werase(stdscr); // Clear Window
@@ -435,7 +449,7 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight) {
 
     while (1) {
         attron(COLOR_PAIR(MAIN1));
-        print_Tile_Block(mode);
+        print_Title_Block(mode);
         print_Path_Block(pathOfLeft, pathOfRight);
 
         attron(COLOR_PAIR(MAIN2));
@@ -526,6 +540,11 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight) {
     }
 }
 
+/////////////////////////////////////////////////////////////
+/// to print selected Page
+/// input : mode (MODE_CLIENT or MODE_SERVER), path1, path2
+/// return : selectMenu
+////////////////////////////////////////////////////////////
 int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * selected, int aryCount, char * pathOfLeft, char * pathOfRight){
     int startPoint = 0;
     int cursor = startPoint;
@@ -569,7 +588,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
     attron(A_STANDOUT | A_UNDERLINE); // selected effect
     switch (selectingMenu) {
         case MENU_FIRSTWINODW:
-            mvprintw(MANUAL_SUBWINDOW_HEIGHT+LOG_SUBWINDOW_HEIGHT, 0, "LOCAL FILE TREE (press back sapce)      ");
+            mvprintw(MANUAL_SUBWINDOW_HEIGHT+LOG_SUBWINDOW_HEIGHT, 0, "LOCAL FILE TREE (press back space)      ");
             break;
         case MENU_SECONDWINDOW:
             if (mode == MODE_CLIENT){
