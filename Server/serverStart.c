@@ -78,7 +78,7 @@ void *serverStart(void *arg){
 			continue;
 
 		for(int i=0;i<nEvent;i++){
-			if(events[i].data.fd=ssock) {
+			if(events[i].data.fd==ssock) {
                 struct sockaddr_in caddr = {0,};
                 int caddr_len = sizeof(caddr);
                 int csock = accept(ssock, (struct sockaddr *) &caddr, &caddr_len);

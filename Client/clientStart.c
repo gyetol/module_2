@@ -1,11 +1,4 @@
  //Echo Client
-#include <sys/types.h>       
-#include <sys/socket.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <arpa/inet.h>
-#include <netinet/in.h>
-#include <pthread.h>
 #include "clientStart.h"
 //#include "listOpen.h"
 
@@ -18,7 +11,7 @@ typedef struct ResponseInfo{
 */
 
 int clientStart(const char * ip){
-
+	printf("clientStart\n");
     //make socket for client
     int sock=socket(PF_INET,SOCK_STREAM,0);
     if(sock==-1){
@@ -29,7 +22,7 @@ int clientStart(const char * ip){
     struct sockaddr_in addr = {0,};
     addr.sin_family=AF_INET;
     addr.sin_port=htons((int)PORT_NUM);
-    addr.sin_addr.s_addr=inet_addr((char * )ip);
+    addr.sin_addr.s_addr=inet_addr(ip);
 
     //try to connect to server
     if(connect(sock,(struct sockaddr*)&addr,sizeof(addr))==-1){
