@@ -76,7 +76,7 @@ int fileDownload(int cSock, char *ip, char *fName){
 
 	char actBuf[BUFFER_SIZE]=" ";
  	strcat(actBuf,"./");
-	strcat(actBuf,path);
+	strcat(actBuf,fName);
 
 	int fd2 = open(actBuf, O_RDWR, O_CREAT, O_TRUNC, 0744);
     while(1){
