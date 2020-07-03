@@ -235,8 +235,8 @@ int main(int argc, char **argv){
 		perror("pthread_create");
 		return -1;
 	}
-	if(serverCommand()==-1){
-		perror("serverCommand");
+	if(serverMain()==-1){
+		perror("serverMain");
 		return -1;
 	}
 	if(pthread_join(tid, NULL)==-1)
