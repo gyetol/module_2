@@ -1,4 +1,3 @@
- //Echo Client
 #include "clientStart.h"
 //#include "listOpen.h"
 
@@ -10,11 +9,11 @@ typedef struct ResponseInfo{
 }ResponseInfo;
 */
 
-int clientStart(const char * ip){
+int clientStart(const char * ip,int * sock){
 	printf("clientStart\n");
     //make socket for client
-    int sock=socket(PF_INET,SOCK_STREAM,0);
-    if(sock==-1){
+    *sock=socket(PF_INET,SOCK_STREAM,0);
+    if(*sock==-1){
         perror("socket");
         return -1;
     }
@@ -25,7 +24,7 @@ int clientStart(const char * ip){
     addr.sin_addr.s_addr=inet_addr(ip);
 
     //try to connect to server
-    if(connect(sock,(struct sockaddr*)&addr,sizeof(addr))==-1){
+    if(connect(*sock,(struct sockaddr*)&addr,sizeof(addr))==-1){
         perror("connect");
         return -1;
     }
@@ -44,9 +43,9 @@ int clientStart(const char * ip){
 //
 //    //request to server
 //    buf[nRead]='\0';
-//    write(sock,buf,nRead);
+//    write(*sock,buf,nRead);
 //
-//    nRead=read(sock,buf,sizeof(buf));
+//    nRead=read(*sock,buf,sizeof(buf));
 //    if(nRead<0){
 //        perror("read");
 //        return -1;

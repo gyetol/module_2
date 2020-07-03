@@ -1,25 +1,37 @@
-#include <pthread.h>
+#include <stdio.h>
 #include <errno.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include "clientStart.h"
-//#include "clientMain.h"
+#include <pthread.h>
+#include <unistd.h>
 
-void * localClientThread(void *arg){
-	printf("localClientThread\n");
-	char* ip=(char*)arg;
+#include "myListOpen.h"
+#include "clientStart.h"
+#include "doCommand.h"
+
+typedef struct ResInfo{
+	int sock;
+	char * ip;
+}ResInfo;
+
+void * subThread(void *arg){
+	if(arg==NULL){
+		fprintf(stderr,"subThread:argument is null\n");
+		return NULL;
+	}
 	int * retVal=calloc(1,sizeof(int));
-	if(clientStart(ip)==-1){
-		fprintf(stderr,"clientStart()");
+	if(retVal==NULL){
+		perror("calloc");
 		*retVal=-1;
 	}
+	ResInfo* ptr=(ResInfo*)arg;
+	if(doCommand(ptr->sock,ptr->ip)==-1)
+		*retVal=-1;
 	*retVal=0;
 	return retVal;
 }
 
-
 int main(){
 	char * ip;
+	ResInfo resInfo={0,};
 
 	/*
 	if(IP_INSERT_PAGE(&ip)==-1){
@@ -30,24 +42,47 @@ int main(){
 	printf("접속할 서버의 IP를 입력하세요:");
 	scanf("%s",ip);
 
-	printf("%s\n",ip);
-
+	printf("%s\n",ip);//디버그 코드
 	if(ip==NULL){
 		perror("scanf");
 		return -1;
 	}
 
-	pthread_t tid;
-	if(pthread_create(&tid,NULL,localClientThread,(void*)ip)==EAGAIN){
-		fprintf(stderr,"client_main:thread생성 실패\n");
+
+	if(myListOpen()==-1){
+		fprintf(stderr,"error in myListOpen\n");
 		return -1;
 	}
 
-	//clientMain();
 
-	int* retVal;
-	pthread_join(tid,(void**)&retVal);
+	pthread_t tid;
+	if(pthread_create(&tid,NULL,subThread,&resInfo)!=0){
+		perror("pthread_create");
+		return -1;
+	}
 
+	int *retVal;
+	if(pthread_join(tid,(void**)&retVal)!=0){
+			perror("pthread_join");
+			return -1;
+	}
+	if(*retVal==-1){
+		fprintf(stderr,"error in doCommand\n");
+		return -1;
+	}
+
+	int sock=0;
+	if(clientStart(ip,&sock)==-1||sock==0){
+		fprintf(stderr,"error in clientStart\n");
+		return -1;
+	}
+
+	if(doCommand(sock,ip)==-1){
+		fprintf(stderr,"error in doCommand\n");
+		return -1;
+	}
+
+	close(sock);
 	return 0;
 }
 

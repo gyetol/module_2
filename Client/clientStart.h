@@ -1,4 +1,4 @@
- //
+//
 // Created by linux on 7/1/20.
 //
 
@@ -15,6 +15,6 @@
 
 #define PORT_NUM 20629
 
-int clientStart(const char * ip);
+int clientStart(const char * ip,int* sock);
 
 #endif //MODULE_2_FTP_CLIENT_H
