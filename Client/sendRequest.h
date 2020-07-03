@@ -8,7 +8,8 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "listOpen.h"
 
-int fileDownload(int cSock, char *ip, char *fname);
+int fileDownload(int cSock, char *ip, char *fName);
 int listDownload(int cSock, char *ip);
-int quit(int cSock, char *ip);
+int clientQuit(int cSock, char *ip);
