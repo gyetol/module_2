@@ -9,11 +9,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "listOpen.h"
+#include "sendRequest.h"
+#define BUFFER_SIZE 1024
 #define END_OF_PROTOCOL "\r\n"
 
-int listDownload(char *type, char *path, char *ip, int cSock){
+int listDownload(int cSock, char *ip){
 
-   if (type == NULL || path == NULL || ip == NULL){
+   if (ip == NULL){
 		perror("listDownload");
 		return -1;
 	}
@@ -47,11 +49,11 @@ int listDownload(char *type, char *path, char *ip, int cSock){
 
 }
 
-int fileDownload(char *type, char *path, char *ip, int cSock){
+int fileDownload(int cSock, char *ip){
 
 	int readBytes, totalBytes;
 
-	if (type == NULL || path == NULL || ip == NULL){
+	if (ip == NULL){
 		perror("fileDownload");
 		return -1;
 	}
@@ -85,7 +87,7 @@ int fileDownload(char *type, char *path, char *ip, int cSock){
 	close(fd);
 
 	char actBuf[BUFSIZ]=" ";
-	strcat(actBuf,"./");
+ 	strcat(actBuf,"./");
 	strcat(actBuf,path);
 
 	int fd2 = open(actBuf, O_RDWR, O_CREAT, O_TRUNC, 0744);
@@ -113,9 +115,9 @@ int fileDownload(char *type, char *path, char *ip, int cSock){
 	return 0;
 }
 
-int clientQuit(char *type, char *path, char *ip, int cSock){
+int clientQuit(int cSock, char *ip){
 
-	if (type == NULL || path == NULL || ip == NULL){
+	if (ip == NULL){
 		perror("quit");
 		return -1;
 	}
@@ -134,7 +136,7 @@ int clientQuit(char *type, char *path, char *ip, int cSock){
 	strcat(buf,"./\n");
 	strcat(buf,"ip:");
 	strcat(buf,"192.168.198.144");
-
+ 
 	while(1){
 		int nWritten=write(cSock, buf, sizeof(buf));
 		if(nWritten<0){
