@@ -1,21 +1,54 @@
 #include<stdio.h>
 
+void myflush(){
+	while(getchar()!='\n'){;}
+}
+
 void doCommand(){
 	char cmd;
+	char *srcPath[100];
+	char *destPath=NULL;
+	char *msg=".";
 
 	while(1){
-	cmd=getchar();
 		
+	cmd=getchar();
+	
 	switch(cmd){
-		case 'c' : 
-		case 'm' :
-		case 'r' :
-		case 'n' :
-		case 'f' :
-		case 'p' :
-		case 'h' :
-		case 'k' :
-		case 'x' :
+		case ' ' : putSrcPath(srcPath, &msg);
+				   break;
+
+		case '\n': //listopen();
+					break;
+
+		case 'c' : getDestPath(destPath, &msg, "복사할 경로를 입력하세요:"); 
+				   doCopy(srcPath,len,destPath,&msg);
+				   freeDestPath(destPath,&msg);
+				   break;
+
+		case 'm' : getDestPath(destPath, &msg, "이동할 경로를 입력하세요:");
+				   doMove(srcPath,len,destpath,&msg);
+				   freeDestPath(destpath,&msg);
+				   break;
+
+		case 'r' : doRemove(srcPath,len,&msg);
+				   break;
+
+		case 'n' : getDestPath(destPath,&msg, "바꿀 이름을 입력하세요:");
+				   doRename(srcPath,len,destPath,&msg);
+				   freeDestPath(destPath,&msg);
+				   break;
+
+		case 'f' : download();
+				   break;
+		case 'p' : ;
+		case 'h' : ;
+		case 'k' : getDestPath(destPath, &msg, "생성할 디렉토리명을 입력하세요:");
+				   doMkdir(destPath,&msg);
+				   freeDestPath(destPath,&msg);
+				   break;
+
+		case 'x' : ;
 	}
 
 	}
@@ -25,6 +58,7 @@ void doCommand(){
 int main(){
 	myListOpen();
 	listOpen();
+	//ls요청 한번 보내고 출력해야됨
 	doCommand();
 
 

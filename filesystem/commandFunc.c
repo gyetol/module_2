@@ -7,6 +7,117 @@
 #include <fcntl.h>
 #include "commandFunc.h"
 
+
+int putSrcPath(char **srcPath,char **msg){
+	
+}
+
+
+int freeDestPath(char *destPath, char **msg){
+	if(destPath == NULL){
+		msg = "there is no path to free;
+		return -1;
+	}
+	if(msg == NULL){
+		msg = "there is no argument";
+		return -1;
+	}
+
+	free(destPath);
+
+	*msg = " freeing is done";
+
+	return 0;
+}
+
+
+//////////////////////////////////////////////////
+// * to get destination path
+// return 0 : exit normally
+// return -1: exit abnormally
+// destPath : destination path to copy,move and so on
+// msg : you can write message in it
+// checkMsg : you can print your message
+int getDestPath(char *destPath, char **msg, const char *checkMsg){
+	if(destPath == NULL || msg == NULL || checkMsg == NULL){
+		*msg = "argument is null";
+		return -1;
+	}
+	char buf[255];
+	printf(checkMsg);
+	fgets(buf,sizeof(buf),stdin);
+	 destPath= malloc(sizeof(buf));
+	*msg = "getting path is done";
+
+	return 0;
+}
+
+
+
+//////////////////////////////////////////////////
+// * to rename file or directory
+// return 0 : exit normally
+// return -1: exit abnormally
+// srcPath: char* array (files' path to rename)
+
+//destPath가 디렉토리인지 파일인지 확인을 해서 디렉토리명이면 리네임을 막아야함!
+int doRename(char **srcPath, int len, char *destPath ,char **msg){
+	if(srcPath == NULL || destPath == NULL){
+		*msg = "argument is null";
+		return -1;
+	}
+	if(len !=1){ //rename은 move와 다르게 length가 1이여야 한다
+		*msg ="you should select single file";
+		return -1;
+	}
+	if((strcmp(*srcPath,".")==0) || (strcmp(*srcPath,"..")==0)){
+		*msg = "can't rename '.' or '..' directory";
+		return -1;
+	}
+
+	char answer;
+	const char *check = "정말로 이름을 바꾸시겠습니까?(y/n)";
+
+	while(1){
+		printf("%s\n",check);
+		answer =getchar();
+		if(answer == 'y' || answer == 'Y'){
+			break;
+		}
+		else if(answer == 'n' || answer == 'N'){
+			return 0;
+		}
+		else{myflush();}
+	}
+	pid_t pid[1];
+	int childStatus;
+
+	for(int i =0; i<len; i++){
+        pid[i]=fork();
+        if(pid[i]==0){
+            if(execl("/bin/mv","mv",*(srcPath+i),destPath,"-i",NULL)==-1){
+                perror("execl");
+                *msg = "error occurrence!";
+                return -1;
+            }
+            exit(EXIT_SUCCESS);
+        }
+
+    }
+    for(int i = 0; i<len; i++){
+        pid_t terminatedChild = wait(&childStatus);
+        if(WIFEXITED(childStatus)){
+            printf("child %d has terminated : %d\n", terminatedChild, WEXITSTATUS(childStatus));
+        }
+        else{
+            printf("child %d has terminated abnormally\n", terminatedChild);
+        }
+    }
+
+    *msg = "renaming is done";
+     return 0;
+}
+
 //////////////////////////////////////////////////
 // * to copy file or directory
 // return 0 : exit normally
@@ -79,7 +190,7 @@ int doCopy(char **srcPath, int len, char *destPath, char **msg){
 // len: length of array
 // msg: we can write message in it
 int doMove(char **srcPath, int len,char *destPath, char **msg){
-	
+//destPath를 디렉토리인지 파일인지 확인을 해서 디렉토리 일때만 move함수 발동하게 해야함	
 	if(srcPath == NULL || destPath == NULL){
 		*msg = "argument is null";
 		return -1;
