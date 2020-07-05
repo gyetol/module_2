@@ -68,19 +68,14 @@ void *serverStart(void *arg){
                 if (csock < 0)
                     err_quit("accept");
                 printf("[server]%s(client) is  connected...\n", inet_ntoa(caddr.sin_addr));
-			}}}//지울중괄호
-				///////////////////////////////////////////////////////////////////////////////////////
-       //여기까진 디버깅 검증 완료
-      ///////////////////////////////////////////////////////////////////////////////////////
-    /*
+			    //여기까진 디버깅 검증 완료
+
 				event.events = EPOLLIN;
                 event.data.fd = csock;
                 if (epoll_ctl(efd, EPOLL_CTL_ADD, csock, &event) == -1)
                     err_quit("epoll_ctl");
                 continue;
             }
-
-	
 			else { //this is for client
 				printf("[server] client connected ...\n");
 					int cSock=events[i].data.fd;
@@ -114,8 +109,7 @@ void *serverStart(void *arg){
 						err_quit("epoll_ctl");
 			}
 		}
-	
-		}*/
+	}
 	close(ssock);
 	*res=0;
 	return res;

@@ -14,7 +14,7 @@ typedef struct ResInfo{
 }ResInfo;
 
 void * subThread(void *arg){
-	printf("reached at subThread\n");
+	printf("subThread 들어옴\n");
 	if(arg==NULL){
 		fprintf(stderr,"subThread:argument is null\n");
 		return NULL;
