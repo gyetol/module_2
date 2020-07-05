@@ -1,8 +1,7 @@
 #include "getRequest.h"	
 
 int getRequest(int cSock, char **type, char **path, char **ip){
-	printf("getRequest진입\n");
-	int fd=open("./request.txt", O_RDWR, 0744);
+    int fd=open("./request.txt", O_RDONLY, 0444);
     if(fd==-1){
         perror("open");
 		close(fd);
@@ -10,7 +9,7 @@ int getRequest(int cSock, char **type, char **path, char **ip){
     }
     char buf[BUFSIZ];
     while(1){
-        int nRead=read(cSock, buf, sizeof(buf));
+        int nRead=read(fd, buf, sizeof(buf));
         if(nRead<0){
             perror("read");
 			close(fd);
@@ -19,15 +18,7 @@ int getRequest(int cSock, char **type, char **path, char **ip){
         else if(nRead==0){
             break;
         }
-
-		int nWritten=write(fd, buf, nRead);
-		if(nWritten<0){
-			perror("write");
-			return -1;
-		}
-		printf("write완료\n");
-	}
-	printf("while문탈출\n");
+    }
     char *savePtr;
     char *saveStr;
     char *ptr=strtok_r(buf,"\n", &savePtr);
@@ -51,5 +42,6 @@ int getRequest(int cSock, char **type, char **path, char **ip){
     *ip=strtok_r(ptr, ":", &saveStr);
     *ip=strtok_r(NULL, ":", &saveStr);
    printf("getRequest수행완료\n");
+   close(fd);
    return 0;
 }

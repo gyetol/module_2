@@ -8,5 +8,5 @@
 #include<sys/stat.h>
 #include<fcntl.h>
 #include<stdlib.h> 
-int response(int cSock, char **type, char **path, char **ip);
+int response(int cSock, int* conFlag, char **type, char **path, char **ip);
 #endif

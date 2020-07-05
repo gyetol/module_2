@@ -1,6 +1,0 @@
-.:
-total 8
-drwxrwxr-x 2 linux linux 4096 Jul  5 03:48 .
-drwxrwxr-x 3 linux linux 4096 Jul  5 05:46 ..
--rw-rw-r-- 1 linux linux    0 Jul  5 01:14 dumy.txt
--rw-rw-r-- 1 linux linux    0 Jul  5 05:50 list.txt

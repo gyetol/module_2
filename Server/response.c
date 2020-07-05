@@ -1,23 +1,25 @@
 #include "response.h"
   
-int response(int cSock, char **type, char **path, char **ip){
+int response(int cSock, int* conFlag, char **type, char **path, char **ip){
 	if(type==NULL||path==NULL||ip==NULL)
 	{
 		perror("execute");
 		return -1;
 	}
+printf("response함수 진입 완료\n");
 	if(strcmp(*type, "ls")==0)
 	{
-		 chdir("./home");
-		char command[100]="/bin/ls -alR > ./list.txt";
-		system(command);
-		 int fd=open("list.txt", O_RDONLY, 0444);
-		 if(fd==-1)
- 		{
-    		 perror("open");
-    		 close(fd);
-    		 return -1;
-		 }
+		int fd=open("./list.txt", O_RDWR, O_CREAT, O_TRUNC, 0666);
+		if(fd==-1)
+		{
+			perror("open");
+			close(fd);
+			return -1;
+		}
+		close(1);
+		dup(fd);
+		chdir("./home");
+		system("/bin/ls -alR");
 		char buf[BUFSIZ];
 		while(1){
 			int nRead=read(fd, buf, sizeof(buf));
@@ -29,18 +31,18 @@ int response(int cSock, char **type, char **path, char **ip){
 			else if(nRead==0){
 				break;
 			}
-		    printf("read완료\n");
-		    int nWritten=write(cSock,buf, nRead);
-			
+
+			int nWritten=write(cSock,buf, sizeof(buf));
 			if(nWritten<0){
 				perror("write");
+				close(fd);
 				return -1;
 				//클라이언트에게 list.txt전송
 			}
-			getchar();
 		}
+		close(fd);
 	}
-/*	else if(strcmp(*type, "download")==0)
+	else if(strcmp(*type, "download")==0)
 	{
 		int fd=open(*path, O_RDONLY, 0444);
 		if(fd==-1){
@@ -70,17 +72,15 @@ int response(int cSock, char **type, char **path, char **ip){
 		//클라이언트에게 해당경로의  파일내용 전송
 		close(fd);
 	}
- */
 	else if(strcmp(*type, "quit")==0)
 	{
 		fprintf(stdout, "[ client ] : %s disconnected", *ip);
+		*conFlag=0;
 	}
 	else
 	{
 		perror("type");
 		return -1;
 	}
-	chdir("..");
-	printf("response끝남\n");
 	return 0;
 }
