@@ -10,7 +10,7 @@ typedef struct ResponseInfo{
 */
 
 int clientStart(const char * ip,int * sock){
-	printf("clientStart\n");
+	printf("clientStart들어옴\n");
     //make socket for client
     *sock=socket(PF_INET,SOCK_STREAM,0);
     if(*sock==-1){

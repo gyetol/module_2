@@ -1,6 +1,7 @@
 #include "sendRequest.h"
 
-int listDownload(int cSock, char *ip){
+int listDownload(int sock, char *ip){
+	printf("listDownload들어옴\n");
 
    if (ip == NULL){
 		perror("listDownload");
@@ -24,7 +25,7 @@ int listDownload(int cSock, char *ip){
     
 	while(1){
 
-	int nWritten=write(cSock,buf,sizeof(buf));
+	int nWritten=write(sock,buf,sizeof(buf));
 	if(nWritten<0){
 		perror("write");
 		close(fd);
@@ -37,7 +38,8 @@ int listDownload(int cSock, char *ip){
 }
 
 
-int fileDownload(int cSock, char *ip, char *fName){
+int fileDownload(int sock, char *ip, char *fName){
+	printf("fileDownload들어옴\n");
 
 	int readBytes, totalBytes;
 
@@ -65,12 +67,21 @@ int fileDownload(int cSock, char *ip, char *fName){
 	strcat(requestBuf,"192.168.198.141");
     
 	while(1){
-		int nWritten=write(cSock, requestBuf, sizeof(requestBuf));
-		if (nWritten < 0){
+		/*
+		int nFdWritten=write(fd, requestBuf, sizeof(requestBuf));
+		if (nFdWritten < 0){
+			perror("write");
+			return -1;
+		}
+		*/
+		int nSockWritten=write(sock,requestBuf,sizeof(requestBuf));
+		if (nSockWritten < 0){
 			perror("write");
 			return -1;
 		}
 	}
+
+	
 
 	close(fd);
 
@@ -83,6 +94,7 @@ int fileDownload(int cSock, char *ip, char *fName){
 		int nRead = read(fd2, actBuf,sizeof(actBuf));
 
 		if(nRead < 0){
+
 			perror("nRead");
 			return -1;
 		}
@@ -103,7 +115,8 @@ int fileDownload(int cSock, char *ip, char *fName){
 	return 0;
 }
 
-int clientQuit(int cSock, char *ip){
+int clientQuit(int sock, char *ip){
+	printf("clientQuit들어옴\n");
 
 	if (ip == NULL){
 		perror("quit");
@@ -126,7 +139,7 @@ int clientQuit(int cSock, char *ip){
 	strcat(buf,"192.168.198.144");
  
 	while(1){
-		int nWritten=write(cSock, buf, sizeof(buf));
+		int nWritten=write(sock, buf, sizeof(buf));
 		if(nWritten<0){
 			perror("write");
 			close(fd);
