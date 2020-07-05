@@ -8,7 +8,7 @@ int listDownload(int sock, char *ip){
 		return -1;
 	}
 
-	int fd = open("./request.txt", O_RDWR, O_CREAT, O_TRUNC, 0744);
+	int fd = open("./request.txt", O_RDWR|O_CREAT|O_TRUNC, 0744);
 	
 	if (fd==-1){
 		perror("open");
@@ -23,18 +23,44 @@ int listDownload(int sock, char *ip){
 	strcat(buf,"ip:");
 	strcat(buf,"192.168.198.141");
     
-	while(1){
-
+	printf("write하자\n");
 	int nWritten=write(sock,buf,sizeof(buf));
 	if(nWritten<0){
 		perror("write");
 		close(fd);
 		return -1;
-	   } 
 	}
-	close(fd);
-	listOpen();
 
+	close(fd);
+	printf("\tlistDownload:server에 요청완료\n");
+
+	int listFd=open("./list.txt",O_WRONLY|O_CREAT|O_TRUNC,0744);
+	if(listFd==-1){
+		perror("open");
+		close(listFd);
+		return -1;
+	}
+	while(1){
+		printf("\tlistDownload:sock에서 읽어오는 while문 진입\n");
+		int nRead=read(sock,buf,sizeof(buf));
+		if(nRead<0){
+			perror("read");
+			close(listFd);
+			return -1;
+		}
+		else if(nRead==0)
+			break;
+		printf("in buf\n%s\n",buf);
+		int nWritten=write(listFd,buf,nRead);
+		if(nWritten<0){
+			perror("write");
+			close(listFd);
+			return -1;
+		}
+
+	}
+	close(listFd);
+	listOpen();
 }
 
 
