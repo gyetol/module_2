@@ -1,0 +1,3 @@
+type:ls
+path:./home
+ip:192.168.164.144
