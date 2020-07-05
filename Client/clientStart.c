@@ -28,7 +28,7 @@ int clientStart(const char * ip){
 
     struct sockaddr_in addr = {0,};
     addr.sin_family=AF_INET;
-    addr.sin_port=htons((int)PORT_NUM);
+    addr.sin_port=htons(PORT_NUM);
     addr.sin_addr.s_addr=inet_addr((char * )ip);
 
     //try to connect to server
