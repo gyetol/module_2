@@ -15,24 +15,6 @@ typedef struct ResInfo{
 }ResInfo;
 
 
-void * subThread(void *arg){
-	printf("subThread 들어옴\n");
-	if(arg==NULL){
-		fprintf(stderr,"subThread:argument is null\n");
-		return NULL;
-	}
-	int * retVal=calloc(1,sizeof(int));
-	if(retVal==NULL){
-		perror("calloc");
-		*retVal=-1;
-	}
-	ResInfo* ptr=(ResInfo*)arg;
-	if(doCommand(ptr->sock,ptr->ip)==-1)
-		*retVal=-1;
-	*retVal=0;
-	return retVal;
-}
-
 int main(){
 	char ip[BUFSIZ];
 	ResInfo resInfo={0,};
@@ -58,23 +40,6 @@ int main(){
 		return -1;
 	}
 
-
-	pthread_t tid;
-	if(pthread_create(&tid,NULL,subThread,&resInfo)!=0){
-		perror("pthread_create");
-		return -1;
-	}
-
-	int *retVal;
-	if(pthread_join(tid,(void**)&retVal)!=0){
-			perror("pthread_join");
-			return -1;
-	}
-	if(*retVal==-1){
-		fprintf(stderr,"error in doCommand\n");
-		return -1;
-	}
-	free(retVal);
 
 	int sock=0;
 	if(clientStart(ip,&sock)==-1||sock==0){

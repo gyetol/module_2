@@ -10,7 +10,7 @@ typedef struct ResponseInfo{
 */
 
 int clientStart(const char * ip,int * sock){
-	printf("clientStart들어옴\n");
+	printf("  clientStart들어옴\n");
     //make socket for client
     *sock=socket(PF_INET,SOCK_STREAM,0);
     if(*sock==-1){
@@ -28,71 +28,6 @@ int clientStart(const char * ip,int * sock){
         perror("connect");
         return -1;
     }
-
-//    //get command from keyboard
-//    char buf[BUFSIZ];
-//    int nRead=read(0,buf,sizeof(buf)); //stdin
-//
-//    if(nRead<0){
-//        perror("read");
-//        return -1;
-//    }
-//    else if(nRead==0){
-//        return -1;
-//    }
-//
-//    //request to server
-//    buf[nRead]='\0';
-//    write(*sock,buf,nRead);
-//
-//    nRead=read(*sock,buf,sizeof(buf));
-//    if(nRead<0){
-//        perror("read");
-//        return -1;
-//    }
-//    else if(nRead==0){
-//        return -1;
-//    }
-//
-//    buf[nRead]='\0';
-//    fputs(buf,stdout);
-
-	/*
-	char * work[BUFSIZ]={0,};
-	while(1){
-		printf("어떤 작업을 수행하실건가요?(LIST:출력,DOWNLOAD:다운로드,QUIT:작업종료):");
-		int nRead=read(0,buf,sizeof(buf));
-		if(nRead<0){
-			perror("read");
-			return -1;
-		}
-		else if(nRead==0){
-			printf("수행하실 작업을 입력하세요!");
-			continue;
-
-		}
-		break;
-	}
-
-	char * path;
-	if(strcmp(work,"DOWNLOAD")==0){
-		printf("다운로드 받을 파일의 경로를 입력하세요:");
-		scanf("%s",path);
-	}
-	
-	
-	pthread_ t tid;
-	if(strcmp(work,"LIST")){
-		pthread_create(&tid,NULL,doListThread,(void*)&sock);
-	}
-	else{
-		pthread_create(&tid,NULL,doDownloadThread,(void*)&sock);
-	}
-
-
-	int * retVal;
-	pthread_join(&tid,(void **)&retval);
-	*/
 
     return 0;
 }
