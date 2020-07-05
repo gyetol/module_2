@@ -1,9 +1,10 @@
 #include "getRequest.h"	
 
-int main(int cSock, int *conFlag, char **type, char **path, char **ip){
+int getRequest(int cSock, char **type, char **path, char **ip){
     int fd=open("./request.txt", O_RDONLY, 0444);
     if(fd==-1){
         perror("open");
+		close(fd);
         return -1;
     }
     char buf[BUFSIZ];
@@ -11,6 +12,7 @@ int main(int cSock, int *conFlag, char **type, char **path, char **ip){
         int nRead=read(fd, buf, sizeof(buf));
         if(nRead<0){
             perror("read");
+			close(fd);
             return -1;
         }
         else if(nRead==0){
@@ -26,6 +28,7 @@ int main(int cSock, int *conFlag, char **type, char **path, char **ip){
     if(strcmp(*type, "ls")!=0&&strcmp(*type, "download")!=0)
     {
         perror("type");
+		close(fd);
         return -1;
     }
 
@@ -38,6 +41,7 @@ int main(int cSock, int *conFlag, char **type, char **path, char **ip){
 
     *ip=strtok_r(ptr, ":", &saveStr);
     *ip=strtok_r(NULL, ":", &saveStr);
-
-    return 0;
+   printf("getRequest수행완료\n");
+   close(fd);
+   return 0;
 }

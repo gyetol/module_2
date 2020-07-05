@@ -8,23 +8,23 @@
 	inputIp(ip);
 	//파일열고
 	int fd=open("./account.txt", O_RDONLY, O_CREAT, 0444);
-	if(fd==-1){
-		perror("open");
-		return -1;
-	}
-	char buf[BUFSIZ];
-	while(1){
-		int nRead=read(fd, buf, sizeof(buf));
-		if(nRead<0){
-			perror("read");
+		if(fd==-1){
+			perror("open");
 			return -1;
 		}
-		else if(nRead==0){
-			break;
-		}
+		char buf[BUFSIZ];
+		while(1){
+			int nRead=read(fd, buf, sizeof(buf));
+			if(nRead<0){
+				perror("read");
+				return -1;
+			}
+			else if(nRead==0){
+				break;
+			}
 		char *savePtr;
 		char *ptr=strtok_r(buf, "\n", &savePtr);
-		while(ptr!=NULL){
+			while(ptr!=NULL){
 			char *saveIp;
 			char *existIp=strtok_r(ptr, ":", &saveIp);
 			if(strcmp(ip, existIp)==0)
@@ -33,10 +33,10 @@
 				return 0; //Exist 호출
 			}
 			ptr=strtok_r(NULL, "\n", &savePtr);
+			}
 		}
-	}
-	close(fd);
-	return -1;//notExist 호출
+close(fd);
+return -1;//notExist 호출
 }
 int inputIp(char *ip){
 	if(ip==NULL){
