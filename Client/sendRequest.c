@@ -66,11 +66,16 @@ int listDownload(int sock, char *ip){
 
 int fileDownload(int sock, char *ip, char *fName){
 	printf("fileDownload들어옴\n");
-
+    
+	int disk_total = system("`df -P | grep -v ^Filesystem | awk '{sum += $2} END {print sum; }'`");
+	int disk_used = system("`df -P | grep -v ^Filesystem | awk '{sum += $3} END {print sum; }'1");
+	int disk_per = system("`echo "100*disk_used/disk_total" | bc -l`");
+	
 	int readBytes, totalBytes;
-
+3
 	if (ip == NULL){
 		perror("fileDownload");
+
 		return -1;
 	}
 
