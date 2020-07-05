@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ifaddrs.h>
 #include "listOpen.h"
 
 int fileDownload(int cSock, char *ip, char *fName);
