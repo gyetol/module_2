@@ -94,9 +94,6 @@ void *serverStart(void *arg){
 				char * path;
 				char * ip;
 				ResponseInfo resInfo={0,};
-    ///////////////////////////////////////////////////////////////////////////////////////
-   //여기까진 디버깅 검증 완료
-  ///////////////////////////////////////////////////////////////////////////////////////
 			//	while(1){
 					if(getRequest(cSock,&type,&path,&ip)==-1)
 						continue;
@@ -106,8 +103,10 @@ void *serverStart(void *arg){
 					resInfo.reqInfo.ip=ip;
 					resInfo.sock=cSock;
 					printf("type : %s, path : %s, ip : %s\n", type, path, ip);
-		
-				/*   	int * tret=0;
+     ///////////////////////////////////////////////////////////////////////////////////////
+    //여기까진 디버깅 검증 완료
+   ///////////////////////////////////////////////////////////////////////////////////////		
+				/*  int * tret=0;
 					pthread_t tid;
 					if(pthread_create(&tid,NULL,responseThread,&resInfo)==EAGAIN)
 						err_quit("pthread_create");
