@@ -1,12 +1,12 @@
 #include "response.h"
   
-int main(int cSock, int* conFlag, char **type, char **path, char **ip){
+int response(int cSock, int* conFlag, char **type, char **path, char **ip){
 	if(type==NULL||path==NULL||ip==NULL)
 	{
 		perror("execute");
 		return -1;
 	}
-
+printf("response함수 진입 완료\n");
 	if(strcmp(*type, "ls")==0)
 	{
 		int fd=open("./list.txt", O_RDWR, O_CREAT, O_TRUNC, 0666);
@@ -56,6 +56,7 @@ int main(int cSock, int* conFlag, char **type, char **path, char **ip){
 			int nRead=read(fd, buf, sizeof(buf));
 			if(nRead<0){
 				perror("nRead");
+				close(fd);
 				return -1;
 			}
 			else if(nRead==0){
@@ -64,10 +65,12 @@ int main(int cSock, int* conFlag, char **type, char **path, char **ip){
 			int nWritten=write(cSock, buf, sizeof(buf));
 			if(nWritten<0){
 				perror("write");
+				close(fd);
 				return -1;
 			}
 		}
 		//클라이언트에게 해당경로의  파일내용 전송
+		close(fd);
 	}
 	else if(strcmp(*type, "quit")==0)
 	{
