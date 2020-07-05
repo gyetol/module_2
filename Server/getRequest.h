@@ -8,5 +8,5 @@
 #include<sys/stat.h>
 #include<fcntl.h>
 #include<stdlib.h>
-
+int getRequest(int cSock, char** type, char** path, char **ip);
 #endif
