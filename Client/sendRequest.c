@@ -1,5 +1,5 @@
 #include "sendRequest.h"
-
+ 
 int listDownload(int cSock, char *ip){
 
    if (ip == NULL){
@@ -20,7 +20,7 @@ int listDownload(int cSock, char *ip){
 	strcat(buf,"path:");
 	strcat(buf,"./home\n");
 	strcat(buf,"ip:");
-	strcat(buf,"192.168.198.141");
+	strcat(buf,"192.168.198.146");
     
 	while(1){
 
@@ -62,7 +62,7 @@ int fileDownload(int cSock, char *ip, char *fName){
 	strcat(requestBuf,"path:");
 	strcat(requestBuf,"./home\n");
 	strcat(requestBuf,"ip:");
-	strcat(requestBuf,"192.168.198.141");
+	strcat(requestBuf,"192.168.198.146");
     
 	while(1){
 		int nWritten=write(cSock, requestBuf, sizeof(requestBuf));
