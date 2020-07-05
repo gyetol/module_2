@@ -17,12 +17,14 @@ void __quit(const char * msg,int line){
 /// input : void *
 /// return : void
 ////////////////////////////////////////////////////////////////
-/*/void* responseThread(void * arg){
+void* responseThread(void * arg){
+printf("responseThread 진입 완료\n");
 	ResponseInfo* resInfo=(ResponseInfo*)arg;
-	if(response(resInfo->reqInfo.type,resInfo->reqInfo.path,resInfo->reqInfo.ip,resInfo.sock)==-1)
+	if(response(resInfo->reqInfo.type,resInfo->reqInfo.path,resInfo->reqInfo.ip,resInfo->sock)==-1)
 		pthread_exit(1);
+printf("response 함수 갔다오기 성공\n");
 	pthread_exit(0);
-}*/
+}
 
 //////////////////////////////////////////////////////////////////
 /// 서버소켓을 열고 클라이언트들의 접속을 기다리는 함수
@@ -106,7 +108,7 @@ void *serverStart(void *arg){
      ///////////////////////////////////////////////////////////////////////////////////////
     //여기까진 디버깅 검증 완료
    ///////////////////////////////////////////////////////////////////////////////////////		
-				/*  int * tret=0;
+				 int * tret=0;
 					pthread_t tid;
 					if(pthread_create(&tid,NULL,responseThread,&resInfo)==EAGAIN)
 						err_quit("pthread_create");
@@ -114,7 +116,7 @@ void *serverStart(void *arg){
 						err_quit("pthread_join");
 					if(*tret!=0)
 						break;	
-				}*/
+			//	}
 		
 				if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
 						err_quit("epoll_ctl");

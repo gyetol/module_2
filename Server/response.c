@@ -6,7 +6,7 @@ int response(int cSock, int* conFlag, char **type, char **path, char **ip){
 		perror("execute");
 		return -1;
 	}
-
+printf("response함수 진입 완료\n");
 	if(strcmp(*type, "ls")==0)
 	{
 		int fd=open("./list.txt", O_RDWR, O_CREAT, O_TRUNC, 0666);
