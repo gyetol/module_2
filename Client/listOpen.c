@@ -2,7 +2,7 @@
 
 int listOpen(void){
 	int chNum=0;
-    int fd = open("./list_sample.txt",O_RDONLY,0444);	
+    int fd = open("./list.txt",O_RDONLY,0444);	
 	system("/bin/mkdir home");
 	chdir("./home");
 	chNum++;
