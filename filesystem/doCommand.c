@@ -5,6 +5,23 @@
 #include<fcntl.h>
 #include<unistd.h>
 #include<sys/socket.h>
+#include<pthread.h>
+#include "commandFunc.h"
+#include "sendRequest.h"
+#include "listOpen.h"
+#include "myListOpen.h"
+
+void *doListThread(void *arg){
+	int *sockPtr=(int *)arg;
+	listDownload("ls",NULL,NULL,*sockPtr);
+	return NULL;
+}
+
+void * doDownloadThread(void *arg){
+	int *sockPtr=(int*)arg;
+	fileDownload("download",NULL,NULL,*sockPtr);
+	return NULL;
+}
 
 
 void myflush(){
@@ -16,6 +33,7 @@ void doCommand(int sock, const char *ip){
 	char *srcPath[100];
 	char *destPath=NULL;
 	char *msg=".";
+	pthread_t tid;
 
 	while(1){
 		
@@ -46,8 +64,13 @@ void doCommand(int sock, const char *ip){
 				   freeDestPath(destPath,&msg);
 				   break;
 
-		case 'f' : download();
+		case 'f' : if(pthread_create(&tid,NULL,doDownloadThread,*resInfo)!=0){
+					   perror("pthread_create");
+					   return -1;
+				   }
+				   //download();
 				   break;
+
 		case 'p' : ;
 		case 'h' : ;
 		case 'k' : getDestPath(destPath, &msg, "생성할 디렉토리명을 입력하세요:");
