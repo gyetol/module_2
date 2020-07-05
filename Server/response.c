@@ -56,6 +56,7 @@ int response(int cSock, int* conFlag, char **type, char **path, char **ip){
 			int nRead=read(fd, buf, sizeof(buf));
 			if(nRead<0){
 				perror("nRead");
+				close(fd);
 				return -1;
 			}
 			else if(nRead==0){
@@ -64,10 +65,12 @@ int response(int cSock, int* conFlag, char **type, char **path, char **ip){
 			int nWritten=write(cSock, buf, sizeof(buf));
 			if(nWritten<0){
 				perror("write");
+				close(fd);
 				return -1;
 			}
 		}
 		//클라이언트에게 해당경로의  파일내용 전송
+		close(fd);
 	}
 	else if(strcmp(*type, "quit")==0)
 	{
