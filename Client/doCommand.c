@@ -14,15 +14,21 @@
 #include "listOpen.h"
 #include "myListOpen.h"
 
-void * doListThread(void *arg){
-	int *sockPtr=(int *)arg;
-	listDownload("ls",NULL,NULL,*sockPtr);
+void * doListThread(ResInfo *resInfo){
+	listDownload(resInfo->sock,resInfo->ip);
 	return NULL;
 }
 
-void * doDownloadThread(void *arg){
-	int *sockPtr=(int*)arg;
-	fileDownload("download",NULL,NULL,*sockPtr);
+void * doDownloadThread(ResInfo *resInfo){
+	char fName[255];
+	printf("다운받을 파일명을 입력해주세요:");
+	fgets(fName,sizeof(fName),stdin);
+	fileDownload(resInfo->sock,resInfo->ip,&fName);
+	return NULL;
+}
+
+void * doQuitThread(ResInfo *resInfo){
+	clientQuit(resInfo->sock, resInfo->ip);
 	return NULL;
 }
 
@@ -31,14 +37,17 @@ void myflush(){
 	while(getchar()!='\n'){;}
 }
 
-int  doCommand(int sock, char *ip){
+int  doCommand(ResInfo *resInfo){
 	char cmd;
 	char *srcPath[100];
 	char *destPath=NULL;
 	char *msg=".";
+	int flag = 0; // doCommand의 while문 계속: 0 , 탈출: 1
 	pthread_t tid;
 
+
 	while(1){
+		if(flag==1){break;}
 		
 	cmd=getchar();
 	
@@ -76,15 +85,20 @@ int  doCommand(int sock, char *ip){
 				   } //download 요청시 download 쓰레드 생성
 				   break;
 
-		case 'p' : ;
-		case 'h' : ;
+		case 'p' : break;
+		case 'h' : break;
 		case 'k' : getDestPath(destPath, &msg, "생성할 디렉토리명을 입력하세요:");
 				   doMkdir(destPath,&msg);
 				   freeDestPath(destPath,&msg);
 				   break;
 
-		case 'x' : ;
-	}
+		case 'x' : if(pthread_create(&tid,NULL,doQuitThread, *resInfo)!=0){
+					   perror("phread_create");
+					   return -1;
+				   } //quit 요청시 quit 쓰레드 생성
+				   flag=1;
+				   break;
+		}
 
 	}
 

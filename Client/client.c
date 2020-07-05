@@ -11,7 +11,9 @@
 typedef struct ResInfo{
 	int sock;
 	char * ip;
+	
 }ResInfo;
+
 
 int main(){
 	char ip[BUFSIZ];
@@ -44,8 +46,11 @@ int main(){
 		fprintf(stderr,"error in clientStart\n");
 		return -1;
 	}
+	
+	resInfo.sock=sock;
+	resInfo.ip=ip;//resInfo= {sock,ip};
 
-	if(doCommand(sock,ip)==-1){
+	if(doCommand(&resInfo)==-1){
 		fprintf(stderr,"error in doCommand\n");
 		return -1;
 	}
