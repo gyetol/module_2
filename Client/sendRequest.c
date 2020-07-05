@@ -63,7 +63,7 @@ int listDownload(int sock, char *ip){
 	listOpen();
 }
 
-
+/*
 int fileDownload(int sock, char *ip, char *fName){
 	printf("fileDownload들어옴\n");
     
@@ -98,13 +98,13 @@ int fileDownload(int sock, char *ip, char *fName){
 	strcat(requestBuf,"192.168.198.141");
     
 	while(1){
-		/*
+		
 		int nFdWritten=write(fd, requestBuf, sizeof(requestBuf));
 		if (nFdWritten < 0){
 			perror("write");
 			return -1;
 		}
-		*/
+		
 		int nSockWritten=write(sock,requestBuf,sizeof(requestBuf));
 		if (nSockWritten < 0){
 			perror("write");
@@ -134,17 +134,17 @@ int fileDownload(int sock, char *ip, char *fName){
 		}
 	}
     
-   /*	while(1){
+   	while(1){
 		int nWritten=write(cSock, actBuf, sizeof(actBuf));
         if (nWritten < 0){
 			perror("write");
 			return -1;
 		}
-	}*/
 
     close(fd2);
 	return 0;
 }
+*/
 
 int clientQuit(int sock, char *ip){
 	printf("clientQuit들어옴\n");
