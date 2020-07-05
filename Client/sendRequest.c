@@ -1,5 +1,6 @@
 #include "sendRequest.h"
 
+/*
 ssize_t writen(int fd, const void *buf, size_t count){
 	if(fd<0||buf==NULL||count==0){
 		return -1;
@@ -21,6 +22,7 @@ ssize_t writen(int fd, const void *buf, size_t count){
 	}
 	return totalWritten;
 }
+*/
 
 int listDownload(int sock, char *ip){
 	printf("listDownload들어옴\n");
