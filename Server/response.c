@@ -1,7 +1,6 @@
 #include "response.h"
   
 int response(int cSock, char **type, char **path, char **ip){
-	printf("response진입\n");
 	if(type==NULL||path==NULL||ip==NULL)
 	{
 		perror("execute");
@@ -9,7 +8,6 @@ int response(int cSock, char **type, char **path, char **ip){
 	}
 	if(strcmp(*type, "ls")==0)
 	{
-		printf("ls진입\n");
 		 chdir("./home");
 		char command[100]="/bin/ls -alR > ./list.txt";
 		system(command);
@@ -20,10 +18,14 @@ int response(int cSock, char **type, char **path, char **ip){
     		 close(fd);
     		 return -1;
 		 }
-		 printf("open성공");
+		 printf("open성공\n");
 		char buf[BUFSIZ];
+		int count=0;
 		while(1){
+			count++;
+			printf("response내부에 있는 %d번째 while문입니다\n", count);
 			int nRead=read(fd, buf, sizeof(buf));
+			printf("response안에 있는 nRead : %d\n", nRead);
 			if(nRead<0){
 				perror("read");
 				close(fd);
@@ -32,15 +34,15 @@ int response(int cSock, char **type, char **path, char **ip){
 			else if(nRead==0){
 				break;
 			}
-		    printf("read완료\n");
-		    int nWritten=write(cSock,buf, nRead);
-			
+		    printf("read완료\n"); 
+		 	int nWritten=write(cSock,buf, nRead);	
 			if(nWritten<0){
 				perror("write");
+				close(fd);
 				return -1;
-				//클라이언트에게 list.txt전송
 			}
 			getchar();
+			printf("write완료\n");
 		}
 	}
 /*	else if(strcmp(*type, "download")==0)

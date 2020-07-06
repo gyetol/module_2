@@ -1,5 +1,5 @@
 .:
 total 8
-drwxrwxr-x 2 linux linux 4096 Jul  5 17:50 .
-drwxrwxr-x 3 linux linux 4096 Jul  5 18:27 ..
--rw-rw-r-- 1 linux linux    0 Jul  5 18:27 list.txt
+drwxrwxr-x 2 linux linux 4096 Jul  5 18:30 .
+drwxrwxr-x 3 linux linux 4096 Jul  5 20:00 ..
+-rw-rw-r-- 1 linux linux    0 Jul  5 20:00 list.txt
