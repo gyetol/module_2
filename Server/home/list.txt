@@ -1,7 +1,7 @@
 .:
 total 16
-drwxrwxr-x 2 linux linux 4096 Jul  6 01:12 .
-drwxrwxr-x 3 linux linux 4096 Jul  6 01:10 ..
--rw-rw-r-- 1 linux linux   39 Jul  6 01:12 fileDanzi2.txt
+drwxrwxr-x 2 linux linux 4096 Jul  6 01:48 .
+drwxrwxr-x 3 linux linux 4096 Jul  6 01:48 ..
+-rw-rw-r-- 1 linux linux   39 Jul  6 01:48 fileDanzi2.txt
 -rw-rw-r-- 1 linux linux   28 Jul  5 22:53 fileDanzi.txt
--rw-rw-r-- 1 linux linux    0 Jul  6 01:43 list.txt
+-rw-rw-r-- 1 linux linux    0 Jul  6 03:31 list.txt
