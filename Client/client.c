@@ -50,7 +50,7 @@ int main(){
 	resInfo.sock=sock;
 	resInfo.ip=ip;//resInfo= {sock,ip};
 
-	if(doCommand(&resInfo)==-1){
+	if(doCommand(resInfo.sock,resInfo.ip)==-1){
 		fprintf(stderr,"error in doCommand\n");
 		return -1;
 	}
