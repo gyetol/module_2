@@ -115,8 +115,8 @@ void *serverStart(void *arg){
 				}
 				if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
 						err_quit("epoll_ctl");
-			printf("도달");
-			getchar();
+				printf("도달");
+				getchar();
 			}
 		}//for문 괄호
 	
