@@ -556,3 +556,6 @@ MigrationBackup/
 client
 list.txt
 fileDanzi
+fileDanzi.txt
+request.txt
+/home/*.txt
