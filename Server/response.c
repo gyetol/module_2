@@ -1,6 +1,7 @@
 #include "response.h"
   
 int response(int cSock, char **type, char **path, char **ip){
+	printf("response진입\n");
 	if(type==NULL||path==NULL||ip==NULL)
 	{
 		perror("execute");
@@ -8,6 +9,7 @@ int response(int cSock, char **type, char **path, char **ip){
 	}
 	if(strcmp(*type, "ls")==0)
 	{
+		printf("ls진입\n");
 		 chdir("./home");
 		char command[100]="/bin/ls -alR > ./list.txt";
 		system(command);
@@ -18,6 +20,7 @@ int response(int cSock, char **type, char **path, char **ip){
     		 close(fd);
     		 return -1;
 		 }
+		 printf("open성공");
 		char buf[BUFSIZ];
 		while(1){
 			int nRead=read(fd, buf, sizeof(buf));

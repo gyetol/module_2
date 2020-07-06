@@ -1,10 +1,5 @@
 #include "serverStart.h"
 
-/////////////////////////////////////////////////////
-/// to print errMessage and quit process
-/// input : msg(출력할 에러 메세지), line(에러가 발생한 줄 line Number)
-/// return : void
-//////////////////////////////////////////////////////
 void __quit(const char * msg,int line){
 	char buf[BUFSIZ];
 	sprintf(buf,"%s(%d)",msg,line);
@@ -12,11 +7,6 @@ void __quit(const char * msg,int line){
 	exit(1);
 }
 
-///////////////////////////////////////////////////////////////
-/// 이벤트가 발생한 클라이언트에게 응답을 하는 thread
-/// input : void *
-/// return : void
-////////////////////////////////////////////////////////////////
 void* responseThread(void * arg){
 	int *res=calloc(1, sizeof(int));
 	ResponseInfo* resInfo=(ResponseInfo*)arg;
@@ -30,11 +20,6 @@ void* responseThread(void * arg){
 	return res;
 }
 
-//////////////////////////////////////////////////////////////////
-/// 서버소켓을 열고 클라이언트들의 접속을 기다리는 함수
-/// input : char * ip (서버의 ip)
-/// return : int (오류코드)
-////////////////////////////////////////////////////////////////////
 void *serverStart(void *arg){
 	int *res;
 	if(arg==NULL){
@@ -112,7 +97,7 @@ void *serverStart(void *arg){
      ///////////////////////////////////////////////////////////////////////////////////////
     //여기까진 디버깅 검증 완료
    ///////////////////////////////////////////////////////////////////////////////////////		
-				/* int * tret=0;
+				    int * tret=0;
 					pthread_t tid;
 					if(pthread_create(&tid,NULL,responseThread,&resInfo)==EAGAIN)
 						err_quit("pthread_create");
@@ -121,10 +106,11 @@ void *serverStart(void *arg){
 					if(*tret!=0)
 						break;
 				getchar();	
-			*/	}
+				}
 				if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
 						err_quit("epoll_ctl");
 			printf("도달");
+			getchar();
 			}
 		}//for문 괄호
 	}//while1괄호
