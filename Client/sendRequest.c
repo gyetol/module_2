@@ -1,29 +1,8 @@
 #include "sendRequest.h"
-
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 /*
-ssize_t writen(int fd, const void *buf, size_t count){
-	if(fd<0||buf==NULL||count==0){
-		return -1;
-	}
-	int totalWritten=0;
-	while(1){
-		int nWritten=write(fd,buf,count);
-		if(nWritten<0){
-			perror("write");
-			return -1;
-		}
-		else if(nWritten==0){
-			if(totalWritten==count){
-				return totalWritten;
-			}
-			return -1;
-		}
-		totalWritten+=nWritten;
-	}
-	return totalWritten;
-}
-*/
-
 int listDownload(int sock, char *ip){
 	printf("listDownload들어옴\n");
 	printf("받은 ip:%s\n",ip);
@@ -35,55 +14,14 @@ int listDownload(int sock, char *ip){
 
 
 
-	//긁어온 코드
-	char * myIp;
-	struct ifaddrs* addrs;
-	if(getifaddrs(&addrs)==-1){
-		perror("getifaddrs");
-		return -1;
-	}
-	struct ifaddrs* tmp = addrs;
-
-	while (tmp) 
-	{
-		if (tmp->ifa_addr && tmp->ifa_addr->sa_family == AF_INET)
-		{
-			struct sockaddr_in *pAddr = (struct sockaddr_in *)tmp->ifa_addr;
-			myIp=inet_ntoa(pAddr->sin_addr);
-		}
-
-		tmp = tmp->ifa_next;
-	}
-
-	freeifaddrs(addrs);
-	printf("\t내 ip:%s\n",myIp);
-	//여기까지
-	/*
-	char buf[BUFFER_SIZE]={0,};
-	strcat(buf,"type:");
-    strcat(buf,"ls\n");
-	strcat(buf,"path:");
-	strcat(buf,"./home\n");
-	strcat(buf,"ip:");
-	strcat(buf,myIp);
-	strcat(buf,"\n");
-	*/
     char command[100]="/bin/echo -e 'type:ls\npath:./home\nip:";
-	strcat(command, myIp);
+	strcat(command, ip);
 	strcat(command, "'");
 	strcat(command," > request.txt");
 	system(command);
 
-	/*
-	int nWritten1=writen(fd,buf,strlen(buf)+1);
-	if(nWritten1<0){
-		perror("write");
-		close(fd);
-		return -1;
-	}
-	*/
 
-	int fd = open("./request.txt", O_RDONLY|O_CREAT, 0744);
+	int fd = open("./request.txt", O_RDONLY|O_CREAT, 0444);
 	if (fd==-1){
 		perror("open");
 		return -1;
@@ -139,91 +77,89 @@ int listDownload(int sock, char *ip){
 	close(listFd);
 	listOpen();
 }
-
-/*
+*/
 int fileDownload(int sock, char *ip, char *fName){
-	printf("fileDownload들어옴\n");
-    
-	int disk_total = system("`df -P | grep -v ^Filesystem | awk '{sum += $2} END {print sum; }'`");
-	int disk_used = system("`df -P | grep -v ^Filesystem | awk '{sum += $3} END {print sum; }'1");
-	int disk_per = system("`echo "100*disk_used/disk_total" | bc -l`");
+	printf("받은fName : %s\n", fName);
+	printf("fileDownload진입\n");
 	
-	int readBytes, totalBytes;
-3
+	//int readBytes, totalBytes;
 	if (ip == NULL){
 		perror("fileDownload");
-
 		return -1;
 	}
 
-	int fd = open("./request.txt", O_RDWR, O_CREAT, O_TRUNC, 0744);	
-		//mode는 0700 파일 소유자에게 읽기 쓰기, 쓰기 실행 권한 
-		//0004 0으로 그룹에게 읽기 권한
-		//00004으로 기타 사용자에게 읽기 권한을 준다
+	char command[100]="/bin/echo -e 'type:download\npath:";
+	strcat(command,fName);
+	strcat(command,"\nip:");
+	strcat(command,ip);
+	strcat(command,"'");
+	strcat(command," > ./request.txt");
+	printf("command is : %s", command);
+	system(command);
 
+	printf("request.txt작성 완료\n");    
+	int fd = open("./request.txt", O_RDONLY, 0444);	
 	if (fd==-1){
 		perror("open");
 		return -1;
 	}
 
-	char requestBuf[BUFFER_SIZE]=" ";
-	strcat(requestBuf,"type:");
-	strcat(requestBuf,"download\n");
-	strcat(requestBuf,"path:");
-	strcat(requestBuf,"./home\n");
-	strcat(requestBuf,"ip:");
-	strcat(requestBuf,"192.168.198.141");
-    
-	while(1){
-		
-		int nFdWritten=write(fd, requestBuf, sizeof(requestBuf));
-		if (nFdWritten < 0){
-			perror("write");
-			return -1;
-		}
-		
-		int nSockWritten=write(sock,requestBuf,sizeof(requestBuf));
-		if (nSockWritten < 0){
-			perror("write");
-			return -1;
-		}
-	}
-
+	printf("open성공\n");
+	char buf[BUFSIZ];
 	
+	int nRead=read(fd,buf,sizeof(buf));
+	if(nRead<0){
+		perror("read");
+		close(fd);
+		return -1;
+	}
+	buf[nRead]='\0';
+	printf("read성공\n");
+	int nSockWritten=write(sock,buf,nRead);
+	if (nSockWritten < 0){
+		perror("write");
+		close(fd);
+		return -1;
+	}
+	printf("write성공\n");
 
-	close(fd);
+//	close(fd);
 
-	char actBuf[BUFFER_SIZE]=" ";
- 	strcat(actBuf,"./");
-	strcat(actBuf,fName);
-
-	int fd2 = open(actBuf, O_RDWR, O_CREAT, O_TRUNC, 0744);
-    while(1){
-		int nRead = read(fd2, actBuf,sizeof(actBuf));
-
+	char actBuf[BUFFER_SIZE]={0,};
+	chdir("./home");
+ //	strcat(actBuf,"./home/");
+//	strcat(actBuf,fName);
+	printf("열 fName : %s\n", fName);
+	int fd2 = open(fName, O_WRONLY|O_CREAT|O_TRUNC, 0222);
+    if(fd2<0){
+	   perror("open");
+	   return -1;
+    }
+    printf("원하는 파일 오픈 성공\n");
+	while(1){
+		int nRead = read(sock, actBuf,sizeof(actBuf));
 		if(nRead < 0){
-
 			perror("nRead");
 			return -1;
 		}
 		else if(nRead == 0){
 			break;
 		}
-	}
-    
-   	while(1){
-		int nWritten=write(cSock, actBuf, sizeof(actBuf));
+		printf("원하는 파일에 쓰기전 read성공\n");
+		int nWritten=write(fd2, actBuf, nRead);
         if (nWritten < 0){
 			perror("write");
 			return -1;
 		}
+		printf("원하는 파일에 쓰기 성공\n");
 
-    close(fd2);
+	}
+    chdir("..");
+   // close(fd2);
 	return 0;
 }
-*/
 
-int clientQuit(int sock, char *ip){
+/*int clientQuit(int sock, char *ip){
 	printf("clientQuit들어옴\n");
 
 	if (ip == NULL){
@@ -256,5 +192,5 @@ int clientQuit(int sock, char *ip){
 	}
 	close(fd);
 
-}
+}*/
 
