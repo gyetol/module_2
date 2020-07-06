@@ -1,5 +1,7 @@
 #include "sendRequest.h"
-
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 /*
 ssize_t writen(int fd, const void *buf, size_t count){
 	if(fd<0||buf==NULL||count==0){
@@ -31,62 +33,19 @@ int listDownload(int sock, char *ip){
 	printf("\n(listDownload)listDownload들어옴\n");
 	printf("(listDownload)받은 ip:%s\n",ip);
 
-   if (ip == NULL){
+  if (ip == NULL){
 		perror("listDownload");
 		return -1;
 	}
 
-
-
-	//긁어온 코드
-	char * myIp;
-	struct ifaddrs* addrs;
-	if(getifaddrs(&addrs)==-1){
-		perror("getifaddrs");
-		return -1;
-	}
-	struct ifaddrs* tmp = addrs;
-
-	while (tmp) 
-	{
-		if (tmp->ifa_addr && tmp->ifa_addr->sa_family == AF_INET)
-		{
-			struct sockaddr_in *pAddr = (struct sockaddr_in *)tmp->ifa_addr;
-			myIp=inet_ntoa(pAddr->sin_addr);
-		}
-
-		tmp = tmp->ifa_next;
-	}
-
-	freeifaddrs(addrs);
-	printf("\t내 ip:%s\n",myIp);
-	//여기까지
-	/*
-	char buf[BUFFER_SIZE]={0,};
-	strcat(buf,"type:");
-    strcat(buf,"ls\n");
-	strcat(buf,"path:");
-	strcat(buf,"./home\n");
-	strcat(buf,"ip:");
-	strcat(buf,myIp);
-	strcat(buf,"\n");
-	*/
-    char command[100]="/bin/echo -e 'type:ls\npath:./home\nip:";
-	strcat(command, myIp);
+  char command[100]="/bin/echo -e 'type:ls\npath:./home\nip:";
+	strcat(command, ip);
 	strcat(command, "'");
 	strcat(command," > request.txt");
 	system(command);
 
-	/*
-	int nWritten1=writen(fd,buf,strlen(buf)+1);
-	if(nWritten1<0){
-		perror("write");
-		close(fd);
-		return -1;
-	}
-	*/
 
-	int fd = open("./request.txt", O_RDONLY|O_CREAT, 0744);
+	int fd = open("./request.txt", O_RDONLY|O_CREAT, 0444);
 	if (fd==-1){
 		perror("open");
 		return -1;
@@ -145,8 +104,7 @@ int listDownload(int sock, char *ip){
 
 int fileDownload(int sock, char *ip, char *fName){
 	printf("\n(fileDownload)fileDownload진입\n");
-	printf("(fileDownload)받은fName : %s\n", fName);
-	
+	printf("(fileDownload)받은fName : %s\n", fName);	
 	if (ip == NULL){
 		perror("fileDownload");
 
@@ -155,39 +113,21 @@ int fileDownload(int sock, char *ip, char *fName){
 
 	char command[100]="/bin/echo -e 'type:download\npath:";
 	strcat(command,fName);
-	strcat(command,"\n");
-	strcat(command,"ip:");
+	strcat(command,"\nip:");
 	strcat(command,ip);
 	strcat(command,"'");
-	strcat(command," > request.txt");
+	strcat(command," > ./request.txt");
+	printf("command is : %s", command);
 	system(command);
 	printf("(fileDownload)request.txt작성 완료\n");    
-
-	int fd = open("./request.txt", O_RDONLY);	
+   
+	int fd = open("./request.txt", O_RDONLY, 0444);	
 	if (fd==-1){
 		perror("open");
 		return -1;
 	}
+  printf("(fileDownload)request.txt open성공\n");
 
-	/*
-	char requestBuf[BUFFER_SIZE]=" ";
-	strcat(requestBuf,"type:");
-	strcat(requestBuf,"download\n");
-	strcat(requestBuf,"path:");
-	strcat(requestBuf,fName);
-	strcat(requestBuf,"\n");
-	strcat(requestBuf,"ip:");
-	strcat(requestBuf,ip);
-	*/
-    
-	/*
-	int nFdWritten=write(fd, command, sizeof(command));
-	if (nFdWritten < 0){
-		perror("write");
-		return -1;
-	}
-	*/
-	printf("(fileDownload)request.txt open성공\n");
 	char buf[BUFSIZ];
 	
 	int nRead=read(fd,buf,sizeof(buf));
@@ -198,17 +138,12 @@ int fileDownload(int sock, char *ip, char *fName){
 	}
 	buf[nRead]='\0';
 	printf("(fileDownload)request.txt read성공\n");
-	int nSockWritten=write(sock,buf,nRead);
-	if (nSockWritten < 0){
-		perror("write");
-		return -1;
-	}
-	printf("(fileDownload)sock에 write성공\n");
-	close(fd);
+
 
 	char actBuf[BUFFER_SIZE]={0,};
 	int fd2 = open(actBuf, O_RDWR|O_CREAT|O_TRUNC, 0744);
 	memset(actBuf,0,strlen(actBuf));
+
 	while(1){
 		int nRead = read(sock, actBuf,sizeof(actBuf));
 		if(nRead < 0){
@@ -219,6 +154,7 @@ int fileDownload(int sock, char *ip, char *fName){
 			break;
 		}
 		printf("(fileDownload)원하는 파일에 쓰기전 read성공\n");
+
 		int nWritten=write(fd2, actBuf, nRead);
         if (nWritten < 0){
 			perror("write");
@@ -226,20 +162,11 @@ int fileDownload(int sock, char *ip, char *fName){
 		}
 		printf("(fileDownload)원하는 파일에 쓰기 성공\n");
 	}
-    
-	/*
-   	while(1){
-		int nWritten=write(sock, actBuf, sizeof(actBuf));
-        if (nWritten < 0){
-			perror("write");
-			return -1;
-		}
-	}
-	*/
-
-    close(fd2);
+  
+  close(fd2);
 	return 0;
 }
+
 
 int clientQuit(int sock, char *ip){
 	printf("(clientQuit)clientQuit들어옴\n");
@@ -286,4 +213,5 @@ int clientQuit(int sock, char *ip){
 	close(fd);
 	return 0;
 }
+
 

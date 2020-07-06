@@ -39,9 +39,9 @@ int main(){
 	if(clientStart(ip,&sock)==-1||sock==0){
 		fprintf(stderr,"error in clientStart\n");
 		return -1;
-	}
-	
+	}	
 	resInfo.sock=sock;
+
 	char * myIp;
 	struct ifaddrs* addrs;
 	if(getifaddrs(&addrs)==-1){
@@ -64,6 +64,7 @@ int main(){
 
 	resInfo.ip=myIp;//resInfo= {sock,ip};
 	printf("(client.c)resInfo.ip==myIp : %s\n",resInfo.ip);
+
 
 	if(doCommand(&resInfo)==-1){
 		fprintf(stderr,"error in doCommand\n");

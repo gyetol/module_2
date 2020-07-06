@@ -17,8 +17,9 @@ int response(int cSock, char **type, char **path, char **ip){
 		 if(fd==-1)
  		{
     		 perror("open");
-    		 close(fd);
-    		 return -1;
+			 close(fd);
+    		 chdir("..");
+			 return -1;
 		 }
 		 printf("open성공\n");
 		char buf[BUFSIZ];
@@ -31,6 +32,7 @@ int response(int cSock, char **type, char **path, char **ip){
 			if(nRead<0){
 				perror("read");
 				close(fd);
+				chdir("..");
 				return -1;
 			}
 			else if(nRead==0){
@@ -41,11 +43,13 @@ int response(int cSock, char **type, char **path, char **ip){
 			if(nWritten<0){
 				perror("write");
 				close(fd);
+				chdir("..");
 				return -1;
 			}
 			getchar();
 			printf("list요청의 write완료\n");
 		}
+		chdir("..");
 	}
 	else if(strcmp(*type, "download")==0)
 	{
@@ -56,6 +60,7 @@ int response(int cSock, char **type, char **path, char **ip){
 		if(fd==-1){
 			perror("open");
 			close(fd);
+			chdir("..");
 			return -1;
 		}
 		printf("open성공\n");
@@ -69,6 +74,7 @@ int response(int cSock, char **type, char **path, char **ip){
 			if(nRead<0){
 				perror("nRead");
 				close(fd);
+				chdir("..");
 				return -1;
 			}
 			else if(nRead==0){
@@ -79,11 +85,13 @@ int response(int cSock, char **type, char **path, char **ip){
 			if(nWritten<0){
 				perror("write");
 				close(fd);
+				chdir("..");
 				return -1;
 			}
 			getchar();
 			printf("write완료\n");
 		}
+		chdir("..");
 	}
  
 	else if(strcmp(*type, "quit")==0)
@@ -95,7 +103,6 @@ int response(int cSock, char **type, char **path, char **ip){
 		perror("type");
 		return -1;
 	}
-	chdir("..");
 	printf("response끝남\n");
 	return 0;
 }
