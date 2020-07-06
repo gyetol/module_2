@@ -7,7 +7,7 @@
 #include "myListOpen.h"
 #include "clientStart.h"
 #include "doCommand.h"
-
+#include "commandFunc.h"
 
 int main(){
 	char ip[BUFSIZ];
