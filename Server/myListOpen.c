@@ -1,7 +1,6 @@
 #include "myListOpen.h"
 
-//int main(void){ //myListOpen();
-int myListOpen(){
+int main(void){ //myListOpen();
 	system("/bin/ls");
 	return 0;
 }
