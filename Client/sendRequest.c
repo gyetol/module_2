@@ -140,23 +140,17 @@ int listDownload(int sock, char *ip){
 	listOpen();
 }
 
-/*
 int fileDownload(int sock, char *ip, char *fName){
 	printf("fileDownload들어옴\n");
-    
-	int disk_total = system("`df -P | grep -v ^Filesystem | awk '{sum += $2} END {print sum; }'`");
-	int disk_used = system("`df -P | grep -v ^Filesystem | awk '{sum += $3} END {print sum; }'1");
-	int disk_per = system("`echo "100*disk_used/disk_total" | bc -l`");
 	
-	int readBytes, totalBytes;
-3
+	//int readBytes, totalBytes;
 	if (ip == NULL){
 		perror("fileDownload");
 
 		return -1;
 	}
 
-	int fd = open("./request.txt", O_RDWR, O_CREAT, O_TRUNC, 0744);	
+	int fd = open("./request.txt", O_RDWR|O_CREAT|O_TRUNC, 0744);	
 		//mode는 0700 파일 소유자에게 읽기 쓰기, 쓰기 실행 권한 
 		//0004 0으로 그룹에게 읽기 권한
 		//00004으로 기타 사용자에게 읽기 권한을 준다
@@ -166,62 +160,77 @@ int fileDownload(int sock, char *ip, char *fName){
 		return -1;
 	}
 
+	char command[100]="/bin/echo -e 'type:download\npath:";
+	strcat(command,fName);
+	strcat(command,"\n");
+	strcat(command,"ip:");
+	strcat(command,ip);
+	strcat(command,"'");
+	strcat(command," > request.txt");
+	system(command);
+
+	/*
 	char requestBuf[BUFFER_SIZE]=" ";
 	strcat(requestBuf,"type:");
 	strcat(requestBuf,"download\n");
 	strcat(requestBuf,"path:");
-	strcat(requestBuf,"./home\n");
+	strcat(requestBuf,fName);
+	strcat(requestBuf,"\n");
 	strcat(requestBuf,"ip:");
-	strcat(requestBuf,"192.168.198.141");
+	strcat(requestBuf,ip);
+	*/
     
-	while(1){
-		
-		int nFdWritten=write(fd, requestBuf, sizeof(requestBuf));
-		if (nFdWritten < 0){
-			perror("write");
-			return -1;
-		}
-		
-		int nSockWritten=write(sock,requestBuf,sizeof(requestBuf));
-		if (nSockWritten < 0){
-			perror("write");
-			return -1;
-		}
+	/*
+	int nFdWritten=write(fd, command, sizeof(command));
+	if (nFdWritten < 0){
+		perror("write");
+		return -1;
+	}
+	*/
+	int nSockWritten=write(sock,command,sizeof(command));
+	if (nSockWritten < 0){
+		perror("write");
+		return -1;
 	}
 
-	
 
 	close(fd);
 
-	char actBuf[BUFFER_SIZE]=" ";
- 	strcat(actBuf,"./");
+	char actBuf[BUFFER_SIZE]={0,};
+ 	strcat(actBuf,"./home/");
 	strcat(actBuf,fName);
 
-	int fd2 = open(actBuf, O_RDWR, O_CREAT, O_TRUNC, 0744);
+	int fd2 = open(actBuf, O_RDWR|O_CREAT|O_TRUNC, 0744);
     while(1){
-		int nRead = read(fd2, actBuf,sizeof(actBuf));
-
+		int nRead = read(sock, actBuf,sizeof(actBuf));
 		if(nRead < 0){
-
 			perror("nRead");
 			return -1;
 		}
 		else if(nRead == 0){
 			break;
 		}
-	}
-    
-   	while(1){
-		int nWritten=write(cSock, actBuf, sizeof(actBuf));
+		int nWritten=write(fd2, actBuf, nRead);
         if (nWritten < 0){
 			perror("write");
 			return -1;
 		}
 
+	}
+    
+	/*
+   	while(1){
+		int nWritten=write(sock, actBuf, sizeof(actBuf));
+        if (nWritten < 0){
+			perror("write");
+			return -1;
+		}
+	}
+	*/
+
     close(fd2);
 	return 0;
 }
-*/
 
 int clientQuit(int sock, char *ip){
 	printf("clientQuit들어옴\n");
