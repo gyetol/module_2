@@ -25,9 +25,9 @@ int response(int cSock, char **type, char **path, char **ip){
 		int count=0;
 		while(1){
 			count++;
-			printf("response내부에 있는 %d번째 while문입니다\n", count);
+			printf("list 응답 내부에 있는 %d번째 while문입니다\n", count);
 			int nRead=read(fd, buf, sizeof(buf));
-			printf("response안에 있는 nRead : %d\n", nRead);
+			printf("list 응답 내부에 있는 nRead : %d\n", nRead);
 			if(nRead<0){
 				perror("read");
 				close(fd);
@@ -36,8 +36,46 @@ int response(int cSock, char **type, char **path, char **ip){
 			else if(nRead==0){
 				break;
 			}
-		    printf("read완료\n"); 
+		    printf("list요청의 read완료\n"); 
 		 	int nWritten=write(cSock,buf, nRead);	
+			if(nWritten<0){
+				perror("write");
+				close(fd);
+				return -1;
+			}
+			getchar();
+			printf("list요청의 write완료\n");
+		}
+	}
+	else if(strcmp(*type, "download")==0)
+	{
+	printf("download진입\n");
+	chdir("./home");
+	printf("path : %s\n", *path);
+		int fd=open(*path, O_RDONLY, 0444);
+		if(fd==-1){
+			perror("open");
+			close(fd);
+			return -1;
+		}
+		printf("open성공\n");
+		char buf[BUFSIZ];
+		int count=0;
+		while(1){
+			count++;
+			printf("download 응답 내부의 %d번째 while문입니다\n", count);
+			int nRead=read(fd, buf, sizeof(buf));
+			printf("download 응답 내부의 nRead : %d\n", nRead);
+			if(nRead<0){
+				perror("nRead");
+				close(fd);
+				return -1;
+			}
+			else if(nRead==0){
+				break;
+			}
+			printf("download요청의 read완료\n");
+			int nWritten=write(cSock, buf, nRead);
 			if(nWritten<0){
 				perror("write");
 				close(fd);
@@ -47,37 +85,7 @@ int response(int cSock, char **type, char **path, char **ip){
 			printf("write완료\n");
 		}
 	}
-/*	else if(strcmp(*type, "download")==0)
-	{
-		int fd=open(*path, O_RDONLY, 0444);
-		if(fd==-1){
-			perror("open");
-			return -1;
-		}
-		close(1);
-		dup(fd);
-		char buf[BUFSIZ];
-		while(1){
-			int nRead=read(fd, buf, sizeof(buf));
-			if(nRead<0){
-				perror("nRead");
-				close(fd);
-				return -1;
-			}
-			else if(nRead==0){
-				break;
-			}
-			int nWritten=write(cSock, buf, sizeof(buf));
-			if(nWritten<0){
-				perror("write");
-				close(fd);
-				return -1;
-			}
-		}
-		//클라이언트에게 해당경로의  파일내용 전송
-		close(fd);
-	}
- */
+ 
 	else if(strcmp(*type, "quit")==0)
 	{
 		fprintf(stdout, "[ client ] : %s disconnected", *ip);

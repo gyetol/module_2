@@ -1,5 +1,6 @@
 .:
-total 8
-drwxrwxr-x 2 linux linux 4096 Jul  5 20:34 .
-drwxrwxr-x 3 linux linux 4096 Jul  5 20:58 ..
--rw-rw-r-- 1 linux linux    0 Jul  5 20:58 list.txt
+total 12
+drwxrwxr-x 2 linux linux 4096 Jul  5 22:23 .
+drwxrwxr-x 3 linux linux 4096 Jul  5 22:34 ..
+-rw-rw-r-- 1 linux linux   28 Jul  5 22:23 fileDanzi.txt
+-rw-rw-r-- 1 linux linux    0 Jul  5 22:45 list.txt
