@@ -100,6 +100,8 @@ void *serverStart(void *arg){
 					resInfo.reqInfo.ip=ip;
 					resInfo.sock=cSock;
 					printf("type : %s, path : %s, ip : %s\n", type, path, ip);
+					if(strcmp(type,"quit")==0)
+						break;
 				   int * tret=0;
 					pthread_t tid;
 					if(pthread_create(&tid,NULL,responseThread,&resInfo)==EAGAIN)
@@ -108,12 +110,12 @@ void *serverStart(void *arg){
 						err_quit("pthread_join");
 					if(*tret==0)
 						break;
-				getchar();	
+					getchar();	
 				}
 				if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
 						err_quit("epoll_ctl");
-			printf("도달");
-			getchar();
+				printf("도달");
+				getchar();
 			}
 		}//for문 괄호
 	
