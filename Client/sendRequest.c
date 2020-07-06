@@ -81,6 +81,7 @@ int listDownload(int sock, char *ip){
 int fileDownload(int sock, char *ip, char *fName){
 	printf("받은fName : %s\n", fName);
 	printf("fileDownload진입\n");
+
 	
 	//int readBytes, totalBytes;
 	if (ip == NULL){
@@ -97,13 +98,14 @@ int fileDownload(int sock, char *ip, char *fName){
 	printf("command is : %s", command);
 	system(command);
 
+
 	printf("request.txt작성 완료\n");    
 	int fd = open("./request.txt", O_RDONLY, 0444);	
 	if (fd==-1){
 		perror("open");
 		return -1;
 	}
-
+  
 	printf("open성공\n");
 	char buf[BUFSIZ];
 	
@@ -123,12 +125,12 @@ int fileDownload(int sock, char *ip, char *fName){
 	}
 	printf("write성공\n");
 
-//	close(fd);
+  //close(fd);
 
 	char actBuf[BUFFER_SIZE]={0,};
 	chdir("./home");
- //	strcat(actBuf,"./home/");
-//	strcat(actBuf,fName);
+  //strcat(actBuf,"./home/");
+  //strcat(actBuf,fName);
 	printf("열 fName : %s\n", fName);
 	int fd2 = open(fName, O_WRONLY|O_CREAT|O_TRUNC, 0222);
     if(fd2<0){
@@ -147,15 +149,15 @@ int fileDownload(int sock, char *ip, char *fName){
 		}
 		printf("원하는 파일에 쓰기전 read성공\n");
 		int nWritten=write(fd2, actBuf, nRead);
+		int nWritten=write(fd2, actBuf, nRead);
         if (nWritten < 0){
 			perror("write");
 			return -1;
 		}
-		printf("원하는 파일에 쓰기 성공\n");
-
+    printf("원하는 파일에 쓰기 성공\n");
 	}
-    chdir("..");
-   // close(fd2);
+  chdir("..");
+  // close(fd2);
 	return 0;
 }
 
@@ -163,7 +165,7 @@ int fileDownload(int sock, char *ip, char *fName){
 	printf("clientQuit들어옴\n");
 
 	if (ip == NULL){
-		perror("quit");
+		perror("quit");k
 		return -1;
 	}
 
