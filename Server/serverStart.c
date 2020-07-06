@@ -100,9 +100,6 @@ void *serverStart(void *arg){
 					resInfo.reqInfo.ip=ip;
 					resInfo.sock=cSock;
 					printf("type : %s, path : %s, ip : %s\n", type, path, ip);
-     ///////////////////////////////////////////////////////////////////////////////////////
-    //여기까진 디버깅 검증 완료
-   ///////////////////////////////////////////////////////////////////////////////////////		
 				   int * tret=0;
 					pthread_t tid;
 					if(pthread_create(&tid,NULL,responseThread,&resInfo)==EAGAIN)
