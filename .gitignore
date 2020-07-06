@@ -552,3 +552,7 @@ MigrationBackup/
 .ionide/
 
 # End of https://www.toptal.com/developers/gitignore/api/clion,c++,c,linux,visualstudio,git
+
+client
+list.txt
+fileDanzi

@@ -98,7 +98,7 @@ int listDownload(int sock, char *ip){
 		}
 		else if(nRead==0)
 			break;
-		buf[nRead-1]='\0';
+		buf[nRead]='\0';
 		printf("\tlistDownload:%s\n",buf);
 		int nWritten=write(sock,buf,nRead);
 		if(nWritten<0){
