@@ -56,7 +56,7 @@ int listDownload(int sock, char *ip){
 	}
 
 	freeifaddrs(addrs);
-	printf("내 ip:%s\n",myIp);
+	printf("\t내 ip:%s\n",myIp);
 	//여기까지
 	/*
 	char buf[BUFFER_SIZE]={0,};
@@ -98,6 +98,8 @@ int listDownload(int sock, char *ip){
 		}
 		else if(nRead==0)
 			break;
+		buf[nRead-1]='\0';
+		printf("\tlistDownload:%s\n",buf);
 		int nWritten=write(sock,buf,nRead);
 		if(nWritten<0){
 			perror("write");
