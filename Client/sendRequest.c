@@ -23,10 +23,13 @@ ssize_t writen(int fd, const void *buf, size_t count){
 	return totalWritten;
 }
 */
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 int listDownload(int sock, char *ip){
-	printf("listDownload들어옴\n");
-	printf("받은 ip:%s\n",ip);
+	printf("\n(listDownload)listDownload들어옴\n");
+	printf("(listDownload)받은 ip:%s\n",ip);
 
    if (ip == NULL){
 		perror("listDownload");
@@ -99,7 +102,7 @@ int listDownload(int sock, char *ip){
 		else if(nRead==0)
 			break;
 		buf[nRead]='\0';
-		printf("\tlistDownload:%s\n",buf);
+		printf("(listDownload)./request.txt에 끄는 중에 버퍼 확인:%s\n",buf);
 		int nWritten=write(sock,buf,nRead);
 		if(nWritten<0){
 			perror("write");
@@ -109,7 +112,7 @@ int listDownload(int sock, char *ip){
 	}
 
 	close(fd);
-	printf("\tlistDownload:server에 요청완료\n");
+	printf("(listDownload):server에 요청완료\n");
 
 	int listFd=open("./list.txt",O_WRONLY|O_CREAT|O_TRUNC,0744);
 	if(listFd==-1){
@@ -118,7 +121,7 @@ int listDownload(int sock, char *ip){
 		return -1;
 	}
 	while(1){
-		printf("\tlistDownload:sock에서 읽어오는 while문 진입\n");
+		printf("(listDownload):sock에서 읽어오는 while문 진입\n");
 		int nRead=read(sock,buf,sizeof(buf));
 		if(nRead<0){
 			perror("read");
@@ -141,22 +144,12 @@ int listDownload(int sock, char *ip){
 }
 
 int fileDownload(int sock, char *ip, char *fName){
-	printf("fileDownload들어옴\n");
+	printf("\n(fileDownload)fileDownload진입\n");
+	printf("(fileDownload)받은fName : %s\n", fName);
 	
-	//int readBytes, totalBytes;
 	if (ip == NULL){
 		perror("fileDownload");
 
-		return -1;
-	}
-
-	int fd = open("./request.txt", O_RDWR|O_CREAT|O_TRUNC, 0744);	
-		//mode는 0700 파일 소유자에게 읽기 쓰기, 쓰기 실행 권한 
-		//0004 0으로 그룹에게 읽기 권한
-		//00004으로 기타 사용자에게 읽기 권한을 준다
-
-	if (fd==-1){
-		perror("open");
 		return -1;
 	}
 
@@ -168,6 +161,13 @@ int fileDownload(int sock, char *ip, char *fName){
 	strcat(command,"'");
 	strcat(command," > request.txt");
 	system(command);
+	printf("(fileDownload)request.txt작성 완료\n");    
+
+	int fd = open("./request.txt", O_RDONLY);	
+	if (fd==-1){
+		perror("open");
+		return -1;
+	}
 
 	/*
 	char requestBuf[BUFFER_SIZE]=" ";
@@ -187,21 +187,29 @@ int fileDownload(int sock, char *ip, char *fName){
 		return -1;
 	}
 	*/
-	int nSockWritten=write(sock,command,sizeof(command));
+	printf("(fileDownload)request.txt open성공\n");
+	char buf[BUFSIZ];
+	
+	int nRead=read(fd,buf,sizeof(buf));
+	if(nRead<0){
+		perror("read");
+		close(fd);
+		return -1;
+	}
+	buf[nRead]='\0';
+	printf("(fileDownload)request.txt read성공\n");
+	int nSockWritten=write(sock,buf,nRead);
 	if (nSockWritten < 0){
 		perror("write");
 		return -1;
 	}
-
-
+	printf("(fileDownload)sock에 write성공\n");
 	close(fd);
 
 	char actBuf[BUFFER_SIZE]={0,};
- 	strcat(actBuf,"./home/");
-	strcat(actBuf,fName);
-
 	int fd2 = open(actBuf, O_RDWR|O_CREAT|O_TRUNC, 0744);
-    while(1){
+	memset(actBuf,0,strlen(actBuf));
+	while(1){
 		int nRead = read(sock, actBuf,sizeof(actBuf));
 		if(nRead < 0){
 			perror("nRead");
@@ -210,12 +218,13 @@ int fileDownload(int sock, char *ip, char *fName){
 		else if(nRead == 0){
 			break;
 		}
+		printf("(fileDownload)원하는 파일에 쓰기전 read성공\n");
 		int nWritten=write(fd2, actBuf, nRead);
         if (nWritten < 0){
 			perror("write");
 			return -1;
 		}
-
+		printf("(fileDownload)원하는 파일에 쓰기 성공\n");
 	}
     
 	/*
@@ -233,20 +242,13 @@ int fileDownload(int sock, char *ip, char *fName){
 }
 
 int clientQuit(int sock, char *ip){
-	printf("clientQuit들어옴\n");
-
+	printf("(clientQuit)clientQuit들어옴\n");
 	if (ip == NULL){
 		perror("quit");
 		return -1;
 	}
 
-	int fd = open("./request.txt", O_RDWR, O_CREAT, O_TRUNC, 0744);
-
-	if (fd==-1){
-		perror("quit");
-		return -1;
-	}
-
+	/*
 	char buf[BUFFER_SIZE];
 	strcat(buf,"type:");
 	strcat(buf,"quit\n");
@@ -254,16 +256,34 @@ int clientQuit(int sock, char *ip){
 	strcat(buf,"./\n");
 	strcat(buf,"ip:");
 	strcat(buf,"192.168.198.144");
- 
-	while(1){
-		int nWritten=write(sock, buf, sizeof(buf));
-		if(nWritten<0){
-			perror("write");
-			close(fd);
-			return -1;
-		}
+	*/
+ 	char command[100]="/bin/echo -e 'type:quit\npath:./home\nip:";
+	strcat(command,ip);
+	strcat(command,"'");
+	strcat(command," > ./request.txt");
+	printf("(clientQuit)command is : %s\n", command);
+	system(command);
+
+	int fd = open("./request.txt", O_RDONLY);
+	if (fd==-1){
+		perror("quit");
+		return -1;
+	}
+
+	char buf[BUFFER_SIZE];
+	int nRead=read(fd,buf,sizeof(buf));
+	if(nRead<0){
+		perror("read");
+		close(fd);
+		return -1;
+	}
+	int nWritten=write(sock, buf, nRead);
+	if(nWritten<0){
+		perror("write");
+		close(fd);
+		return -1;
 	}
 	close(fd);
-
+	return 0;
 }
 

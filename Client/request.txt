@@ -1,3 +1,0 @@
-type:download
-path:fileDanzi.txt
-ip:192.168.30.17

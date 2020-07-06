@@ -8,12 +8,6 @@
 #include "clientStart.h"
 #include "doCommand.h"
 
-typedef struct ResInfo{
-	int sock;
-	char * ip;
-	
-}ResInfo;
-
 
 int main(){
 	char ip[BUFSIZ];
@@ -48,9 +42,30 @@ int main(){
 	}
 	
 	resInfo.sock=sock;
-	resInfo.ip=ip;//resInfo= {sock,ip};
+	char * myIp;
+	struct ifaddrs* addrs;
+	if(getifaddrs(&addrs)==-1){
+		perror("getifaddrs");
+		return -1;
+	}
+	struct ifaddrs* tmp = addrs;
 
-	if(doCommand(resInfo.sock,resInfo.ip)==-1){
+	while (tmp) 
+	{
+		if (tmp->ifa_addr && tmp->ifa_addr->sa_family == AF_INET)
+		{
+			struct sockaddr_in *pAddr = (struct sockaddr_in *)tmp->ifa_addr;
+			myIp=inet_ntoa(pAddr->sin_addr);
+		}
+
+		tmp = tmp->ifa_next;
+	}
+	freeifaddrs(addrs);
+
+	resInfo.ip=myIp;//resInfo= {sock,ip};
+	printf("(client.c)resInfo.ip==myIp : %s\n",resInfo.ip);
+
+	if(doCommand(&resInfo)==-1){
 		fprintf(stderr,"error in doCommand\n");
 		return -1;
 	}

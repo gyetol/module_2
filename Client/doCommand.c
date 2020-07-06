@@ -105,12 +105,24 @@ int  doCommand(ResInfo *resInfo){
 }
 */
 
-int doCommand(int sock,char * ip){
-	printf("doCommand 들어옴\n");
-	//listDownload(sock,ip);
-	//printf("listDownload성공\n");
-	fileDownload(sock,ip,"fileDanzi.txt");
-	printf("fileDownload성공\n");
-	//clientQuit(sock,ip);	printf("clientQuit성공\n");
+/*
+void * fileDownloadThread(void * arg){
+	printf("(doCommand)fileDownloadThread 진입\n");
+	ResInfo * resInfo=(ResInfo*)arg;
+	fileDownload(resInfo->sock,resInfo->ip,"fileDanzi.txt");
+	return NULL;
+}
+*/
+
+int doCommand(ResInfo* resInfo){
+	printf("(doCommand)doCommand 들어옴\n");
+	//listDownload(resInfo->sock,resInfo->ip);
+	//printf("(doCommand)listDownload성공\n");
+
+	//pthread_t tid;
+	//pthread_create(&tid,NULL,fileDownloadThread,resInfo);
+	//pthread_join(tid,NULL);
+	//printf("(doCommand)fileDownload성공\n");
+	clientQuit(resInfo->sock,resInfo->ip);	printf("clientQuit성공\n");
 	return 0;
 }
