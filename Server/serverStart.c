@@ -101,7 +101,11 @@ void *serverStart(void *arg){
 					resInfo.sock=cSock;
 					printf("type : %s, path : %s, ip : %s\n", type, path, ip);
 					if(strcmp(type,"quit")==0)
+					{
+			   			if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
+      	 	 			  err_quit("epoll_ctl");
 						break;
+					}
 				   int * tret=0;
 					pthread_t tid;
 					if(pthread_create(&tid,NULL,responseThread,&resInfo)==EAGAIN)
@@ -112,8 +116,8 @@ void *serverStart(void *arg){
 						break;
 					getchar();	
 				}
-				if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
-						err_quit("epoll_ctl");
+			//	if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
+		//				err_quit("epoll_ctl");
 				printf("도달");
 				getchar();
 			}

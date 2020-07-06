@@ -15,7 +15,7 @@ int getRequest(int cSock, char **type, char **path, char **ip){
 
     *type=strtok_r(ptr,":", &saveStr);
     *type=strtok_r(NULL,":", &saveStr);
-    if(strcmp(*type, "ls")!=0&&strcmp(*type, "download")!=0)
+    if(strcmp(*type, "ls")!=0&&strcmp(*type, "download")!=0&&strcmp(*type, "quit")!=0)
     {
         perror("type");
         return -1;
