@@ -1,3 +1,6 @@
+#ifndef SERVER_START_H_
+#define SERVER_START_H_
+
  #include <sys/types.h>
  #include <sys/socket.h>
  #include <pthread.h>
@@ -29,8 +32,5 @@ typedef struct{
  }ResponseInfo;
 
 
-
-
-
- void __quit(const char * msg,int line);
  void* serverStart(void* arg);
+#endif

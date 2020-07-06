@@ -1,7 +1,6 @@
 #include "getRequest.h"	
 
 int getRequest(int cSock, char **type, char **path, char **ip){
-	printf("getRequest진입\n");
     char buf[BUFSIZ]="";
 	int nRead=read(cSock, buf, sizeof(buf));
        
@@ -10,7 +9,6 @@ int getRequest(int cSock, char **type, char **path, char **ip){
             perror("read");
             return -1;
         }
-		printf("read완료\n");
     char *savePtr;
     char *saveStr;
     char *ptr=strtok_r(buf,"\n", &savePtr);
@@ -32,6 +30,5 @@ int getRequest(int cSock, char **type, char **path, char **ip){
 
     *ip=strtok_r(ptr, ":", &saveStr);
     *ip=strtok_r(NULL, ":", &saveStr);
-	printf("getRequest수행완료\n");
    return 0;
 }
