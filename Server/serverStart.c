@@ -10,11 +10,11 @@ void __quit(const char * msg,int line){
 void* responseThread(void * arg){
 	int *res=calloc(1, sizeof(int));
 	ResponseInfo* resInfo=(ResponseInfo*)arg;
-/*	if(response(resInfo->sock, &(resInfo->reqInfo.type),&(resInfo->reqInfo.path),&(resInfo->reqInfo.ip))==-1)
+	if(response(resInfo->sock, &(resInfo->reqInfo.type),&(resInfo->reqInfo.path),&(resInfo->reqInfo.ip))==-1)
 	{
 		*res=1;
 		return res;
-	}*/
+	}
 	printf("response 함수 갔다오기 성공\n");
 	*res=0;
 	return res;
@@ -115,8 +115,8 @@ void *serverStart(void *arg){
 				}
 				if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
 						err_quit("epoll_ctl");
-				printf("도달");
-				getchar();
+			printf("도달");
+			getchar();
 			}
 		}//for문 괄호
 	
