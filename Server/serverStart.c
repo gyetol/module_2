@@ -52,7 +52,7 @@ void *serverStart(void *arg){
 		err_quit("epoll_create");
 
 	struct epoll_event event; 
-	event.events=EPOLLIN; 
+	event.events=EPOLLIN|EPOLLOUT;
 	event.data.fd=ssock;
 	if(epoll_ctl(efd,EPOLL_CTL_ADD,ssock,&event)==-1)
 		err_quit("epoll_ctl");
@@ -77,50 +77,56 @@ void *serverStart(void *arg){
                 printf("[server]%s(client) is  connected... and cSock is %d\n", inet_ntoa(caddr.sin_addr), csock);	
 				printf("connect당시의 cSock : %d\n", csock);
 				getchar();
-				event.events = EPOLLIN;
+				event.events = EPOLLIN|EPOLLOUT;
 				event.data.fd = csock;
                 if(epoll_ctl(efd, EPOLL_CTL_ADD, csock, &event)==-1)
 					err_quit("epoll_ctl");
             }
-			else{
-			   //this is for client
-				printf("[server] client send request ...\n");
-				int cSock=events[i].data.fd; 
-				printf("cSock=%d", cSock);
-				getchar();
-		        char * type;
-				char * path;
-				char * ip;
-				ResponseInfo resInfo={0,};
-				while(1){
-					if(getRequest(cSock,&type,&path,&ip)==-1)
-						continue;
-					resInfo.reqInfo.type=type;
-					resInfo.reqInfo.path=path;
-					resInfo.reqInfo.ip=ip;
-					resInfo.sock=cSock;
-					printf("type : %s, path : %s, ip : %s\n", type, path, ip);
-					if(strcmp(type,"quit")==0)
-					{
-			   			if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
-      	 	 			  err_quit("epoll_ctl");
-						break;
+			else {
+				if(events[i].events==EPOLLIN){
+				   //this is for client
+					printf("[server] client send request ...\n");
+					int cSock=events[i].data.fd; 
+					printf("cSock=%d", cSock);
+					getchar();
+					char * type;
+					char * path;
+					char * ip;
+					ResponseInfo resInfo={0,};
+					while(1){
+						if(getRequest(cSock,&type,&path,&ip)==-1)
+							continue;
+						resInfo.reqInfo.type=type;
+						resInfo.reqInfo.path=path;
+						resInfo.reqInfo.ip=ip;
+						resInfo.sock=cSock;
+						printf("type : %s, path : %s, ip : %s\n", type, path, ip);
+						if(strcmp(type,"quit")==0)
+						{
+							if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
+							  err_quit("epoll_ctl");
+							break;
+						}
+					   int * tret=0;
+						pthread_t tid;
+						if(pthread_create(&tid,NULL,responseThread,&resInfo)==EAGAIN)
+							err_quit("pthread_create");
+						if(pthread_join(tid,(void**)&tret)!=0)
+							err_quit("pthread_join");
+						if(*tret==0)
+						{
+							free(tret);
+							break;
+						}
+						getchar();	
 					}
-				   int * tret=0;
-					pthread_t tid;
-					if(pthread_create(&tid,NULL,responseThread,&resInfo)==EAGAIN)
-						err_quit("pthread_create");
-					if(pthread_join(tid,(void**)&tret)!=0)
-						err_quit("pthread_join");
-					if(*tret==0)
-					{
-						free(tret);
-						break;
-					}
-					getchar();	
+					printf("도달");
+					getchar();
 				}
-				printf("도달");
-				getchar();
+				else{
+					if(epoll_ctl(efd,EPOLL_CTL_DEL,events[i].data.fd,NULL)==-1)
+      	 	 			  err_quit("epoll_ctl");
+				}
 			}
 		}//for문 괄호
 	
