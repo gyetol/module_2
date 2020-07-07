@@ -1,44 +1,15 @@
 #include "sendRequest.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-/*
-ssize_t writen(int fd, const void *buf, size_t count){
-	if(fd<0||buf==NULL||count==0){
-		return -1;
-	}
-	int totalWritten=0;
-	while(1){
-		int nWritten=write(fd,buf,count);
-		if(nWritten<0){
-			perror("write");
-			return -1;
-		}
-		else if(nWritten==0){
-			if(totalWritten==count){
-				return totalWritten;
-			}
-			return -1;
-		}
-		totalWritten+=nWritten;
-	}
-	return totalWritten;
-}
-*/
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 
 int listDownload(int sock, char *ip){
 	printf("\n(listDownload)listDownload들어옴\n");
 	printf("(listDownload)받은 ip:%s\n",ip);
 
-  if (ip == NULL){
+	if (ip == NULL){
 		perror("listDownload");
 		return -1;
 	}
 
-  char command[100]="/bin/echo -e 'type:ls\npath:./home\nip:";
+    char command[100]="/bin/echo -e 'type:ls\npath:./home\nip:";
 	strcat(command, ip);
 	strcat(command, "'");
 	strcat(command," > request.txt");
@@ -82,23 +53,28 @@ int listDownload(int sock, char *ip){
 	while(1){
 		printf("(listDownload):sock에서 읽어오는 while문 진입\n");
 		int nRead=read(sock,buf,sizeof(buf));
+		printf("(listDownload)nRead:%d\n",nRead);
 		if(nRead<0){
 			perror("read");
 			close(listFd);
 			return -1;
-		}
-		else if(nRead==0)
-			break;
-		printf("in buf\n%s\n",buf);
-		int nWritten=write(listFd,buf,nRead);
-		if(nWritten<0){
-			perror("write");
-			close(listFd);
-			return -1;
-		}
 
+		}
+		else if(strstr(buf,"EOF"))
+			break;
+		else{
+			printf("(listDownload)nRead완료\n");
+			printf("in buf\n%s\n",buf);
+			int nWritten=write(listFd,buf,nRead);
+			if(nWritten<0){
+				perror("write");
+				close(listFd);
+				return -1;
+			}
+			printf("(listDownload)write완료\n");
+		}
 	}
-	close(listFd);
+	printf("(listDownload)write탈출\n");
 	listOpen();
 }
 
@@ -107,7 +83,6 @@ int fileDownload(int sock, char *ip, char *fName){
 	printf("(fileDownload)받은fName : %s\n", fName);	
 	if (ip == NULL){
 		perror("fileDownload");
-
 		return -1;
 	}
 
@@ -117,31 +92,50 @@ int fileDownload(int sock, char *ip, char *fName){
 	strcat(command,ip);
 	strcat(command,"'");
 	strcat(command," > ./request.txt");
-	printf("command is : %s", command);
+	printf("(fileDownload)command is : %s", command);
 	system(command);
 	printf("(fileDownload)request.txt작성 완료\n");    
    
-	int fd = open("./request.txt", O_RDONLY, 0444);	
+	int fd = open("./request.txt", O_RDONLY);	
 	if (fd==-1){
 		perror("open");
 		return -1;
 	}
-  printf("(fileDownload)request.txt open성공\n");
+    printf("(fileDownload)request.txt open성공\n");
 
 	char buf[BUFSIZ];
-	
 	int nRead=read(fd,buf,sizeof(buf));
 	if(nRead<0){
 		perror("read");
 		close(fd);
 		return -1;
 	}
-	buf[nRead]='\0';
 	printf("(fileDownload)request.txt read성공\n");
+	buf[nRead]='\0';
+
+	int nSockWritten=write(sock,buf,nRead);
+	if(nSockWritten<0){
+		perror("write");
+		close(fd);
+		return -1;
+	}
+	printf("(fileDownload)request.txt sock에 write성공\n");
+	close(fd);
 
 
 	char actBuf[BUFFER_SIZE]={0,};
+	//하드코딩-----------
+	mkdir("./home",0744);
+	chdir("./home");
+	//---------------------
+	printf("(fileDownload)열 fileName:%s\n",fName);
 	int fd2 = open(actBuf, O_RDWR|O_CREAT|O_TRUNC, 0744);
+	if(fd2<0){
+		perror("open");
+		return -1;
+	}
+	printf("(fileDownload)%s 파일 open 성공\n",fName);
+
 	memset(actBuf,0,strlen(actBuf));
 
 	while(1){
@@ -162,8 +156,9 @@ int fileDownload(int sock, char *ip, char *fName){
 		}
 		printf("(fileDownload)원하는 파일에 쓰기 성공\n");
 	}
+	chdir("..");
   
-  close(fd2);
+    close(fd2);
 	return 0;
 }
 
