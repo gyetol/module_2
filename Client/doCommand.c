@@ -66,7 +66,7 @@ void * doQuitThread(void * arg){
 
 int  doCommand(ResInfo *resInfo){
 	char cmd;
-	char *srcPath[100]={"b.c","bb.c"}; //하드코딩함
+	char *srcPath[]={"b.c","bb.c"}; //하드코딩함
 	char *destPath="folder";
 	char *msg=".";
 	int flag = 0; // doCommand의 while문 계속: 0 , 탈출: 1
@@ -90,22 +90,22 @@ int  doCommand(ResInfo *resInfo){
 				   } //서버쪽의 디렉토리 경로 요청시 list 쓰레드 생성
 					break;
 
-		case 'c' : getDestPath(destPath, &msg, "복사할 경로를 입력하세요:"); 
+		case 'c' :// getDestPath(destPath, &msg, "복사할 경로를 입력하세요:"); 
 				   doCopy(srcPath,len,destPath,&msg);
-				   freeDestPath(destPath,&msg);
+				  // freeDestPath(destPath,&msg);
 				   break;
 
-		case 'm' : getDestPath(destPath, &msg, "이동할 경로를 입력하세요:");
+		case 'm' :// getDestPath(destPath, &msg, "이동할 경로를 입력하세요:");
 				   doMove(srcPath,len,destPath,&msg);
-				   freeDestPath(destPath,&msg);
+				  // freeDestPath(destPath,&msg);
 				   break;
 
 		case 'r' : doRemove(srcPath,len,&msg);
 				   break;
 
-		case 'n' : getDestPath(destPath,&msg, "바꿀 이름을 입력하세요:");
+		case 'n' :// getDestPath(destPath,&msg, "바꿀 이름을 입력하세요:");
 				   doRename(srcPath,len,destPath,&msg);
-				   freeDestPath(destPath,&msg);
+				  // freeDestPath(destPath,&msg);
 				   break;
 
 		case 'f' : if(pthread_create(&tid,NULL,doDownloadThread,resInfo)!=0){
@@ -116,9 +116,9 @@ int  doCommand(ResInfo *resInfo){
 
 		case 'p' : break;
 		case 'h' : break;
-		case 'k' : getDestPath(destPath, &msg, "생성할 디렉토리명을 입력하세요:");
+		case 'k' :// getDestPath(destPath, &msg, "생성할 디렉토리명을 입력하세요:");
 				   doMkdir(destPath,&msg);
-				   freeDestPath(destPath,&msg);
+				  // freeDestPath(destPath,&msg);
 				   break;
 
 		case 'x' : if(pthread_create(&tid,NULL,doQuitThread, resInfo)!=0){
