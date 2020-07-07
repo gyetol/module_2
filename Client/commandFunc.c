@@ -263,89 +263,73 @@ int doMove(char **srcPath, int len,char *destPath, char **msg){
 // return -1: exit abnormally
 // newPath : directory name to make
 // msg : we can write message in it
-int doMkdir(char *newPath, char **msg){
-    int fd1 = open("news.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
-    char cmd [BUFSIZ] = "/usr/bin/find -name ";
-    strcat(cmd, newPath);
-    strcat(cmd, " >> news.txt");
-	if(newPath == NULL || msg == NULL){
+int doMkdir(char **msg){
+	if(msg == NULL){
 		*msg = "argument is null";
 		return -1;
 	}
 	
-	if((strcmp(newPath,".")==0) || (strcmp(newPath,"..")==0)){
-		*msg = "wrong directory name";
-		return -1;
+	//if((strcmp(newPath,".")==0) || (strcmp(newPath,"..")==0)){
+	//	*msg = "wrong directory name";
+	//	return -1;
+	//	}
+    //현재 디렉토리 안에 같은 디렉토리명이 있는지 검사(일단 리눅스를 믿고 패스)
+
+	char answer;
+	const char *check = "디렉토리를 생성하시겠습니까?(y/n)"; 
+
+	while(1){
+		printf("%s\n",check);
+		//myflush();
+		answer=getchar();
+		if(answer == 'y' || answer == 'Y'){
+			break;
+		}
+		else if(answer == 'n' || answer == 'N'){
+			return 0;
+		}
+		else{myflush();}
 	}
-    //현재 디렉토리 안에 같은 디렉토리명이 있는지 검사
-    system(cmd);
 
+	char newDirName[255];
+	
 
-    fd1 = open("news.txt", O_RDONLY);
-    char * str[BUFSIZ];
-    int result = read(fd1, str, BUFSIZ);
-    close(fd1);
-
-    if (result == 0){
-        *msg="success make directory";
-        pid_t pid[2];
+		printf("생성할 디렉토리명을 입력해주세요: ");
+		myflush();
+		fgets(newDirName, sizeof(newDirName), stdin);
+		newDirName[strlen(newDirName)-1]='\0';
+		if(strcmp(newDirName,".")==0 || strcmp(newDirName,"..")==0){
+			printf("사용할 수 없는 디렉토리명입니다.\n");
+			return -1;
+		}
+		pid_t pid[1];
 		int childStatus;
 
-		for(int i =0; i<2; i++){
+		for(int i=0; i<1; i++){
 			pid[i]=fork();
-		}
-		if(pid[1]==0){
-			if(execl("/bin/mkdir","mkdir",newPath,NULL)==-1){
-				perror("execl");
-				*msg = "error occurrence!";
-				return -1;
+			if(pid[i]==0){
+				if(execl("/bin/mkdir","mkdir",newDirName,NULL)==-1){
+					perror("execl");
+					*msg = "error occurrence!";
+					return -1;
+				}
+				exit(EXIT_SUCCESS);
 			}
-			exit(EXIT_SUCCESS);
 		}
-		if(pid[2]==0){
-			if(execl("/bin/rm","rm","news.txt",NULL)==-1){
-				perror("execl");
-				*msg= "error occurrence!";
-				return -1;
+		for(int i=0; i<1; i++){
+			pid_t terminatedChild = wait(&childStatus);
+			if(WIFEXITED(childStatus)){
+				printf("child %d has terminated : %d\n", terminatedChild, WEXITSTATUS(childStatus));
 			}
-			exit(EXIT_SUCCESS);
+			else{
+				printf("child %d has terminated abnormally\n", terminatedChild);
+			}
 		}
-	for(int i=0; i<2; i++){
-		pid_t terminatedChild = wait(&childStatus);
-		if(WIFEXITED(childStatus)){
-			printf("child %d has terminated : %d\n", terminatedChild, WEXITSTATUS(childStatus));
-		}
-		else{
-			printf("child %d has terminated abnormally\n", terminatedChild);
-		}
-	}	
-	}
+
 
 	*msg = "making new directory is done";
 	return 0;
-
-     /*   pid = fork();
-        if (pid == 0){
-            //새디렉터리 생성
-            if(execl("/bin/mkdir","mkdir",newPath,NULL)==-1){
-                perror("execl");
-                *msg = "error occurrence!";
-                return -1;
-            }
-        }
-    }
-    else{
-        *msg="there is already exit";
-    }
-
-
-	//디스크 용량 확인
-	
-
-
-	return 0;*/
 }
-
 
 //////////////////////////////////////////////////////////
 // *to remove files and directory*

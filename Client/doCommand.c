@@ -95,6 +95,11 @@ int  doCommand(ResInfo *resInfo){
 						   perror("pthread_create");
 						   return -1;
 					   } //서버쪽의 디렉토리 경로 요청시 list 쓰레드 생성
+					   if(pthread_join(tid,(void**)tret)!=0){
+						   perror("pthread_join");
+						   return -1;
+					   }
+					   free(tret);
 						break;
 
 			case 'c' :// getDestPath(destPath, &msg, "복사할 경로를 입력하세요:"); 
@@ -137,7 +142,7 @@ int  doCommand(ResInfo *resInfo){
 						   return -1;
 					   } //quit 요청시 quit 쓰레드 생성
 					   flag=1;
-					   if(pthread_join(tid,(void**)tert)!=){
+					   if(pthread_join(tid,(void**)tret)!=0){
 						   perror("pthread_join");
 						   return -1;
 					   }
