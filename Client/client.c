@@ -42,6 +42,7 @@ int main(){
 	}	
 	resInfo.sock=sock;
 
+	//자기 ip뽑아내기-----------------------------------
 	char * myIp;
 	struct ifaddrs* addrs;
 	if(getifaddrs(&addrs)==-1){
@@ -61,6 +62,7 @@ int main(){
 		tmp = tmp->ifa_next;
 	}
 	freeifaddrs(addrs);
+	//--------------------------------------------------------
 
 	resInfo.ip=myIp;//resInfo= {sock,ip};
 	printf("(client.c)resInfo.ip==myIp : %s\n",resInfo.ip);
