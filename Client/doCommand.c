@@ -133,7 +133,7 @@ int  doCommand(ResInfo *resInfo){
 			case 'p' : break;
 			case 'h' : break;
 			case 'k' :// getDestPath(destPath, &msg, "생성할 디렉토리명을 입력하세요:");
-					   doMkdir(destPath,&msg);
+					   doMkdir(&msg);
 					  // freeDestPath(destPath,&msg);
 					   break;
 
