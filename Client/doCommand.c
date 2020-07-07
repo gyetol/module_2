@@ -74,6 +74,7 @@ int  doCommand(ResInfo *resInfo){
 	int flag = 0; // doCommand의 while문 계속: 0 , 탈출: 1
 	int len = sizeof(srcPath)/sizeof(srcPath[0]);
 	pthread_t tid;
+	int* tret;
 
 	printf("(doCommand)doCommand 들어옴\n");
 
@@ -118,8 +119,12 @@ int  doCommand(ResInfo *resInfo){
 						   perror("pthread_create");
 						   return -1;
 					   } //download 요청시 download 쓰레드 생성
+					   if(pthread_join(tid,(void**)tret)!=0){
+						   perror("pthread_join");
+						   return -1;
+					   }
+					   free(tret);
 					   break;
-
 			case 'p' : break;
 			case 'h' : break;
 			case 'k' :// getDestPath(destPath, &msg, "생성할 디렉토리명을 입력하세요:");
@@ -132,6 +137,11 @@ int  doCommand(ResInfo *resInfo){
 						   return -1;
 					   } //quit 요청시 quit 쓰레드 생성
 					   flag=1;
+					   if(pthread_join(tid,(void**)tert)!=){
+						   perror("pthread_join");
+						   return -1;
+					   }
+					   free(tret);
 					   break;
 			default: printf("존재하지 않는 명령입니다.\n");
 					 break;
