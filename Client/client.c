@@ -8,17 +8,20 @@
 #include "clientStart.h"
 #include "doCommand.h"
 #include "commandFunc.h"
+#include "commonNcurses.h"
 
 int main(){
-	char ip[BUFSIZ];
+    init_scr();
+    int sock = 0;
+    char * ip = "";
+    int thisMenu = MENU_MAIN;
+    int * selected =NULL;
+
 	ResInfo resInfo={0,};
 
-	/*
-	if(IP_INSERT_PAGE(&ip)==-1){
-		//클라이언트에게 ip재입력 받음
-	}
-	*/
+	*selected=IP_insert_Page(&ip);
 
+	/*
 	printf("접속할 서버의 IP를 입력하세요:");
 	scanf("%s",ip);
 
@@ -27,6 +30,8 @@ int main(){
 		perror("scanf");
 		return -1;
 	}
+	*/
+	printf("(client.c)입력받은 ip:%s\n",ip);
 
 
 	if(myListOpen()==-1){
@@ -35,7 +40,6 @@ int main(){
 	}
 
 
-	int sock=0;
 	if(clientStart(ip,&sock)==-1||sock==0){
 		fprintf(stderr,"error in clientStart\n");
 		return -1;
