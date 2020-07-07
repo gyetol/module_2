@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "commonNcurses.h"
+#include "clientStart.h"
 
 char * sampleFiles[] = {
         "this is file 1", "this is file 2", "this is file 3", "this is file 4",
@@ -31,6 +32,7 @@ int main(){
                 thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, sampleFiles, selected, 16, "CLIENT PATH", "SERVER PATH");
                 break;
             case MENU_IP_INSERT :
+				clientStart(ipAddress,&sock);
             case MENU_FTP_PAGE:
                 thisMenu = FTP_Main_Page(MODE_CLIENT, "CLIENT PATH", "SERVER PATH");
                 break;

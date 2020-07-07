@@ -15,6 +15,7 @@ char * sampleFile[] = {
 };
 ///////////////////////////////////////////////////////////////////////////
 
+
 /////////////////////////////////////////////////////////////
 /// to make env for ncurses and color pairs
 /// input : void
@@ -172,7 +173,8 @@ int IP_insert_Page(char**ip){
                     return selectingMenu;
                 }
             default:
-                if ((selectingMenu == MENU_IP_INSERT) && ((key >= '0' && key <= '9') || (key >= 'a' && key <= 'z') || (key == '.') )) {
+                //if ((selectingMenu == MENU_IP_INSERT) && ((key >= '0' && key <= '9') || (key >= 'a' && key <= 'z') || (key == '.') )) {
+                if ((selectingMenu == MENU_IP_INSERT) && ((key >= '0' && key <= '9') || (key == '.') )) {
                     char tempKey[2];
                     tempKey[0] = key;
                     tempKey[1] = '\0';
