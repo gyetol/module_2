@@ -280,7 +280,7 @@ int doMkdir(char **msg){
 
 	while(1){
 		printf("%s\n",check);
-		//myflush();
+		myflush();
 		answer=getchar();
 		if(answer == 'y' || answer == 'Y'){
 			break;
