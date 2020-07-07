@@ -4,7 +4,7 @@
 #include <ncurses.h>
 #include <string.h>
 #include <stdlib.h>
-#include "commonNucurses.h"
+#include "commonNcurses.h"
 
 ///////////////////////SAMPLE FILES/////////////////////////////////////////
 char * sampleFile[] = {

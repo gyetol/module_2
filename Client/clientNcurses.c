@@ -1,11 +1,9 @@
-
-
 //
 // Created by linux on 6/30/20.
 //
 #include <unistd.h>
 
-#include "commonNucurses.h"
+#include "commonNcurses.h"
 
 char * sampleFiles[] = {
         "this is file 1", "this is file 2", "this is file 3", "this is file 4",
