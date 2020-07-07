@@ -113,11 +113,12 @@ void *serverStart(void *arg){
 					if(pthread_join(tid,(void**)&tret)!=0)
 						err_quit("pthread_join");
 					if(*tret==0)
+					{
+						free(tret);
 						break;
+					}
 					getchar();	
 				}
-			//	if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
-		//				err_quit("epoll_ctl");
 				printf("도달");
 				getchar();
 			}
