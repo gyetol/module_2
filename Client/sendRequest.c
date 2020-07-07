@@ -144,9 +144,8 @@ int fileDownload(int sock, char *ip, char *fName){
 			perror("nRead");
 			return -1;
 		}
-		else if(nRead == 0){
+		else if(strstr(buf,"EOF"))
 			break;
-		}
 		printf("(fileDownload)원하는 파일에 쓰기전 read성공\n");
 
 		int nWritten=write(fd2, actBuf, nRead);
