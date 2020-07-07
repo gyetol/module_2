@@ -46,6 +46,14 @@ int response(int cSock, char **type, char **path, char **ip){
 				chdir("..");
 				return -1;
 			}
+			char eofBuf[3]="EOF";
+			int eofWritten=write(cSock, eofBuf, sizeof(eofBuf));
+			if(eofWritten<0){
+				perror("write");
+				close(fd);
+				chdir("..");
+				return -1;
+			}
 			getchar();
 			printf("list요청의 write완료\n");
 		}
