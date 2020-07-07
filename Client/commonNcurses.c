@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include "commonNcurses.h"
 
-
 ///////////////////////SAMPLE FILES/////////////////////////////////////////
 char * sampleFile[] = {
         "this is file 1", "this is file 2", "this is file 3", "this is file 4",
