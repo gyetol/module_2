@@ -69,6 +69,7 @@ int  doCommand(ResInfo *resInfo){
 	char cmd;
 	char *srcPath[]={"b.c","bb.c"}; //하드코딩함
 	char *destPath="folder";
+	char *destPath1="folder1";
 	char *msg=".";
 	int flag = 0; // doCommand의 while문 계속: 0 , 탈출: 1
 	int len = sizeof(srcPath)/sizeof(srcPath[0]);
@@ -81,7 +82,6 @@ int  doCommand(ResInfo *resInfo){
 	while(1){
 		printf("(doCommand)명령어 처리하는 while문 진입\n");
 		if(flag==1){break;}
-		
 		myflush();
 		printf("수행할 명령어를 입력해주세요:");
 		cmd=getchar();
@@ -142,12 +142,6 @@ int  doCommand(ResInfo *resInfo){
 
 
 
-void * fileDownloadThread(void * arg){
-	printf("(doCommand)fileDownloadThread 진입\n");
-	ResInfo * resInfo=(ResInfo*)arg;
-	fileDownload(resInfo->sock,resInfo->ip,"fileDanzi.txt");
-	return NULL;
-}
 
 /*
 int doCommand(ResInfo* resInfo){

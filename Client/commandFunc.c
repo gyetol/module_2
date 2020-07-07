@@ -288,8 +288,43 @@ int doMkdir(char *newPath, char **msg){
 
     if (result == 0){
         *msg="success make directory";
-        pid_t pid;
-        pid = fork();
+        pid_t pid[2];
+		int childStatus;
+
+		for(int i =0; i<2; i++){
+			pid[i]=fork();
+		}
+		if(pid[1]==0){
+			if(execl("/bin/mkdir","mkdir",newPath,NULL)==-1){
+				perror("execl");
+				*msg = "error occurrence!";
+				return -1;
+			}
+			exit(EXIT_SUCCESS);
+		}
+		if(pid[2]==0){
+			if(execl("/bin/rm","rm","news.txt",NULL)==-1){
+				perror("execl");
+				*msg= "error occurrence!";
+				return -1;
+			}
+			exit(EXIT_SUCCESS);
+		}
+	for(int i=0; i<2; i++){
+		pid_t terminatedChild = wait(&childStatus);
+		if(WIFEXITED(childStatus)){
+			printf("child %d has terminated : %d\n", terminatedChild, WEXITSTATUS(childStatus));
+		}
+		else{
+			printf("child %d has terminated abnormally\n", terminatedChild);
+		}
+	}	
+	}
+
+	*msg = "making new directory is done";
+	return 0;
+
+     /*   pid = fork();
         if (pid == 0){
             //새디렉터리 생성
             if(execl("/bin/mkdir","mkdir",newPath,NULL)==-1){
@@ -308,7 +343,7 @@ int doMkdir(char *newPath, char **msg){
 	
 
 
-	return 0;
+	return 0;*/
 }
 
 

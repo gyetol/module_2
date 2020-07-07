@@ -127,8 +127,10 @@ int doRename(char **srcPath, int len, char *destPath ,char **msg){
 // len: length of array
 // msg: we can write message in it
 int doCopy(char **srcPath, int len, char *destPath, char **msg){
+printf("docopy 진입\n");
 	if(srcPath == NULL || destPath == NULL){
 		*msg = "argument is null";
+	myflush();
 		return -1;
 	}
 	if(len <=0){
@@ -139,10 +141,12 @@ int doCopy(char **srcPath, int len, char *destPath, char **msg){
 		*msg = "can't copy '.' or '..' directory";
 		return -1;
 	}
+	printf(".또는 ..검사 완료\n");
 	char answer;
 	const char *check = "정말로 복사하시겠습니까?(y/n)";
 
 	while(1){
+		printf("while문 진입완료\n");
 		printf("%s\n",check);
 		answer = getchar();
 		if(answer == 'y' || answer == 'Y'){
@@ -152,8 +156,10 @@ int doCopy(char **srcPath, int len, char *destPath, char **msg){
 			return 0;
 		}
 		else{myflush();}
+		printf("while문 완료\n");
 	}
 
+	printf("while문 탈출완료\n");
 	pid_t pid[len];
 	int childStatus;
 
@@ -168,6 +174,7 @@ int doCopy(char **srcPath, int len, char *destPath, char **msg){
 			exit(EXIT_SUCCESS);
 		}
 	}
+	printf("for문 첫번째 완료\n");
 	for(int i =0; i<len; i++){
 		pid_t terminatedChild = wait(&childStatus);
 		if(WIFEXITED(childStatus)){
@@ -177,8 +184,10 @@ int doCopy(char **srcPath, int len, char *destPath, char **msg){
 			printf("child %d has terminated abnormally\n", terminatedChild);
 		}
 	}
+	printf("for문 두번째 완료\n");
 	
 	*msg = "copying is done";
+	printf("함수종료직전\n");
 	return 0;
 }
 
