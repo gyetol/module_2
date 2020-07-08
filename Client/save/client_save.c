@@ -8,7 +8,11 @@
 #include "clientStart.h"
 #include "doCommand.h"
 #include "commandFunc.h"
-#include "commonNcurses.h"
+
+typedef struct ResInfo{
+	int sock;
+	char * ip;
+}ResInfo;
 
 int main(){
     int sock = 0;

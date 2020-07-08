@@ -1,27 +1,30 @@
 #include "parsing.h"
-
+/*
+int myListOpen();
 int main(){
-	char *directories[DIRECTORY_SIZE];
- 	int dNext=0;
-	char *files[FILE_SIZE];
-	int fNext=0;
-	parsing(directories, files, &dNext, &fNext);
-   /*	for(int i=0;i<dNext;i++){
-     printf("%s\n", directories[i]);
- 	}
-	 for(int i=0;i<fNext;i++){
-     printf("%s\n", files[i]);
- 	}	*/
+	Array* directories;
+	Array* files;
+
+	myListOpen();
+	parsing("myList.txt",&directories,&files);//server side
+	printf("parsing.c의 결과\n");
+	printf("%d\n%d",directories->next,files->next);
+
+	free(directories);
+	free(files);
 	return 0;
 }
+*/
+typedef struct Array{
+	char * array[ARR_SIZ];
+ 	int next;
+}Array;
 
-int parsing(char **directories, char **files, int *dNext, int *fNext){
-//	char * directories[10];
-//	int dNext=0;
-//	char * files[10];
-//	int fNext=0;
+int parsing(const char *path,Array** directories,Array** files){
+	Array* dirs=calloc(1,sizeof(Array));
+	Array* fs=calloc(1,sizeof(Array));
 
-	int fd=open("list.txt", O_RDONLY| O_CREAT, 444);
+	int fd=open(path, O_RDONLY| O_CREAT, 444);
 	if(fd<0){
 		perror("open");
 		return -1;
@@ -33,39 +36,34 @@ int parsing(char **directories, char **files, int *dNext, int *fNext){
 			perror("read");
 			return -1;
 		}
-		else if (nRead==0){
+		else if (nRead==0)
 			break;
-		}
 	
-	char *savePtr, *saveStr;
-	char *ptr=strtok_r(buf, "\n", &savePtr);
-		  ptr=strtok_r(NULL, "\n", &savePtr);
-		  ptr=strtok_r(NULL, "\n", &savePtr);
-	while(ptr!=NULL)	{
+		char *savePtr, *saveStr;
+		char *ptr=strtok_r(buf, "\n", &savePtr);
+		ptr=strtok_r(NULL, "\n", &savePtr);
+		ptr=strtok_r(NULL, "\n", &savePtr);
+		while(ptr!=NULL)	{
 			char *str=strtok_r(ptr, " ", &saveStr);
 			char type=str[0];
-			for(int i=0;i<8;i++)
-			{
+			for(int i=0;i<8;i++){
 				str=strtok_r(NULL, " ", &saveStr);
 			}
-			if(type=='d')
-			{
-				//printf("directory");
-				directories[*dNext]=str;
-				(*dNext)++;
+			if(type=='d'){
+				dirs->array[dirs->next]=str;
+				printf("%s\n",dirs->array[dirs->next]);
+				(dirs->next)++;
 			}
-			else if(type=='-')
-			{
-				//printf("file");
-				files[*fNext]=str;
-				(*fNext)++;
+			else if(type=='-'){
+				fs->array[fs->next]=str;
+				fs->next++;
 			}
 			else
 				break;
-			//printf("%s", str);			
 			ptr=strtok_r(NULL, "\n", &savePtr);
-			//printf("\n");
 		}
 	}
-return 0;
+	*directories=dirs;
+	*files=fs;
+	return 0;
 }

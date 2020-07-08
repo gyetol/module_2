@@ -18,10 +18,9 @@ int clientMain(int *thisMenu){
 
 	ResInfo resInfo={0,};
 
-	*thisMenu=IP_insert_Page(&ip);
+	*thisMenu=IP_insert_Page(&ip);//IP입력을 받아야한다.
 
 	printf("(client.c)입력받은 ip:%s\n",ip);
-
 
 	if(myListOpen()==-1){
 		fprintf(stderr,"error in myListOpen\n");
