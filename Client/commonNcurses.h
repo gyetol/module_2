@@ -60,7 +60,7 @@ typedef struct Array Array;
 
 //these are page modes
 #define MENU_MAIN 0
-#define MENU_BOOKMARKS 1
+#define MAIN_HELP 1
 #define MENU_HISTORY 2
 #define MENU_EXIT 3
 #define MENU_IP_INSERT 4
@@ -108,7 +108,7 @@ void print_Log_Block(char  ** srcArray, int aryCount);
 void print_Path_Block(char * pathOfLeft, char *pathOfRight);    //insert local or server path string
 int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight, ResInfo *resInfo,char **msg,Array* myDirectories,Array* myFiles,Array* directories,Array* files);
 int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * selected, int aryCount, char * pathOfLeft, char * pathOfRight, ResInfo *resInfo,char **msg);
-
+void Help_Page();
 
 
 #endif //TESTMODULE_COMMONNUCURSES_H

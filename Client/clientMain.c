@@ -138,10 +138,10 @@ int main(){
                 //
                 break;
             case MENU_HELP:
-                //
+                Help_Page();
                 break;
-            case MENU_BOOKMARKS:
-                //
+            case MAIN_HELP:
+                Help_Page();
                 break;
             case MENU_HISTORY:
                 //

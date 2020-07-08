@@ -128,7 +128,7 @@ int IP_insert_Page(char**ip){
     char key; // User Input
     char ipAddress[IPADDRESSLENGTH] = "";
 
-    int selectingMenu = MENU_BOOKMARKS;
+    int selectingMenu = MAIN_HELP;
 
     WINDOW *upMenu = NULL;
     WINDOW *middleWindow = NULL;
@@ -161,7 +161,7 @@ int IP_insert_Page(char**ip){
 
         attron(A_STANDOUT | A_UNDERLINE); // selected effect
         switch(selectingMenu){
-            case MENU_BOOKMARKS :
+            case MAIN_HELP :
                 mvprintw(22, 15, "HELP");
                 break;
             case MENU_HISTORY :
@@ -179,29 +179,29 @@ int IP_insert_Page(char**ip){
 
         switch(key) {
             case KEYBOARD_UP:
-                if (selectingMenu == MENU_HELP || selectingMenu == MENU_EXIT || selectingMenu == MENU_HISTORY) {
+                if (selectingMenu == MAIN_HELP || selectingMenu == MENU_EXIT || selectingMenu == MENU_HISTORY) {
                     selectingMenu = MENU_IP_INSERT;
                 }
                 break;
             case KEYBOARD_DOWN:
                 if (selectingMenu == MENU_IP_INSERT) {
-                    selectingMenu = MENU_HELP;
+                    selectingMenu = MAIN_HELP;
                 }
                 break;
             case KEYBOARD_RIGHT:
-                if (selectingMenu == MENU_HELP)
+                if (selectingMenu == MAIN_HELP)
                     selectingMenu = MENU_HISTORY;
                 else if (selectingMenu == MENU_HISTORY)
                     selectingMenu = MENU_EXIT;
                 else if (selectingMenu == MENU_EXIT)
-                    selectingMenu = MENU_HELP;
+                    selectingMenu = MAIN_HELP;
                 break;
             case KEYBOARD_LEFT :
                 if (selectingMenu == MENU_HISTORY)
-                    selectingMenu = MENU_HELP;
+                    selectingMenu = MAIN_HELP;
                 else if (selectingMenu == MENU_EXIT)
                     selectingMenu = MENU_HISTORY;
-                else if (selectingMenu == MENU_HELP)
+                else if (selectingMenu == MAIN_HELP)
                     selectingMenu = MENU_EXIT;
                 break;
             case KEYBOARD_BACKSPACE:
@@ -228,7 +228,7 @@ int IP_insert_Page(char**ip){
                     delwin(middleWindow);
                     delwin(downMenu);
                     return selectingMenu;
-                } else if (selectingMenu == MENU_HELP){
+                } else if (selectingMenu == MAIN_HELP){
                     *ip=ipAddress;
                     delwin(upMenu);
                     delwin(middleWindow);
