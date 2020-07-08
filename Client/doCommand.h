@@ -19,7 +19,11 @@ typedef struct ResInfo{
 }ResInfo;
 
 void * fileDownloadThread(void * arg);
+void * doListThread(void *arg);
+void * doDownloadThread(void *arg);
+void * doQuitThread(void *arg);
 int doCommand(ResInfo *resInfo);
+int *tret;
 //int doCommand(int sock,char * ip);
 
 #endif

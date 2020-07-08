@@ -87,6 +87,7 @@ int main(){
 				myIp=getMyIp();
 				mvprintw(0,0,"myIP:%s",myIp);
 				resInfo.ip=myIp;
+
             case MENU_FTP_PAGE:
 				myListOpen();
 				//list.txt파싱하는 함수 

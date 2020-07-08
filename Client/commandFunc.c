@@ -38,9 +38,13 @@ int getDestPath(char *destPath, char **msg, const char *checkMsg){
 		return -1;
 	}
 	char buf[255];
+	char *temp=NULL;
 	printf("%s\n",checkMsg);
 	fgets(buf,sizeof(buf),stdin);
-	 destPath= malloc(sizeof(buf));
+	buf[strlen(buf)-1]='\0';
+	 temp= malloc(sizeof(buf));
+	 strcpy(temp,buf);
+	 destPath=temp;
 	*msg = "getting path is done";
 
 	return 0;

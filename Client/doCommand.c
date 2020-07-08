@@ -74,7 +74,8 @@ int  doCommand(ResInfo *resInfo){
 	int flag = 0; // doCommand의 while문 계속: 0 , 탈출: 1
 	int len = sizeof(srcPath)/sizeof(srcPath[0]);
 	pthread_t tid;
-	int* tret;
+	//int* tret;
+	
 
 	printf("(doCommand)doCommand 들어옴\n");
 
