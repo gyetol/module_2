@@ -1,19 +1,17 @@
 //
 // Created by moosong on 6/30/20.
 //
-#include <ncurses.h>
-#include <string.h>
-#include <stdlib.h>
-#include "commonNucurses.h"
-#include <pthread.h>
+#include "commonNcurses.h"
 
 ///////////////////////SAMPLE FILES/////////////////////////////////////////
+/*
 char * sampleFile[] = {
         "this is file 1", "this is file 2", "this is file 3", "this is file 4",
         "this is file 5", "this is file 6", "this is file 7", "this is file 8",
         "this is file 9", "this is file 10", "this is file 11", "this is file 12",
         "this is file 13", "this is file 14", "this is file 15", "this is file 16"
 };
+*/
 ///////////////////////////////////////////////////////////////////////////
 
 
@@ -425,7 +423,7 @@ void print_Path_Block(char * pathOfLeft, char *pathOfRight){
 /// input : mode MODE_CLIENT or MODE_SERVER, path1, path2
 /// return : selectMenu
 ////////////////////////////////////////////////////////////
-int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInfo,char **msg) {
+int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInfo,char **msg,Array* myDirectories,Array*myFiles,Array*directories,Array* files) {
     werase(stdscr); // Clear Window
     curs_set(0); // Not need Cursor pointer
     char key; // User Input
@@ -454,14 +452,14 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
     while (1) {
         attron(COLOR_PAIR(MAIN1));
         print_Title_Block(mode);
-        print_Path_Block(pathOfLeft, pathOfRight);
+                 print_Path_Block(pathOfLeft, pathOfRight);
 
         attron(COLOR_PAIR(MAIN2));
         print_Log_Block(sampleFile, 10);
-        print_Sub_Block(MODE_FIRST, sampleFile, 10);
-        print_Sub_Block(MODE_SECOND, sampleFile, 10);
-        print_Sub_Block(MODE_THIRD, sampleFile, 10);
-        print_Sub_Block(MODE_FOURTH, sampleFile, 10);
+        print_Sub_Block(MODE_FIRST, myDirectories->array, 10);
+        print_Sub_Block(MODE_SECOND, myFiles->array, 10);
+        print_Sub_Block(MODE_THIRD, directories->array, 10);
+        print_Sub_Block(MODE_FOURTH, files->array, 10);
 
         attron(A_STANDOUT | A_UNDERLINE); // selected effect
         switch (selectingMenu) {

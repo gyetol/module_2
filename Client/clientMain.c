@@ -2,10 +2,25 @@
 // Created by linux on 6/30/20.
 //
 #include <unistd.h>
-         #include <sys/types.h>
+#include <sys/types.h>
 #include <ifaddrs.h>                                                                          
 #include "commonNcurses.h"
+#include "parsing.h"
 #include "clientStart.h"
+#include "sendRequest.h"
+#include "myListOpen.h"
+#include "listOpen.h"
+
+typedef struct ResInfo{
+	int sock;
+	char * ip;
+}ResInfo;
+
+typedef struct Array{
+	char * array[ARR_SIZ];
+ 	int next;
+}Array;
+
 
 char * sampleFiles[] = {
         "this is file 1", "this is file 2", "this is file 3", "this is file 4",
@@ -14,10 +29,6 @@ char * sampleFiles[] = {
         "this is file 13", "this is file 14", "this is file 15", "this is file 16"
 };
 
-typedef struct ResInfo{
-	int sock;
-	char * ip;
-}ResInfo;
 
 char *getMyIp(){
 	char * myIp;
@@ -50,18 +61,15 @@ int main(){
     int * selected =NULL;
 	char * myIp;
 
-	char *myDirectories[DIRECTORY_SIZE];
- 	int mydNext=0;
-	char *myFiles[FILE_SIZE];
-	int myfNext=0;
+	Array* myDirectories;
+	Array* myFiles;
+	char clientPath[1024]="/";
+	char serverPath[1024]="/home";
+	char * msg={0,};
 
-	char *directories[DIRECTORY_SIZE];
- 	int dNext=0;
-	char *files[FILE_SIZE];
-	int fNext=0;
+	Array* directories;
+	Array* files;
 
-
-	
 	ResInfo resInfo={0,};
 
     while (thisMenu != MENU_EXIT){
@@ -70,34 +78,38 @@ int main(){
                 thisMenu = IP_insert_Page(&ipAddress);
                 break;
             case MENU_FIRSTWINODW :
-            case MENU_SECONDWINDOW :
-            case MENU_THIRDWINDOW :
-            case MENU_FOURTHWINDOW :
 				myListOpen();
-				//list.txt파싱하는 함수 
-				parsing(myDirectories,myFiles,&mydNext,&myfNext);
-
-				listOpen();
-				//list.txt파싱하는 함수
-				parsing(directories,files,&dNext,&fNext);
-                thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, sampleFiles, selected, 16, "CLIENT PATH", "SERVER PATH");
+				parsing("myList.txt",&myDirectories,&myFiles);//myListOpen
+                thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, myDirectories->array, selected, myDirectories->next, clientPath, serverPath,&resInfo,&msg);
+				break;
+            case MENU_SECONDWINDOW :
+				myListOpen();
+				parsing("myList.txt",&myDirectories,&myFiles);//myListOpen
+                thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, myFiles->array, selected, myFiles->next, clientPath, serverPath,&resInfo,&msg);
+				break;
+            case MENU_THIRDWINDOW :
+				listDownload(resInfo.sock,resInfo.ip);
+				parsing("list.txt",&directories,&files);//myListOpen
+                thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, directories->array, selected, directories->next, clientPath, serverPath,&resInfo,&msg);
+				break;
+            case MENU_FOURTHWINDOW :
+				listDownload(resInfo.sock,resInfo.ip);
+				parsing("list.txt",&directories,&files);//myListOpen
+                thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, files->array, selected, files->next, clientPath, serverPath,&resInfo,&msg);
                 break;
             case MENU_IP_INSERT :
-				clientStart(ipAddress,&sock);
+				clientStart("192.168.30.22",&sock);
 				myIp=getMyIp();
 				mvprintw(0,0,"myIP:%s",myIp);
 				resInfo.ip=myIp;
-
+				resInfo.sock=sock;
             case MENU_FTP_PAGE:
 				myListOpen();
-				//list.txt파싱하는 함수 
-				parsing(myDirectories,myFiles,&mydNext,&myfNext);
-
-				listOpen();
-				//list.txt파싱하는 함수
-				parsing(directories,files,&dNext,&fNext);
-
-                thisMenu = FTP_Main_Page(MODE_CLIENT, "CLIENT PATH", "SERVER PATH");
+				parsing("myList.txt",&myDirectories,&myFiles);//myListOpen
+				//printf server side list
+				listDownload(resInfo.sock,resInfo.ip);
+				parsing("list.txt",&directories,&files);//myListOpen
+                thisMenu = FTP_Main_Page(MODE_CLIENT, clientPath, serverPath,&resInfo,&msg,myDirectories,myFiles,directories,files);
                 break;
             case MENU_IP_MANAGE:
                 //

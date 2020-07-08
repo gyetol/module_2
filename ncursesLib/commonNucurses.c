@@ -20,7 +20,7 @@ char * sampleFile[] = {
 /// input : void
 /// return : void
 ////////////////////////////////////////////////////////////
-void init_scr()
+void init_scr() 
 {
     initscr();
     start_color();
