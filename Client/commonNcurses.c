@@ -521,8 +521,8 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
         attron(COLOR_PAIR(MAIN2));
         print_Log_Block(sampleFile, 10);
         print_Sub_Block(MODE_FIRST, myDirectories->array, myDirectories->next);
-        print_Sub_Block(MODE_SECOND, myFiles->array, myFiles->next);
-        print_Sub_Block(MODE_THIRD, directories->array, directories->next);
+        print_Sub_Block(MODE_SECOND, directories->array, directories->next);
+        print_Sub_Block(MODE_THIRD, myFiles->array, myFiles->next);
         print_Sub_Block(MODE_FOURTH, files->array, files->next);
 
         attron(A_STANDOUT | A_UNDERLINE); // selected effect
@@ -587,12 +587,14 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
                     selectingMenu = MENU_THIRDWINDOW;
                 }
                 break;
+				/*
             case KEYBOARD_ENTER:
                 if ( (selectingMenu == MENU_FIRSTWINODW)||(selectingMenu == MENU_SECONDWINDOW)||
                         (selectingMenu == MENU_THIRDWINDOW)||(selectingMenu == MENU_FOURTHWINDOW)){
                     return selectingMenu;
                 }
                 break;
+				*/
             case IP_MANAGE_KEY:
                 return MENU_IP_MANAGE;
             case HELP_KEY:
@@ -629,6 +631,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
     int totalCount;
     selected = calloc(aryCount,sizeof(int));
     char key;
+	int selectedCnt=0;
 
     switch (selectingMenu) {
         case MENU_FIRSTWINODW:
@@ -769,12 +772,20 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
             case KEYBOARD_SPACEBAR:
                 if (selected[cursor] == 0) {
                     selected[cursor] = 1;
+					selectedCnt++;
                 } else {
                     selected[cursor] = 0;
                 }
                 break;
             case KEYBOARD_BACKSPACE:
                 return MENU_FTP_PAGE;
+			case KEYBORD_ENTER:
+				//위의 두 화면에서 enter가 입력되었을 경우에만 해당 함수를 탈출
+				if(thisMenu==MENU_FIRSTWINDOW||thisMenu==MENU_SECONDWINDOW){
+					if(selectedCnt==1)
+						return MENU_INPUT_DIR;
+				}
+				break;
             case EXIT_KEY:
 				  return MENU_FTP_PAGE; // 4분할 화면 중 하나에 있을 시 , exit키는 ftp_page로 이동
                // return MENU_EXIT;

@@ -39,7 +39,7 @@ void * doDownloadThread(void *arg){
 	ResInfo* resInfo =(ResInfo*)arg;
 	char fName[255];
 	myflush();
-	printf("(doDownloadThread)다운받을 파일명을 입력해주세요:");
+// 	printf("(doDownloadThread)다운받을 파일명을 입력해주세요:");
 	fgets(fName,sizeof(fName),stdin);
 
 	if(fileDownload(resInfo->sock,resInfo->ip,fName)==-1){
@@ -81,17 +81,14 @@ int  doCommand(ResInfo *resInfo){
 	int len = sizeof(srcPath)/sizeof(srcPath[0]);
 	pthread_t tid;
 	//int* tret;
-	
 
-	printf("(doCommand)doCommand 들어옴\n");
-
-
+// 	printf("(doCommand)doCommand 들어옴\n");
 
 	while(1){
-		printf("(doCommand)명령어 처리하는 while문 진입\n");
+// 		printf("(doCommand)명령어 처리하는 while문 진입\n");
 		if(flag==1){break;}
 		myflush();
-		printf("수행할 명령어를 입력해주세요:");
+// 		printf("수행할 명령어를 입력해주세요:");
 		cmd=getchar();
 	
 		switch(cmd){
@@ -155,7 +152,8 @@ int  doCommand(ResInfo *resInfo){
 					   }
 					   free(tret);
 					   break;
-			default: printf("존재하지 않는 명령입니다.\n");
+			default: 
+// 					 printf("존재하지 않는 명령입니다.\n");
 					 break;
 		}
 
