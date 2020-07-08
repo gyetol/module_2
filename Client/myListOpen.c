@@ -1,5 +1,4 @@
 #include "myListOpen.h"
- 
 
 int myListOpen(){
 //int main(void){ //myListOpen();
