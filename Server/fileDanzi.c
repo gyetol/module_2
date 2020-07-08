@@ -211,6 +211,7 @@ int main(int argc, char **argv){
 	else if(strcmp(argv[1], "--help")==0||strcmp(argv[1], "-h")==0)
 		help();
 	else{
+		system("./log.sh");
 		char ip[20]=" ";
 		char pwd[20]=" ";
 		//서버 등록 되어있는 ip인지 확인
