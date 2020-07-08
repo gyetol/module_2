@@ -56,6 +56,60 @@ void init_IP_insert_Page(WINDOW *upWindow, WINDOW *middleWindow, WINDOW *downWin
 }
 
 /////////////////////////////////////////////////////////////
+///to show help page
+// return : void
+////////////////////////////////////////////////////////////
+void Help_Page(){
+	werase(stdscr); //clear Window
+	curs_set(0); //Not need Cursor pointer
+	
+	WINDOW *help = NULL;
+
+	attron(COLOR_PAIR(MAIN1));
+	mvprintw(3, 34, "HELP PAGE");
+
+    attron(COLOR_PAIR(MAIN2));
+	mvprintw(7, 2, "Usage : PUT IP ADDRESS WHERE YOU WANT TO CONNECT + ENTER KEY ");
+    mvprintw(9, 2, "If you want to move the cursor -> use Arrow key");
+	mvprintw(10, 2, "If you want to select the menu -> use Enter key");
+	
+	mvprintw(14, 30, "--------------- MENU USAGE ---------------");
+	mvprintw(15, 2, "HISTORY : 'History'page shows the record history where you logged in before");
+	mvprintw(16, 2, "EXIT : Terminate the FileDanzi FTP Service");
+
+	mvprintw(21, 30, "--------------- COMMAND KEY USAGE ------------");
+	mvprintw(22, 2, "1. Copyfile : Select the file or files what you want to copy and press the 'c' key");
+	mvprintw(23, 2, "2. Movefile : Select the file or files what you want to move and press the 'm' key");
+	mvprintw(24, 2, "3. RemoveFile : Select the file or files what you want to delete and press the 'r' key");
+	mvprintw(25, 2, "3. ReNamefile : Select the file or files what you want to rename and press the 'n' key");
+	mvprintw(26, 2, "4. DownloadFile : Select the file or files what you want to download and press the 'f' key");
+	mvprintw(27, 2, "5. IPManage : ");
+	mvprintw(28, 2, "6. MoVeDir : Select the directory what you want to move and press the 'v' key");
+	mvprintw(29, 2, "7. RemovEDir : Select the directory what you want to remove nad press the 'e' key");
+	mvprintw(30, 2, "8. RenAmeDir : Select the directory what you want to rename and press the 'a' key");
+	mvprintw(31, 2, "9. Help : Manual page for client how to use  FileDanzi FTP Server and press the 'h' key");
+	mvprintw(32, 2, "10.MaKeFolder : Make new folder for manage client file system and press the 'k' key");
+	mvprintw(33, 2, "11. EXit : Terminate the FileDanzi FTP Server and press the 'x' key");
+    
+	//underline
+    attron(A_UNDERLINE);
+    mvprintw(22, 2, "C");
+    mvprintw(23, 2, "M");
+    mvprintw(24, 2, "R");
+    mvprintw(25, 4, "N");
+	mvprintw(26, 10, "F");
+    mvprintw(27, 3, "P");
+    mvprintw(28, 4, "V");
+    mvprintw(29, 7, "E");
+    mvprintw(30, 5, "A");
+    mvprintw(31, 2, "H");
+    mvprintw(32, 4, "K");
+    mvprintw(33, 3, "X");
+
+    attroff(A_UNDERLINE);
+
+}
+/////////////////////////////////////////////////////////////
 /// to show main menu
 /// input1 : ip Address space to store
 /// return : menunum
@@ -93,14 +147,14 @@ int IP_insert_Page(char**ip){
         }
 
         attron(COLOR_PAIR(MAIN1));
-        mvprintw(22, 15, "BOOK MARKS");
+        mvprintw(22, 15, "HELP");
         mvprintw(22, 36, "HISTORY");
         mvprintw(22, 58, "EXIT");
 
         attron(A_STANDOUT | A_UNDERLINE); // selected effect
         switch(selectingMenu){
             case MENU_BOOKMARKS :
-                mvprintw(22, 15, "BOOK MARKS");
+                mvprintw(22, 15, "HELP");
                 break;
             case MENU_HISTORY :
                 mvprintw(22, 36, "HISTORY");
@@ -117,29 +171,29 @@ int IP_insert_Page(char**ip){
 
         switch(key) {
             case KEYBOARD_UP:
-                if (selectingMenu == MENU_BOOKMARKS || selectingMenu == MENU_EXIT || selectingMenu == MENU_HISTORY) {
+                if (selectingMenu == MENU_HELP || selectingMenu == MENU_EXIT || selectingMenu == MENU_HISTORY) {
                     selectingMenu = MENU_IP_INSERT;
                 }
                 break;
             case KEYBOARD_DOWN:
                 if (selectingMenu == MENU_IP_INSERT) {
-                    selectingMenu = MENU_BOOKMARKS;
+                    selectingMenu = MENU_HELP;
                 }
                 break;
             case KEYBOARD_RIGHT:
-                if (selectingMenu == MENU_BOOKMARKS)
+                if (selectingMenu == MENU_HELP)
                     selectingMenu = MENU_HISTORY;
                 else if (selectingMenu == MENU_HISTORY)
                     selectingMenu = MENU_EXIT;
                 else if (selectingMenu == MENU_EXIT)
-                    selectingMenu = MENU_BOOKMARKS;
+                    selectingMenu = MENU_HELP;
                 break;
             case KEYBOARD_LEFT :
                 if (selectingMenu == MENU_HISTORY)
-                    selectingMenu = MENU_BOOKMARKS;
+                    selectingMenu = MENU_HELP;
                 else if (selectingMenu == MENU_EXIT)
                     selectingMenu = MENU_HISTORY;
-                else if (selectingMenu == MENU_BOOKMARKS)
+                else if (selectingMenu == MENU_HELP)
                     selectingMenu = MENU_EXIT;
                 break;
             case KEYBOARD_BACKSPACE:
@@ -166,7 +220,7 @@ int IP_insert_Page(char**ip){
                     delwin(middleWindow);
                     delwin(downMenu);
                     return selectingMenu;
-                } else if (selectingMenu == MENU_BOOKMARKS){
+                } else if (selectingMenu == MENU_HELP){
                     *ip=ipAddress;
                     delwin(upMenu);
                     delwin(middleWindow);
