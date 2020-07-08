@@ -13,6 +13,7 @@
 #include "doCommand.h"
 
 //struct 
+#define ARR_SIZ (100)
 typedef struct ResInfo ResInfo;//socket&ip information
 typedef struct Array Array;
 
@@ -104,7 +105,7 @@ int IP_insert_Page(char**ip);   //this is for ip page to insert string, return v
 void print_Sub_Block(int mode, char** srcArray, int aryCount);
 void print_Log_Block(char  ** srcArray, int aryCount);
 void print_Path_Block(char * pathOfLeft, char *pathOfRight);    //insert local or server path string
-int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight, ResInfo *resInfo,char **msg);
+int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight, ResInfo *resInfo,char **msg,Array* myDirectories,Array* myFiles,Array* directories,Array* files);
 int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * selected, int aryCount, char * pathOfLeft, char * pathOfRight, ResInfo *resInfo,char **msg);
 
 
