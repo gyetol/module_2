@@ -1,12 +1,24 @@
 #include "parsing.h"
 
-int main(){
+struct typedef DStruct{
 	char *directories[DIRECTORY_SIZE];
- 	int dNext=0;
+	int dNext=0;
+}DStruct;
+
+struct typedef FStruct{
 	char *files[FILE_SIZE];
 	int fNext=0;
-	parsing("list.txt",directories, files, &dNext, &fNext);
- 	parsing("myList.txt", directories, files, &dNext, &fNext);
+}FStruct;
+
+int main(){
+//	char *directories[DIRECTORY_SIZE];
+// 	int dNext=0;
+//	char *files[FILE_SIZE];
+//	int fNext=0;
+	struct Dtruct dStruct;
+	struct FStruct fStruct;
+	parsing("list.txt",struct dStruct.directories, fStruct.files, &dStruct.dNext, &fStruct.fNext);
+ 	parsing("myList.txt", struct dStruct.directories, fStruct.files, &dStruct.dNext, &fStruct.fNext);
   	/*	for(int i=0;i<dNext;i++){
      printf("%s\n", directories[i]);
  	}
@@ -21,7 +33,7 @@ int parsing(char *path,char **directories, char **files, int *dNext, int *fNext)
 //	int dNext=0;
 //	char * files[10];
 //	int fNext=0;
-
+/*
 	int fd=open(path, O_RDONLY| O_CREAT, 444);
 	if(fd<0){
 		perror("open");
@@ -67,6 +79,6 @@ int parsing(char *path,char **directories, char **files, int *dNext, int *fNext)
 			ptr=strtok_r(NULL, "\n", &savePtr);
 			//printf("\n");
 		}
-	}
+	}*/
 return 0;
 }
