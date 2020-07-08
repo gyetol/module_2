@@ -104,6 +104,7 @@ int fileDownload(int sock, char *ip, char *fName){
     printf("(fileDownload)request.txt open성공\n");
 
 	char buf[BUFSIZ];
+
 	int nRead=read(fd,buf,sizeof(buf));
 	if(nRead<0){
 		perror("read");
@@ -124,6 +125,8 @@ int fileDownload(int sock, char *ip, char *fName){
 
 
 	char actBuf[BUFFER_SIZE]={0,};
+	size_t fSize;
+
 	//하드코딩-----------
 	mkdir("./home",0744);
 	chdir("./home");
@@ -137,6 +140,13 @@ int fileDownload(int sock, char *ip, char *fName){
 	printf("(fileDownload)%s 파일 open 성공\n",fName);
 
 	memset(actBuf,0,strlen(actBuf));
+
+   //extract fileSize
+   fSize = fileSize(fName);
+   printf("%20s :%ld MB\n", fName, fSize);
+
+   sscanf(strchr(actBuf, '(')+1, "%lu", &fSize);
+   printf("fileSize : %lu\n", fSize);
 
 	while(1){
 		int nRead = read(sock, actBuf,sizeof(actBuf));
