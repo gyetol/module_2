@@ -6,8 +6,9 @@ int main(){
  	int dNext=0;
 	char *files[FILE_SIZE];
 	int fNext=0;
-	parsing(directories, files, &dNext, &fNext);
-   /*	for(int i=0;i<dNext;i++){
+	parsing("list.txt",directories, files, &dNext, &fNext);
+ 	parsing("myList.txt", directories, files, &dNext, &fNext);
+  	/*	for(int i=0;i<dNext;i++){
      printf("%s\n", directories[i]);
  	}
 	 for(int i=0;i<fNext;i++){
@@ -16,13 +17,13 @@ int main(){
 	return 0;
 }
 
-int parsing(char **directories, char **files, int *dNext, int *fNext){
+int parsing(char *path,char **directories, char **files, int *dNext, int *fNext){
 //	char * directories[10];
 //	int dNext=0;
 //	char * files[10];
 //	int fNext=0;
 
-	int fd=open("list.txt", O_RDONLY| O_CREAT, 444);
+	int fd=open(path, O_RDONLY| O_CREAT, 444);
 	if(fd<0){
 		perror("open");
 		return -1;
