@@ -6,7 +6,16 @@
 #define MODULE_2_COMMONNUCURSES_H
 
 #include <ncurses.h>
+#include <string.h>
+#include <stdlib.h>
+#include <pthread.h>
+
 #include "doCommand.h"
+
+//struct 
+typedef struct ResInfo ResInfo;//socket&ip information
+typedef struct Array Array;
+
 
 //ip length limit
 #define IPADDRESSLENGTH 15
@@ -97,5 +106,7 @@ void print_Log_Block(char  ** srcArray, int aryCount);
 void print_Path_Block(char * pathOfLeft, char *pathOfRight);    //insert local or server path string
 int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight, ResInfo *resInfo,char **msg);
 int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * selected, int aryCount, char * pathOfLeft, char * pathOfRight, ResInfo *resInfo,char **msg);
+
+
 
 #endif //TESTMODULE_COMMONNUCURSES_H

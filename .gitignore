@@ -558,4 +558,6 @@ list.txt
 fileDanzi
 fileDanzi.txt
 request.txt
-/home/*.txt
+/home/list.txt
+account.txt
+*.txt
