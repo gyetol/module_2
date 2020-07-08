@@ -20,7 +20,7 @@ int clientStart(const char * ip,int * sock){
 
     struct sockaddr_in addr = {0,};
     addr.sin_family=AF_INET;
-    addr.sin_port=htons((int)PORT_NUM);
+    addr.sin_port=htons(PORT_NUM);
     addr.sin_addr.s_addr=inet_addr(ip);
 
     //try to connect to server
