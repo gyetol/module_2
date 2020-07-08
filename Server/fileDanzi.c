@@ -204,46 +204,50 @@ int pwdTest(char *ip, char *pwd){
 }
 
 int main(int argc, char **argv){
-	if(argc!=2||(strcmp(argv[1],"start")!=0)){
+	if(argc!=2||((strcmp(argv[1], "start")!=0)&&(strcmp(argv[1], "--help")!=0))&&(strcmp(argv[1], "-h")!=0)){
 		fprintf(stderr, "usage : ./fileDanzi start\n");
 		return -1;
 	}
-	char ip[20]=" ";
-	char pwd[20]=" ";
-	//서버 등록 되어있는 ip인지 확인
-	if(ipTest(ip)==-1){
-
-		//등록되어있지 않을 경우 등록시키기
-		if(notExist(ip,pwd)==-1){
-			perror("notExist");
+	else if(strcmp(argv[1], "--help")==0||strcmp(argv[1], "-h")==0)
+		help();
+	else{
+		char ip[20]=" ";
+		char pwd[20]=" ";
+		//서버 등록 되어있는 ip인지 확인
+		if(ipTest(ip)==-1){
+	
+			//등록되어있지 않을 경우 등록시키기
+			if(notExist(ip,pwd)==-1){
+				perror("notExist");
+				return -1;
+			}
+	
+		}
+	
+		//등록되어있는 ip일 경우 비번 입력시키기
+		if(exist(ip, pwd)==-1){
+			perror("exist");
+			return -1;
+		}
+	
+		//존재하는 사용자임이 확인되었으면 쓰레드 분리 후
+		//한쪽에선 로컬 명령어 받고 한쪽에선 서버 가동시키기
+		pthread_t tid;
+		if(pthread_create(&tid, NULL, serverStart, ip)==-1)
+		{
+			perror("pthread_create");
+			return -1;
+		}
+	/*	if(serverMain()==-1){
+			perror("serverMain");
+			return -1;
+		}*/
+		if(pthread_join(tid, NULL)==-1)
+		{
+			perror("thread join failed");
 			return -1;
 		}
 
 	}
-
-	//등록되어있는 ip일 경우 비번 입력시키기
-	if(exist(ip, pwd)==-1){
-		perror("exist");
-		return -1;
+		return 0;
 	}
-
-	//존재하는 사용자임이 확인되었으면 쓰레드 분리 후
-	//한쪽에선 로컬 명령어 받고 한쪽에선 서버 가동시키기
-	pthread_t tid;
-	if(pthread_create(&tid, NULL, serverStart, ip)==-1)
-	{
-		perror("pthread_create");
-		return -1;
-	}
-/*	if(serverMain()==-1){
-		perror("serverMain");
-		return -1;
-	}*/
-	if(pthread_join(tid, NULL)==-1)
-	{
-		perror("thread join failed");
-		return -1;
-	}
-	return 0;
-}
-

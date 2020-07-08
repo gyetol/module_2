@@ -11,6 +11,7 @@
  #include<pthread.h>
  #include"serverMain.h"
  #include"serverStart.h"
+ #include"help.h"
 int ipTest(char *ip); 
 int inputIp(char *ip);
 int notExist(char *ip,char *pwd);
