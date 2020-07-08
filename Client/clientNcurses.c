@@ -31,6 +31,8 @@ int main(){
                 thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, sampleFiles, selected, 16, "CLIENT PATH", "SERVER PATH");
                 break;
             case MENU_IP_INSERT :
+			//	ipAddress = "192.168.30.2";
+				clientStart(ipAddress,&sock);
             case MENU_FTP_PAGE:
                 thisMenu = FTP_Main_Page(MODE_CLIENT, "CLIENT PATH", "SERVER PATH");
                 break;

@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "commonNucurses.h"
+#include <pthread.h>
 
 ///////////////////////SAMPLE FILES/////////////////////////////////////////
 char * sampleFile[] = {
@@ -422,11 +423,12 @@ void print_Path_Block(char * pathOfLeft, char *pathOfRight){
 /// input : mode MODE_CLIENT or MODE_SERVER, path1, path2
 /// return : selectMenu
 ////////////////////////////////////////////////////////////
-int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight) {
+int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInfo,char **msg) {
     werase(stdscr); // Clear Window
     curs_set(0); // Not need Cursor pointer
     char key; // User Input
     int selectingMenu = MENU_FIRSTWINODW;
+	pthread_t tid;
 
     WINDOW *upMenu = NULL;
     WINDOW *downMenu = NULL;
@@ -535,6 +537,15 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight) {
                 destroy_FTP_Main_Page(upMenu, downMenu, logWindow, pathWindow, firstWindow,
                                       secondWindow, thirdWindow, fourthWindow,
                                       xWindow, yWindow, zWindow);
+				if(pthread_create(&tid, NULL, doQuitThread,resInfo)!=0){
+					perror("pthread_create");
+					return -1;
+				}
+				if(pthread_join(tid,(void**)tret)!=0){
+					perror("pthread_join");
+					return -1;
+				}
+				free(tret);
                 return MENU_EXIT;
         }
     }
@@ -545,14 +556,14 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight) {
 /// input : mode (MODE_CLIENT or MODE_SERVER), path1, path2
 /// return : selectMenu
 ////////////////////////////////////////////////////////////
-int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * selected, int aryCount, char * pathOfLeft, char * pathOfRight){
+int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * selected, int aryCount, char * pathOfLeft, char * pathOfRight, ResInfo *resInfo,char **msg){
     int startPoint = 0;
     int cursor = startPoint;
     char * nullStr;
     int x;
     int y;
     int totalCount;
-    selected = malloc(sizeof(int) * aryCount);
+    selected = calloc(aryCount,sizeof(int));
     char key;
 
     switch (selectingMenu) {
@@ -701,15 +712,98 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
             case KEYBOARD_BACKSPACE:
                 return MENU_FTP_PAGE;
             case EXIT_KEY:
-                return MENU_EXIT;
+				  return MENU_FTP_PAGE; // 4분할 화면 중 하나에 있을 시 , exit키는 ftp_page로 이동
+               // return MENU_EXIT;
             case COPY_FILE_KEY:
+				  {	int i;
+					int k;
+					int cnt=0;
+				  	char * resultAry[100];
+					char *destPath=".";
+					for(i=0; i<aryCount; i++){
+						if(selected[i]!=0){
+							resultAry[k]=srcAry[i];
+							k++;
+						}
+					}
+					while(1){
+						if(resultAry[cnt]==NULL){break;}
+						else{cnt++;}
+					}
+					getDestPath(destPath,msg,"복사할 경로를 입력하세요: ");
+					doCopy(resultAry, cnt,destPath,msg);
+					freeDestPath(destPath,msg);
+					free(selected);
+				  }
                 return COPY_FILE_KEY;
+
             case MOVE_FILE_KEY:
+				  {	int i;
+					int k;
+					int cnt=0;
+				  	char * resultAry[100];
+					char *destPath=".";
+					for(i=0; i<aryCount; i++){
+						if(selected[i]!=0){
+							resultAry[k]=srcAry[i];
+							k++;
+						}
+					}
+					while(1){
+						if(resultAry[cnt]==NULL){break;}
+						else{cnt++;}
+					}
+					getDestPath(destPath,msg,"이동할 경로를 입력하세요: ");
+					doMove(resultAry, cnt,destPath,msg);
+					freeDestPath(destPath,msg);
+					free(selected);
+				  }
                 return MOVE_FILE_KEY;
+
             case REMOVE_FILE_KEY:
+				  {	int i;
+					int k;
+					int cnt=0;
+				  	char * resultAry[100];
+					char *destPath=".";
+					for(i=0; i<aryCount; i++){
+						if(selected[i]!=0){
+							resultAry[k]=srcAry[i];
+							k++;
+						}
+					}
+					while(1){
+						if(resultAry[cnt]==NULL){break;}
+						else{cnt++;}
+					}
+					doRemove(resultAry, cnt,msg);
+					free(selected);
+				  }
                 return REMOVE_FILE_KEY;
+
             case RENAME_FILE_KEY:
+				  {	int i;
+					int k;
+					int cnt=0;
+				  	char * resultAry[100];
+					char *destPath=".";
+					for(i=0; i<aryCount; i++){
+						if(selected[i]!=0){
+							resultAry[k]=srcAry[i];
+							k++;
+						}
+					}
+					while(1){
+						if(resultAry[cnt]==NULL){break;}
+						else{cnt++;}
+					}
+					getDestPath(destPath,msg,"새로운 파일명/디렉토리명을  입력하세요: ");
+					doRename(resultAry, cnt,destPath,msg);
+					freeDestPath(destPath,msg);
+					free(selected);
+				  }
                 return UP_AND_DOWN_FILE_KEY;
+
             case IP_MANAGE_KEY:
                 return MENU_IP_MANAGE;
             case MOVE_DIR_KEY:
@@ -720,7 +814,11 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
                 return RENAME_DIR_KEY;
             case HELP_KEY:
                 return MENU_HELP;
+
             case MAKE_DIR_KEY:
+				{
+					doMkdir(msg);
+				}
                 return MAKE_DIR_KEY;
         }
     }
