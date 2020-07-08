@@ -7,4 +7,4 @@
 #include<string.h>
 #define DIRECTORY_SIZE (50)
 #define FILE_SIZE (100)
-int parsing(char **directories, char **files, int *dNext, int *fNext);
+int parsing(char *path,char **directories, char **files, int *dNext, int *fNext);
