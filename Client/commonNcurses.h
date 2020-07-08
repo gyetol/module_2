@@ -6,6 +6,7 @@
 #define MODULE_2_COMMONNUCURSES_H
 
 #include <ncurses.h>
+#include "doCommand.h"
 
 //ip length limit
 #define IPADDRESSLENGTH 15
@@ -86,13 +87,15 @@
 #define MAKE_DIR_KEY 'k'
 #define EXIT_KEY 'x'
 
+
+
 //function list
 void init_scr();    //if you want to use ncurses, please call this first.
 int IP_insert_Page(char**ip);   //this is for ip page to insert string, return value is menu_num
 void print_Sub_Block(int mode, char** srcArray, int aryCount);
 void print_Log_Block(char  ** srcArray, int aryCount);
 void print_Path_Block(char * pathOfLeft, char *pathOfRight);    //insert local or server path string
-int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight);
-int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * selected, int aryCount, char * pathOfLeft, char * pathOfRight);
+int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight, ResInfo *resInfo,char **msg);
+int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * selected, int aryCount, char * pathOfLeft, char * pathOfRight, ResInfo *resInfo,char **msg);
 
 #endif //TESTMODULE_COMMONNUCURSES_H
