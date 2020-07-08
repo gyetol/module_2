@@ -30,6 +30,32 @@ char * sampleFiles[] = {
 };
 
 
+void help(){
+	 printf("\n
+         Usage : PUT IP ADDRESS WHERE YOU WANT TO CONNECT + ENTER KEY\n
+
+         If you want to move the cursor then use Arrow key and push the Enter key then
+         it will be selected. \n
+
+         HISTORY : 'History' page shows the record history where you logged in before
+         EXIT : Terminate the FTP service
+
+         1. Copyfile : Select the file or files what you want and
+                       press the 'c' key
+
+         2. Movefile : Select the file or files what you wnat and
+                       press the 'm' key
+
+
+                       \n");
+}
+
+typedef struct ResInfo{
+	int sock;
+	char * ip;
+}ResInfo;
+
+
 char *getMyIp(){
 	char * myIp;
 	struct ifaddrs* addrs;
@@ -76,6 +102,7 @@ int main(){
         switch (thisMenu) {
             case MENU_MAIN :
                 thisMenu = IP_insert_Page(&ipAddress);
+
                 break;
             case MENU_FIRSTWINODW :
 				myListOpen();
