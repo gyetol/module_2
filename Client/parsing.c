@@ -34,7 +34,6 @@ typedef struct Array{
  	int next;
 }Array;
 
-<<<<<<< HEAD
 int parsing(const char *path,Array** directories,Array** files){
 //int parsing(char *path,char **directories, char **files, int *dNext, int *fNext){
 //	char * directories[10];
