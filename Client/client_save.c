@@ -10,16 +10,21 @@
 #include "commandFunc.h"
 #include "commonNcurses.h"
 
-int clientMain(int *thisMenu){
-    init_scr();
+int main(){
     int sock = 0;
-    char * ip = "192.168.30.2";
-    int thisMenu = MENU_MAIN;
+    char ip[20] ={0,}; 
 
 	ResInfo resInfo={0,};
 
-	*thisMenu=IP_insert_Page(&ip);
 
+	printf("접속할 서버의 IP를 입력하세요:");
+	scanf("%s",ip);
+
+	printf("%s\n",ip);//디버그 코드
+	if(ip==NULL){
+		perror("scanf");
+		return -1;
+	}
 	printf("(client.c)입력받은 ip:%s\n",ip);
 
 

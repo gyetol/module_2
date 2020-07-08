@@ -110,6 +110,8 @@ int fileDownload(int sock, char *ip, char *fName){
 		close(fd);
 		return -1;
 	}
+
+
 	printf("(fileDownload)request.txt read성공\n");
 	buf[nRead]='\0';
 
@@ -124,6 +126,8 @@ int fileDownload(int sock, char *ip, char *fName){
 
 
 	char actBuf[BUFFER_SIZE]={0,};
+	size_t fSize;
+
 	//하드코딩-----------
 	mkdir("./home",0744);
 	chdir("./home");
@@ -137,6 +141,13 @@ int fileDownload(int sock, char *ip, char *fName){
 	printf("(fileDownload)%s 파일 open 성공\n",fName);
 
 	memset(actBuf,0,strlen(actBuf));
+    
+	//extract fileSize
+    //fSize = fileSize(fName);
+	//printf("%20s : ld MB\n", fName, fSize);
+
+	//sscanf(strchr(actBuf, '(')+1, "%u", &fileSize);
+	//printf("fileSize : %u\n", fileSize);
 
 	while(1){
 		int nRead = read(sock, actBuf,sizeof(actBuf));
@@ -161,6 +172,14 @@ int fileDownload(int sock, char *ip, char *fName){
 	return 0;
 }
 
+static size_t fileSize(const char *fName){
+	struct stat sb;
+	if(stat(fName, &sb) != 0){
+		perror("error");
+		exit(EXIT_FAILURE);
+	}
+	return sb.st_size;
+}
 
 int clientQuit(int sock, char *ip){
 	printf("(clientQuit)clientQuit들어옴\n");
@@ -207,5 +226,17 @@ int clientQuit(int sock, char *ip){
 	close(fd);
 	return 0;
 }
+
+/*static ssize_t fileSize(const char *fName){
+	struct stat sb;
+	if(stat(fName, &sb) != 0){
+		perror("error");
+		exit(EXIT_FAILURE);
+	}
+	return sb.st_size;
+}*/
+
+
+
 
 
