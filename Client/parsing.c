@@ -1,18 +1,26 @@
 #include "parsing.h"
 
-/*
+typedef struct Array{
+	char * array[ARR_SIZ];
+ 	int next;
+}Array;
+
 int main(){
 	Array* directories;
 	Array* files;
 
-	myListOpen();
-	parsing("myList.txt",&directories,&files);//server side
-	printf("parsing.c의 결과\n");
-	printf("%d\n%d",directories->next,files->next);
-
+	parsing("list.txt",&directories,&files);
+ 	//parsing("myList.txt", directories, files, &dNext, &fNext);
+  	for(int i=0;i<directories->next;i++){
+     printf("%s\n", directories->array[i]);
+ 	}
+	for(int i=0;i<files->next;i++){
+     printf("%s\n", files->array[i]);
+ 	}
 	free(directories);
 	free(files);
 	//혜린언니의 원래 코드
+	/*
 	char *directories[DIRECTORY_SIZE];
  	int dNext=0;
 	char *files[FILE_SIZE];
@@ -25,14 +33,11 @@ int main(){
 	for(int i=0;i<fNext;i++){
      printf("%s\n", files[i]);
  	}
+	*/
 	return 0;
 }
-*/
 
-typedef struct Array{
-	char * array[ARR_SIZ];
- 	int next;
-}Array;
+
 
 int parsing(const char *path,Array** directories,Array** files){
 //int parsing(char *path,char **directories, char **files, int *dNext, int *fNext){
