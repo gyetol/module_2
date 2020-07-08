@@ -79,8 +79,20 @@ void *serverStart(void *arg){
 				getchar();
 				event.events = EPOLLIN;
 				event.data.fd = csock;
-                if(epoll_ctl(efd, EPOLL_CTL_ADD, csock, &event)==-1)
-					err_quit("epoll_ctl");
+				int res=epoll_ctl(efd, EPOLL_CTL_ADD, csock, &event);
+				if(res==-1){
+					for(int i=0;i<10;i++){
+						printf("%d번쨰 대기상태\n",i+1);
+						while(1){
+							int wait=clock();
+							if(wait>=50000)
+								break;
+						}
+						printf("wait의 while문 빠져나옴\n");	
+					    res=epoll_ctl(efd, EPOLL_CTL_ADD, csock, &event);
+					}
+				}
+				printf("wait success\n");
             }
 			else{
 			   //this is for client
