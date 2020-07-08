@@ -30,6 +30,7 @@ char * sampleFiles[] = {
 };
 
 
+/*
 void help(){
 	 printf("\n
          Usage : PUT IP ADDRESS WHERE YOU WANT TO CONNECT + ENTER KEY\n
@@ -49,11 +50,7 @@ void help(){
 
                        \n");
 }
-
-typedef struct ResInfo{
-	int sock;
-	char * ip;
-}ResInfo;
+*/
 
 
 char *getMyIp(){
@@ -102,7 +99,6 @@ int main(){
         switch (thisMenu) {
             case MENU_MAIN :
                 thisMenu = IP_insert_Page(&ipAddress);
-
                 break;
             case MENU_FIRSTWINODW :
 				myListOpen();

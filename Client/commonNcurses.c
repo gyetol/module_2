@@ -9,15 +9,19 @@
 #include <pthread.h>
 
 
+//struct 
+typedef struct Array{
+	char * array[ARR_SIZ];
+	int next;
+}Array;
+
 ///////////////////////SAMPLE FILES/////////////////////////////////////////
-/*
 char * sampleFile[] = {
         "this is file 1", "this is file 2", "this is file 3", "this is file 4",
         "this is file 5", "this is file 6", "this is file 7", "this is file 8",
         "this is file 9", "this is file 10", "this is file 11", "this is file 12",
         "this is file 13", "this is file 14", "this is file 15", "this is file 16"
 };
-*/
 ///////////////////////////////////////////////////////////////////////////
 
 
@@ -34,7 +38,7 @@ void init_scr()
     ///first:index
     ///second:text
     ///color:background
-    init_pair(MAIN1, COLOR_BLACK, COLOR_YELLOW);
+	init_pair(MAIN1, COLOR_BLACK, COLOR_YELLOW);
     init_pair(MAIN2, COLOR_BLACK, COLOR_WHITE);
     init_pair(CLIENTBAR, COLOR_BLACK, COLOR_YELLOW);
     init_pair(SELECTED, COLOR_BLACK, COLOR_YELLOW);
@@ -516,10 +520,10 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
 
         attron(COLOR_PAIR(MAIN2));
         print_Log_Block(sampleFile, 10);
-        print_Sub_Block(MODE_FIRST, myDirectories->array, 10);
-        print_Sub_Block(MODE_SECOND, myFiles->array, 10);
-        print_Sub_Block(MODE_THIRD, directories->array, 10);
-        print_Sub_Block(MODE_FOURTH, files->array, 10);
+        print_Sub_Block(MODE_FIRST, myDirectories->array, myDirectories->next);
+        print_Sub_Block(MODE_SECOND, myFiles->array, myFiles->next);
+        print_Sub_Block(MODE_THIRD, directories->array, directories->next);
+        print_Sub_Block(MODE_FOURTH, files->array, files->next);
 
         attron(A_STANDOUT | A_UNDERLINE); // selected effect
         switch (selectingMenu) {

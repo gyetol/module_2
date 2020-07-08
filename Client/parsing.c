@@ -1,5 +1,6 @@
 #include "parsing.h"
 
+/*
 int main(){
 	Array* directories;
 	Array* files;
