@@ -1,0 +1,15 @@
+.:
+total 16
+<<<<<<< HEAD
+drwxrwxr-x 2 linux linux 4096 Jul  7 19:55 .
+drwxrwxr-x 4 linux linux 4096 Jul  7 20:51 ..
+-rw-rw-r-- 1 linux linux   39 Jul  7 19:18 fileDanzi2.txt
+-rw-rw-r-- 1 linux linux   28 Jul  7 19:18 fileDanzi.txt
+-rw-rw-r-- 1 linux linux    0 Jul  7 22:08 list.txt
+=======
+drwxrwxr-x 2 linux linux 4096 Jul  7 19:18 .
+drwxrwxr-x 4 linux linux 4096 Jul  7 19:49 ..
+-rw-rw-r-- 1 linux linux   39 Jul  7 19:18 fileDanzi2.txt
+-rw-rw-r-- 1 linux linux   28 Jul  7 19:18 fileDanzi.txt
+-rw-rw-r-- 1 linux linux    0 Jul  7 19:50 list.txt
+>>>>>>> 5b6c233685b7bac5d6bca46e44189e367c190295

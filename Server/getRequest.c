@@ -1,7 +1,8 @@
 #include "getRequest.h"	
 
 int getRequest(int cSock, char **type, char **path, char **ip){
-    char buf[BUFSIZ]="";
+	printf("getRequest진입\n");
+	char buf[BUFSIZ]="";
 	int nRead=read(cSock, buf, sizeof(buf));
        
 		printf("nRead:%d\n", nRead);
