@@ -1,5 +1,6 @@
 #include "parsing.h"
 
+
 int main(){
 	char *directories[DIRECTORY_SIZE];
  	int dNext=0;
