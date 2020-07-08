@@ -8,6 +8,7 @@
 #include<fcntl.h>
 #include<unistd.h>
 #include<string.h>
+<<<<<<< HEAD
 
 #define ARR_SIZ (100)
 
