@@ -792,6 +792,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
                 }
 
                 break;
+				/*
             case KEYBOARD_LEFT:
  				mvprintw(1,1,"LEFT입력");
 				refresh();
@@ -800,6 +801,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
                 selected[0]=cursor;//this is insert
 				*selectedArrPtr=selected;
                 return MENU_OUT_DIR;
+				*/
             case KEYBOARD_RIGHT:
  				mvprintw(1,1,"ENTER입력");
 				refresh();
@@ -810,7 +812,11 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
  				mvprintw(3,1,"selected[0]=%d",selected[0]);
 				refresh();
 				*selectedArrPtr=selected;
-                return MENU_INTO_DIR;
+				if(selectingMenu==MENU_FIRSTWINODW)
+					return MENU_INTO_MYDIR;
+				else if(selectingMenu==MENU_SECONDWINDOW)
+					return MENU_INTO_SERVDIR;
+				break;
             case KEYBOARD_SPACEBAR:
                 if (selected[cursor] == 0) {
                     selected[cursor] = 1;
