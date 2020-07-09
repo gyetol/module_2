@@ -278,6 +278,7 @@ int keyPad(Windows *windows){
 	delwin(windows->rightwin);
 	delwin(windows->consolewin);
 	endwin();
+	exit(0);
 	return 0;
 }
 /*int main(Windows *windows){
