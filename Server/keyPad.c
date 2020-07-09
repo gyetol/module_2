@@ -11,6 +11,14 @@ int keyPad(Windows *windows){
 	wrefresh(windows->consolewin);
 
 	int ch;
+	WINDOW* win[4];
+	win[0]=windows->logwin;
+	win[1]=windows->leftwin;
+	win[2]=windows->rightwin;
+	win[3]=windows->consolewin;
+	int now=3;
+	WINDOW *currentwin=win[now];
+	WINDOW *prevwin=win[2];
 	noecho();
 	keypad(stdscr, TRUE);
 	while((ch=getch())!='x')
@@ -18,10 +26,40 @@ int keyPad(Windows *windows){
 		switch(ch)
 		{
 			case KEY_LEFT:
-				mvwprintw(windows->consolewin, 2, 1, "keyleft");
+				prevwin=currentwin;
+				if(now==0)
+					now=3;
+				else
+					now--;
+				currentwin=win[now];
+				if(prevwin==windows->logwin)
+					wborder(prevwin, 0, 0, 0, ' ', 0, 0, ' ', ' ');
+				else
+					wborder(prevwin, 0, 0, 0, 0, 0, 0, 0, 0);
+				wborder(currentwin, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+				wbkgd(prevwin, COLOR_PAIR(1));
+				wbkgd(currentwin, COLOR_PAIR(2));
+				refresh();
+				wrefresh(prevwin);
+				wrefresh(currentwin);
 				break;
 			case KEY_RIGHT:
-				mvwprintw(windows->consolewin, 2, 1, "keyright");
+				prevwin=currentwin;
+				if(now==3)
+					now=0;
+				else
+					now++;
+				currentwin=win[now];
+			    if(prevwin==windows->logwin)
+					wborder(prevwin, 0, 0, 0, ' ', 0, 0, ' ', ' ');
+				else
+					wborder(prevwin, 0, 0, 0, 0, 0, 0, 0, 0);
+				wborder(currentwin, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+				wbkgd(prevwin, COLOR_PAIR(1));
+				wbkgd(currentwin, COLOR_PAIR(2));
+				refresh();
+				wrefresh(prevwin);
+				wrefresh(currentwin);
 				break;
 			case KEY_UP:	
 				mvwprintw(windows->consolewin, 2, 1, "keyup");
