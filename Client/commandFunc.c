@@ -45,7 +45,7 @@ int getDestPath(char *destPath, char **msg, const char *checkMsg){
 	//printf("%s\n",checkMsg);
 	//fgets(buf,sizeof(buf),stdin);
 	//buf[strlen(buf)-1]='\0';
-	// tmp= malloc(sizeof(buf));
+	 tmp= malloc(sizeof(buf));
 	 strcpy(tmp,buf);
 	 destPath=tmp;
 	*msg = "getting path is done";
@@ -361,9 +361,10 @@ int doRemove(char **srcPath, int len, char **msg){
 	}
 
 	char answer;
-	const char *check= "정말로 삭제하시겠습니까?(y/n)";
+	const char *check= "do you want to remove?(y/n)";
 
 	while(1){
+		/*
 		printf("%s\n",check);
 		myflush();
 		answer = getchar();
@@ -373,9 +374,36 @@ int doRemove(char **srcPath, int len, char **msg){
 		else if(answer == 'n' || answer == 'N'){
 			return 0;
 		}
+		else{myflush();} */
+
+		mvprintw(FTP_HEIGHT-1,1, check);
+		refresh();
+		myflush();	
+		//mvscanw(FTP_HEIGHT-1,49,"%s",*answer);
+		keypad(stdscr,TRUE);
+		answer =getch();
+
+
+	/*	
+		if( (strcmp(answer,"y")==0) || (strcmp(answer,"Y")==0) ){
+			break;
+		}
+		else if( (strcmp(answer,"n")==0) || (strcmp(answer, "N")==0) ){
+			break;
+		}
+		else{myflush();}*/
+
+
+		if(answer==89 || answer ==121){
+			mvprintw(FTP_HEIGHT-1,1,"success");
+			break;
+		}
+		else if (answer == 78 || answer == 110){
+			return 0;
+		}
 		else{myflush();}
 	}
-	
+
 	pid_t pid[len];
 	int childStatus;
 
@@ -412,3 +440,4 @@ void myflush(){
 	while(getchar()!='\n'){;}
 	return;
 }
+
