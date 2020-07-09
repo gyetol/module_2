@@ -1,19 +1,10 @@
 //
 // Created by moosong on 6/30/20.
 //
-
 #include <ncurses.h>
 #include <string.h>
 #include <stdlib.h>
-#include "commonNcurses.h"
-#include <pthread.h>
-
-
-//struct 
-typedef struct Array{
-	char * array[ARR_SIZ];
-	int next;
-}Array;
+#include "commonNucurses.h"
 
 ///////////////////////SAMPLE FILES/////////////////////////////////////////
 char * sampleFile[] = {
@@ -24,13 +15,12 @@ char * sampleFile[] = {
 };
 ///////////////////////////////////////////////////////////////////////////
 
-
 /////////////////////////////////////////////////////////////
 /// to make env for ncurses and color pairs
 /// input : void
 /// return : void
 ////////////////////////////////////////////////////////////
-void init_scr()
+void init_scr() 
 {
     initscr();
     start_color();
@@ -38,7 +28,7 @@ void init_scr()
     ///first:index
     ///second:text
     ///color:background
-	init_pair(MAIN1, COLOR_BLACK, COLOR_YELLOW);
+    init_pair(MAIN1, COLOR_BLACK, COLOR_YELLOW);
     init_pair(MAIN2, COLOR_BLACK, COLOR_WHITE);
     init_pair(CLIENTBAR, COLOR_BLACK, COLOR_YELLOW);
     init_pair(SELECTED, COLOR_BLACK, COLOR_YELLOW);
@@ -62,95 +52,19 @@ void init_IP_insert_Page(WINDOW *upWindow, WINDOW *middleWindow, WINDOW *downWin
     downWindow = subwin(stdscr, 3, FTP_WIDE, 21, 0);
     wbkgd(downWindow, COLOR_PAIR(MAIN1));
 }
- ////////////////////////////////////////////////////////////
- /// to prepare Help Page
- /// input : all windows to make Help Page
- /// return : void
- ///////////////////////////////////////////////////////////
- void init_Help_Page(WINDOW *helpWindow){
-
-     helpWindow = subwin(stdscr, FTP_HEIGHT, FTP_WIDE, 0, 0);
-     wbkgd(helpWindow, COLOR_PAIR(MAIN1));
-
-}
 
 /////////////////////////////////////////////////////////////
-///to show help page
-// return : void
-////////////////////////////////////////////////////////////
-int Help_Page(){
-	werase(stdscr); //clear Window
-	curs_set(0); //Not need Cursor pointer
-	
-	WINDOW *hWin = NULL;
-    int key;
-
-    init_Help_Page(hWin);
-    //	attron(COLOR_PAIR(MAIN1));
-	mvprintw(1, 30, "< HELP PAGE >");
-
-	mvprintw(2, 2, "Usage : PUT IP ADDRESS + ENTER KEY ");
-    mvprintw(3, 2, "If you want to move the cursor -> use Arrow key");
-	mvprintw(4, 2, "If you want to select the menu -> use Enter key");
-	
-	mvprintw(6, 25, "---- MENU USAGE ----");
-	mvprintw(7, 2, "HISTORY : 'History'page shows the record history where you logged in before");
-	mvprintw(8, 2, "EXIT : Terminate the FileDanzi FTP Service");
-
-	mvprintw(10, 20, "---- COMMAND KEY USAGE ----");
-	mvprintw(11, 2, "1. Copyfile : Select the file or files to copy and press the 'c' key");
-	mvprintw(12, 2, "2. Movefile : Select the file or files to move and press the 'm' key");
-	mvprintw(13, 2, "3. RemoveFile : Select the file or files to delete and press the 'r' key");
-	mvprintw(14, 2, "3. ReNamefile : Select the file or files to rename and press the 'n' key");
-	mvprintw(15, 2, "4. DownloadFile : Select the file or files to download and press the 'f' key");
-	mvprintw(16, 2, "5. IPManage : ");
-	mvprintw(17, 2, "6. MoVeDir : Select the directory to move and press the 'v' key");
-	mvprintw(18, 2, "7. RemovEDir : Select the directory to remove nad press the 'e' key");
-	mvprintw(19, 2, "8. RenAmeDir : Select the directory to rename and press the 'a' key");
-	mvprintw(20, 2, "9. Help : Manual page FileDanzi FTP Server and press the 'h' key");
-	mvprintw(21, 2, "10.MaKeFolder : Make new folder for manage filesystem 'k' key");
-	mvprintw(22, 2, "11.EXit : Terminate the FileDanzi FTP Server to press the 'x' key");
-    
-	
-	//underline
-    attron(A_UNDERLINE);
-    mvprintw(11, 5, "C");
-    mvprintw(12, 5, "M");
-    mvprintw(13, 5, "R");
-    mvprintw(14, 7, "N");
-	mvprintw(15, 13,"F");
-    mvprintw(16, 6, "P");
-    mvprintw(17, 7, "V");
-    mvprintw(18, 10,"E");
-    mvprintw(19, 8, "A");
-    mvprintw(20, 5, "H");
-    mvprintw(21, 7, "K");
-    mvprintw(22, 6, "X");
-
-    attroff(A_UNDERLINE);
-
-	wrefresh(hWin);
-	refresh();
-
-	if (key = getch()){
-		return MENU_MAIN;
-	}
-	delwin(hWin);
-
-}
-
-////////////////////////////////////////////////////////////
 /// to show main menu
 /// input1 : ip Address space to store
 /// return : menunum
-/////
+////////////////////////////////////////////////////////////
 int IP_insert_Page(char**ip){
     werase(stdscr); // Clear Window
     curs_set(0); // Not need Cursor pointer
     char key; // User Input
     char ipAddress[IPADDRESSLENGTH] = "";
 
-    int selectingMenu = MAIN_HELP;
+    int selectingMenu = MENU_BOOKMARKS;
 
     WINDOW *upMenu = NULL;
     WINDOW *middleWindow = NULL;
@@ -159,7 +73,7 @@ int IP_insert_Page(char**ip){
 
     attron(COLOR_PAIR(MAIN1));
     mvprintw(3, 34, "FILE DANZI");
-    mvprintw(7, 32, "SIMPLE & CUTE FTP Service");
+    mvprintw(7, 32, "cute FTP Cleint");
 
     attron(COLOR_PAIR(MAIN2));
     mvprintw(16, 16, "INSERT SERVER'S IP ADDRESS (press enter key)");
@@ -177,14 +91,14 @@ int IP_insert_Page(char**ip){
         }
 
         attron(COLOR_PAIR(MAIN1));
-        mvprintw(22, 15, "HELP");
+        mvprintw(22, 15, "BOOK MARKS");
         mvprintw(22, 36, "HISTORY");
         mvprintw(22, 58, "EXIT");
 
         attron(A_STANDOUT | A_UNDERLINE); // selected effect
         switch(selectingMenu){
-            case MAIN_HELP :
-                mvprintw(22, 15, "HELP");
+            case MENU_BOOKMARKS :
+                mvprintw(22, 15, "BOOK MARKS");
                 break;
             case MENU_HISTORY :
                 mvprintw(22, 36, "HISTORY");
@@ -201,29 +115,29 @@ int IP_insert_Page(char**ip){
 
         switch(key) {
             case KEYBOARD_UP:
-                if (selectingMenu == MAIN_HELP || selectingMenu == MENU_EXIT || selectingMenu == MENU_HISTORY) {
+                if (selectingMenu == MENU_BOOKMARKS || selectingMenu == MENU_EXIT || selectingMenu == MENU_HISTORY) {
                     selectingMenu = MENU_IP_INSERT;
                 }
                 break;
             case KEYBOARD_DOWN:
                 if (selectingMenu == MENU_IP_INSERT) {
-                    selectingMenu = MAIN_HELP;
+                    selectingMenu = MENU_BOOKMARKS;
                 }
                 break;
             case KEYBOARD_RIGHT:
-                if (selectingMenu == MAIN_HELP)
+                if (selectingMenu == MENU_BOOKMARKS)
                     selectingMenu = MENU_HISTORY;
                 else if (selectingMenu == MENU_HISTORY)
                     selectingMenu = MENU_EXIT;
                 else if (selectingMenu == MENU_EXIT)
-                    selectingMenu = MAIN_HELP;
+                    selectingMenu = MENU_BOOKMARKS;
                 break;
             case KEYBOARD_LEFT :
                 if (selectingMenu == MENU_HISTORY)
-                    selectingMenu = MAIN_HELP;
+                    selectingMenu = MENU_BOOKMARKS;
                 else if (selectingMenu == MENU_EXIT)
                     selectingMenu = MENU_HISTORY;
-                else if (selectingMenu == MAIN_HELP)
+                else if (selectingMenu == MENU_BOOKMARKS)
                     selectingMenu = MENU_EXIT;
                 break;
             case KEYBOARD_BACKSPACE:
@@ -233,9 +147,7 @@ int IP_insert_Page(char**ip){
                 break;
             case KEYBOARD_ENTER :
                 if (selectingMenu == MENU_IP_INSERT){
-					*ip =malloc(sizeof(char)*16);
-					strcpy(*ip,ipAddress);
-                   // *ip=ipAddress;
+                    *ip=ipAddress;
                     delwin(upMenu);
                     delwin(middleWindow);
                     delwin(downMenu);
@@ -247,25 +159,20 @@ int IP_insert_Page(char**ip){
                     delwin(downMenu);
                     return selectingMenu;
                 } else if (selectingMenu == MENU_HISTORY){
-					*ip =malloc(sizeof(char)*16);
-					strcpy(*ip,ipAddress);
-                   // *ip=ipAddress;
+                    *ip=ipAddress;
                     delwin(upMenu);
                     delwin(middleWindow);
                     delwin(downMenu);
                     return selectingMenu;
-                } else if (selectingMenu == MAIN_HELP){
-					*ip =malloc(sizeof(char)*16);
-					strcpy(*ip,ipAddress);
-                    //*ip=ipAddress;
+                } else if (selectingMenu == MENU_BOOKMARKS){
+                    *ip=ipAddress;
                     delwin(upMenu);
                     delwin(middleWindow);
                     delwin(downMenu);
                     return selectingMenu;
                 }
             default:
-                //if ((selectingMenu == MENU_IP_INSERT) && ((key >= '0' && key <= '9') || (key >= 'a' && key <= 'z') || (key == '.') )) {
-                if ((selectingMenu == MENU_IP_INSERT) && ((key >= '0' && key <= '9') || (key == '.') )) {
+                if ((selectingMenu == MENU_IP_INSERT) && ((key >= '0' && key <= '9') || (key >= 'a' && key <= 'z') || (key == '.') )) {
                     char tempKey[2];
                     tempKey[0] = key;
                     tempKey[1] = '\0';
@@ -362,14 +269,14 @@ void print_Manual_Bar(int mode){
     mvprintw(0, 26, "RemoveFile");
     mvprintw(0, 40, "reNameFile");
     mvprintw(0, 54, str);
-    mvprintw(0, 70, "MakeDir");
+    mvprintw(0, 70, "IPManage");
 
     int temp = FTP_HEIGHT-1;
-   // mvprintw(temp, 12, "MoVeDir");
-   // mvprintw(temp, 23, "RemovEDir");
-   // mvprintw(temp, 36, "RenameDir");
-   // mvprintw(temp, 49, "Help");
-   // mvprintw(temp, 57, "MakeFolder");
+    mvprintw(temp, 12, "MoVeDir");
+    mvprintw(temp, 23, "RemovEDir");
+    mvprintw(temp, 36, "RenameDir");
+    mvprintw(temp, 49, "Help");
+    mvprintw(temp, 57, "MakeFolder");
     mvprintw(temp, 71, "EXit");
 
     ///underline
@@ -383,13 +290,13 @@ void print_Manual_Bar(int mode){
     } else if (mode == MODE_SERVER){
         mvprintw(0, 60, "F");
     }
-    mvprintw(0, 72, "K");
+    mvprintw(0, 71, "P");
 
-    //mvprintw(temp, 14, "V");
-    //mvprintw(temp, 28, "E");
-    //mvprintw(temp, 39, "A");
-    //mvprintw(temp, 49, "H");
-    //mvprintw(temp, 59, "K");
+    mvprintw(temp, 14, "V");
+    mvprintw(temp, 28, "E");
+    mvprintw(temp, 39, "A");
+    mvprintw(temp, 49, "H");
+    mvprintw(temp, 59, "K");
     mvprintw(temp, 72, "X");
 
     attroff(A_UNDERLINE);
@@ -515,12 +422,11 @@ void print_Path_Block(char * pathOfLeft, char *pathOfRight){
 /// input : mode MODE_CLIENT or MODE_SERVER, path1, path2
 /// return : selectMenu
 ////////////////////////////////////////////////////////////
-int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInfo,char **msg,Array* myDirectories,Array*myFiles,Array*directories,Array* files) {
+int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight) {
     werase(stdscr); // Clear Window
     curs_set(0); // Not need Cursor pointer
     char key; // User Input
     int selectingMenu = MENU_FIRSTWINODW;
-	pthread_t tid;
 
     WINDOW *upMenu = NULL;
     WINDOW *downMenu = NULL;
@@ -544,14 +450,14 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
     while (1) {
         attron(COLOR_PAIR(MAIN1));
         print_Title_Block(mode);
-		print_Path_Block(pathOfLeft, pathOfRight);
+        print_Path_Block(pathOfLeft, pathOfRight);
 
         attron(COLOR_PAIR(MAIN2));
         print_Log_Block(sampleFile, 10);
-        print_Sub_Block(MODE_FIRST, myDirectories->array, myDirectories->next);
-        print_Sub_Block(MODE_SECOND, directories->array, directories->next);
-        print_Sub_Block(MODE_THIRD, myFiles->array, myFiles->next);
-        print_Sub_Block(MODE_FOURTH, files->array, files->next);
+        print_Sub_Block(MODE_FIRST, sampleFile, 10);
+        print_Sub_Block(MODE_SECOND, sampleFile, 10);
+        print_Sub_Block(MODE_THIRD, sampleFile, 10);
+        print_Sub_Block(MODE_FOURTH, sampleFile, 10);
 
         attron(A_STANDOUT | A_UNDERLINE); // selected effect
         switch (selectingMenu) {
@@ -615,15 +521,12 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
                     selectingMenu = MENU_THIRDWINDOW;
                 }
                 break;
-				
             case KEYBOARD_ENTER:
-// 				mvprintw(1,1,"FTP_Main_Page: enter눌림");
                 if ( (selectingMenu == MENU_FIRSTWINODW)||(selectingMenu == MENU_SECONDWINDOW)||
                         (selectingMenu == MENU_THIRDWINDOW)||(selectingMenu == MENU_FOURTHWINDOW)){
                     return selectingMenu;
                 }
                 break;
-				
             case IP_MANAGE_KEY:
                 return MENU_IP_MANAGE;
             case HELP_KEY:
@@ -632,15 +535,6 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
                 destroy_FTP_Main_Page(upMenu, downMenu, logWindow, pathWindow, firstWindow,
                                       secondWindow, thirdWindow, fourthWindow,
                                       xWindow, yWindow, zWindow);
-				if(pthread_create(&tid, NULL, doQuitThread,resInfo)!=0){
-					perror("pthread_create");
-					return -1;
-				}
-				if(pthread_join(tid,(void**)tret)!=0){
-					perror("pthread_join");
-					return -1;
-				}
-				free(tret);
                 return MENU_EXIT;
         }
     }
@@ -651,16 +545,15 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
 /// input : mode (MODE_CLIENT or MODE_SERVER), path1, path2
 /// return : selectMenu
 ////////////////////////////////////////////////////////////
-int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** selectedArrPtr, int aryCount, char * pathOfLeft, char * pathOfRight, ResInfo *resInfo,char **msg){
+int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * selected, int aryCount, char * pathOfLeft, char * pathOfRight){
     int startPoint = 0;
     int cursor = startPoint;
     char * nullStr;
     int x;
     int y;
     int totalCount;
-    int *selected = calloc(aryCount,sizeof(int));//NULL체크 해야함
+    selected = malloc(sizeof(int) * aryCount);
     char key;
-	int selectedCnt=0;
 
     switch (selectingMenu) {
         case MENU_FIRSTWINODW:
@@ -764,9 +657,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
             }
         }
 
-//         mvprintw(1,1,"ENTER입력");  
-		refresh();
-		
+        refresh();
         key = getchar();
 
         switch (key) {
@@ -793,164 +684,45 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
 
                 break;
             case KEYBOARD_LEFT:
- 				mvprintw(1,1,"LEFT입력");
-				refresh();
-				getchar();
                 memset(selected, 0, aryCount);
                 selected[0]=cursor;//this is insert
-				*selectedArrPtr=selected;
                 return MENU_OUT_DIR;
             case KEYBOARD_RIGHT:
- 				mvprintw(1,1,"ENTER입력");
-				refresh();
                 memset(selected, 0, aryCount);
- 				mvprintw(2,1,"memset완료");
-				refresh();
-			    selected[0]=cursor;//this is insert
- 				mvprintw(3,1,"selected[0]=%d",selected[0]);
-				refresh();
-				*selectedArrPtr=selected;
+                selected[0]=cursor;//this is insert
                 return MENU_INTO_DIR;
             case KEYBOARD_SPACEBAR:
                 if (selected[cursor] == 0) {
                     selected[cursor] = 1;
-					selectedCnt++;
                 } else {
                     selected[cursor] = 0;
                 }
                 break;
             case KEYBOARD_BACKSPACE:
-				*selectedArrPtr=selected;
-
-
                 return MENU_FTP_PAGE;
             case EXIT_KEY:
-				*selectedArrPtr=selected;
-				  return MENU_FTP_PAGE; // 4분할 화면 중 하나에 있을 시 , exit키는 ftp_page로 이동
-               // return MENU_EXIT;
+                return MENU_EXIT;
             case COPY_FILE_KEY:
-				  {	int i;
-					int k;
-					int cnt=0;
-				  	char * resultAry[100];
-					char *destPath=".";
-					for(i=0; i<aryCount; i++){
-						if(selected[i]!=0){
-							resultAry[k]=srcAry[i];
-							k++;
-						}
-					}
-					while(1){
-						if(resultAry[cnt]==NULL){break;}
-						else{cnt++;}
-					}
-					getDestPath(destPath,msg,"복사할 경로를 입력하세요: ");
-					doCopy(resultAry, cnt,destPath,msg);
-					freeDestPath(destPath,msg);
-					free(selected);
-				  }
-
-				*selectedArrPtr=selected;
                 return COPY_FILE_KEY;
-
             case MOVE_FILE_KEY:
-				  {	int i;
-					int k;
-					int cnt=0;
-				  	char * resultAry[100];
-					char *destPath=".";
-					for(i=0; i<aryCount; i++){
-						if(selected[i]!=0){
-							resultAry[k]=srcAry[i];
-							k++;
-						}
-					}
-					while(1){
-						if(resultAry[cnt]==NULL){break;}
-						else{cnt++;}
-					}
-					getDestPath(destPath,msg,"이동할 경로를 입력하세요: ");
-					doMove(resultAry, cnt,destPath,msg);
-					freeDestPath(destPath,msg);
-					free(selected);
-				  }
-
-				*selectedArrPtr=selected;
                 return MOVE_FILE_KEY;
-
             case REMOVE_FILE_KEY:
-				  {	int i;
-					int k;
-					int cnt=0;
-				  	char * resultAry[100];
-					char *destPath=".";
-					for(i=0; i<aryCount; i++){
-						if(selected[i]!=0){
-							resultAry[k]=srcAry[i];
-							k++;
-						}
-					}
-					while(1){
-						if(resultAry[cnt]==NULL){break;}
-						else{cnt++;}
-					}
-					doRemove(resultAry, cnt,msg);
-					free(selected);
-				  }
-
-				*selectedArrPtr=selected;
                 return REMOVE_FILE_KEY;
-
             case RENAME_FILE_KEY:
-				  {	int i;
-					int k;
-					int cnt=0;
-				  	char * resultAry[100];
-					char *destPath=".";
-					for(i=0; i<aryCount; i++){
-						if(selected[i]!=0){
-							resultAry[k]=srcAry[i];
-							k++;
-						}
-					}
-					while(1){
-						if(resultAry[cnt]==NULL){break;}
-						else{cnt++;}
-					}
-					getDestPath(destPath,msg,"새로운 파일명/디렉토리명을  입력하세요: ");
-					doRename(resultAry, cnt,destPath,msg);
-					freeDestPath(destPath,msg);
-					free(selected);
-				  }
-
-				*selectedArrPtr=selected;
                 return UP_AND_DOWN_FILE_KEY;
-
             case IP_MANAGE_KEY:
-				*selectedArrPtr=selected;
                 return MENU_IP_MANAGE;
             case MOVE_DIR_KEY:
-				*selectedArrPtr=selected;
                 return MOVE_DIR_KEY;
             case REMOVE_DIR_KEY:
-				*selectedArrPtr=selected;
                 return REMOVE_DIR_KEY;
             case RENAME_DIR_KEY:
-				*selectedArrPtr=selected;
                 return RENAME_DIR_KEY;
             case HELP_KEY:
-				*selectedArrPtr=selected;
                 return MENU_HELP;
-
             case MAKE_DIR_KEY:
-				{
-					doMkdir(msg);
-				}
-				*selectedArrPtr=selected;
                 return MAKE_DIR_KEY;
         }
     }
-
-	*selectedArrPtr=selected;
     return MENU_FTP_PAGE;
 }

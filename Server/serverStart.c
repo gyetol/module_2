@@ -9,7 +9,6 @@ void* keypadThread(void *arg){
 	int *res=calloc(1, sizeof(int));
 	Windows* windows=(Windows*)arg;
 	mvwprintw(windows->consolewin, 2, 4, "keypadThread create success");
-	mvwprintw(windows->consolewin, 3, 1, ">> now I should make keypad in this thread for input");
 	refresh();
 	wrefresh(windows->consolewin);
 	if(keyPad(windows)==-1)
@@ -86,11 +85,13 @@ int serverStart(char *ip){
  {
 	 init_color(COLOR_WHITE, 999, 999, 893);
      init_color(COLOR_YELLOW, 999,999,400);
-   //    init_color(COLOR_YELLOW, 999, 999, 980);
+	 init_color(COLOR_MAGENTA, 756, 537, 415); 
+	 //    init_color(COLOR_YELLOW, 999, 999, 980);
 	 //내가 원하던 색깔 편집기능 되는지 확인+편집 동시에
  }
  init_pair(1, COLOR_BLACK, COLOR_WHITE);
  init_pair(2, COLOR_BLACK, COLOR_YELLOW);
+ init_pair(3, COLOR_BLACK, COLOR_MAGENTA);
  //attron(COLOR_PAIR(1));
  //printw("wdsdsfsdfsdfsdfsr");
  //attroff(COLOR_PAIR(1));
@@ -139,7 +140,7 @@ int serverStart(char *ip){
 		err_quit("epoll_create");
 
 	struct epoll_event event; 
-	event.events=EPOLLIN; 
+	event.events=EPOLLIN||EPOLLOUT;
 	event.data.fd=ssock;
 	if(epoll_ctl(efd,EPOLL_CTL_ADD,ssock,&event)==-1)
 		err_quit("epoll_ctl");
@@ -203,52 +204,58 @@ int serverStart(char *ip){
 				printf("wait success\n");
             }
 			else{
-			   //this is for client
-				printf("[server] client send request ...\n");
-				int cSock=events[i].data.fd; 
-				printf("cSock=%d", cSock);
-				getchar();
-		        char * type;
-				char * path;
-				char * ip;
-				ResponseInfo resInfo={0,};
-				while(1){
-					if(getRequest(cSock,&type,&path,&ip)==-1)
-						continue;
-					resInfo.reqInfo.type=type;
-					resInfo.reqInfo.path=path;
-					resInfo.reqInfo.ip=ip;
-					resInfo.sock=cSock;
-					printf("type : %s, path : %s, ip : %s\n", type, path, ip);
-					if(strcmp(type,"quit")==0)
-					{
-			   			if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
-      	 	 			  err_quit("epoll_ctl");
-						break;
-					}
-				   int * tret=0;
-					pthread_t tid;
-					if(pthread_create(&tid,NULL,responseThread,&resInfo)==EAGAIN)
-						err_quit("pthread_create");
-					if(pthread_join(tid,(void**)&tret)!=0)
-						err_quit("pthread_join");
-					if(*tret==0)
-					{
-						free(tret);
-						break;
-					}
+				if(events[i].events==EPOLLIN){
+				    //this is for client
+					printf("[server] client send request ...\n");
+					int cSock=events[i].data.fd; 
+					printf("cSock=%d", cSock);
+					getchar();
+					char * type;
+					char * path;
+					char * ip;
+					ResponseInfo resInfo={0,};
+					while(1){
+						if(getRequest(cSock,&type,&path,&ip)==-1)
+							continue;
+						resInfo.reqInfo.type=type;
+						resInfo.reqInfo.path=path;
+						resInfo.reqInfo.ip=ip;
+						resInfo.sock=cSock;
+						printf("type : %s, path : %s, ip : %s\n", type, path, ip);
+						if(strcmp(type,"quit")==0)
+						{
+							if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
+							  err_quit("epoll_ctl");
+							break;
+						}
+					   int * tret=0;
+						pthread_t tid;
+						if(pthread_create(&tid,NULL,responseThread,&resInfo)==EAGAIN)
+							err_quit("pthread_create");
+						if(pthread_join(tid,(void**)&tret)!=0)
+							err_quit("pthread_join");
+						if(*tret==0)
+						{
+							free(tret);
+							break;
+						}
 
 	//////////////////////////////////////////////				//keypad 쓰레드 기다리기
-if(pthread_join(tid_s, (void**)&tret_s)!=0)
-    err_quit("pthread_join");
-if(*tret_s==0)
-{
-    free(tret_s);
-    break;
-}
+						if(pthread_join(tid_s, (void**)&tret_s)!=0)
+							err_quit("pthread_join");
+						if(*tret_s==0)
+						{
+							free(tret_s);
+							break;
+						}
 ///////////////////////////////////////////////////////////////////////////////////////////
+					}
+					printf("도달");
 				}
-				printf("도달");
+				else{
+					if(epoll_ctl(efd,EPOLL_CTL_DEL,events[i].data.fd,NULL)==-1)
+					  err_quit("epoll_ctl");
+				}
 			}
 		}//for문 괄호
 	}//while1괄호

@@ -53,11 +53,14 @@ char *getMyIp(){
 
 int main(){
     init_scr();
-    int sock = 0;//sock저장할 변수 
-    char * ipAddress = "";//IP주소 저장할 변수
-    int thisMenu = MENU_MAIN;//현재 메뉴 저장하는 변수
-    int * selected =NULL;//현재 선택된 배열의 인덱스를 뽑는데 사용하는 배열을 가리키는 포인터
-	char * myIp;//내 ip저장할 변수
+
+    int sock = 0;
+    //char * ipAddress = "";
+	char * ipAddress = NULL;
+    int thisMenu = MENU_MAIN;
+    int * selected =NULL;
+	char * myIp;
+
 
 	Array* myDirectories=NULL;//로컬 디렉토리 정보
 	Array* myFiles=NULL;//로컬 세부정보
@@ -115,7 +118,7 @@ int main(){
                 thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, files->array, &selected, files->next, clientPath, serverPath,&resInfo,&msg);
                 break;
             case MENU_IP_INSERT :
-				clientStart("192.168.30.22",&sock);
+				clientStart(ipAddress,&sock);
 				myIp=getMyIp();
 				mvprintw(0,0,"myIP:%s",myIp);
 				resInfo.ip=myIp;
