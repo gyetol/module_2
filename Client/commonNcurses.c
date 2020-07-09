@@ -801,15 +801,6 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
                 break;
             case KEYBOARD_BACKSPACE:
                 return MENU_FTP_PAGE;
-
-			case KEYBOARD_ENTER:
-
-				//위의 두 화면에서 enter가 입력되었을 경우에만 해당 함수를 탈출
-				if(selectingMenu==MENU_FIRSTWINODW||selectingMenu==MENU_SECONDWINDOW){
-					if(selectedCnt==1)
-						return MENU_INTO_DIR;
-				}
-				break;*/
             case EXIT_KEY:
 				  return MENU_FTP_PAGE; // 4분할 화면 중 하나에 있을 시 , exit키는 ftp_page로 이동
                // return MENU_EXIT;

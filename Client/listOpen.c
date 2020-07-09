@@ -99,7 +99,7 @@ int listOpen(void){
 		chdir("..");
 	}
 	chdir("./home");
-	system("/bin/ls -alR");
+	system("/bin/ls -alR > list.txt");
 	close(fd);
 	return 0;
 }

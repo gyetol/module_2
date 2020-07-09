@@ -1,4 +1,4 @@
-//
+
 // Created by linux on 6/30/20.
 //
 
@@ -73,6 +73,10 @@ int main(){
 
 	ResInfo resInfo={0,};
 
+	int index;
+	char** destination=calloc(1,sizeof(char*));
+
+
     while (thisMenu != MENU_EXIT){
         switch (thisMenu) {
             case MENU_MAIN :
@@ -124,6 +128,19 @@ int main(){
             case MENU_HISTORY:
                 //
                 break;
+			case MENU_INTO_DIR:
+				index=selected[0];
+				*destination=myDirectories->array[index];
+				chdir(*destination);
+				memset(clientPath,0,strlen(clientPath));
+				strcpy(clientPath,*destination);
+				free(myDirectories);
+				free(myFiles);
+				parsing("myList.txt",&myDirectories,&myFiles);
+				print_Sub_Block(MODE_CLIENT,myFiles->array,myFiles->next);
+				thisMenu=MENU_THIRDWINDOW;
+				break;
+			//case MENU_OUT_DIR:
         }
     }
 
@@ -132,3 +149,4 @@ int main(){
     endwin();
     return 0;
 }
+

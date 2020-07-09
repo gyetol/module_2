@@ -4,13 +4,8 @@ typedef struct Array{
 	char * array[ARR_SIZ];
  	int next;
 }Array;
-<<<<<<< HEAD
 
 /*int main(){	
-=======
-/*
-int main(){
->>>>>>> develop
 	Array* directories;
 	Array* files;
 

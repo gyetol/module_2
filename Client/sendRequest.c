@@ -75,7 +75,7 @@ int listDownload(int sock, char *ip){
 		}
 	}
 // 	printf("(listDownload)write탈출\n");
-	listOpen();
+	//listOpen();
 }
 
 int fileDownload(int sock, char *ip, char *fName){
