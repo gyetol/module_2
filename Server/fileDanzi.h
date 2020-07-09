@@ -9,7 +9,6 @@
  #include<unistd.h>
  #include<stdlib.h>
  #include<pthread.h>
- #include"serverMain.h"
  #include"serverStart.h"
  #include"help.h"
 int ipTest(char *ip); 
