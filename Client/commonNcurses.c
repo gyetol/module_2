@@ -817,7 +817,9 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
 					selectedCnt++;
                 } else {
                     selected[cursor] = 0;
+					selectedCnt--;
                 }
+				*selectedArrPtr=selected;
                 break;
             case KEYBOARD_BACKSPACE:
 				*selectedArrPtr=selected;
@@ -829,6 +831,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
 				  return MENU_FTP_PAGE; // 4분할 화면 중 하나에 있을 시 , exit키는 ftp_page로 이동
                // return MENU_EXIT;
             case COPY_FILE_KEY:
+	
 				  {	int i;
 					int k;
 					int cnt=0;
@@ -845,7 +848,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
 						else{cnt++;}
 					}
 					getDestPath(destPath,msg,"복사할 경로를 입력하세요: ");
-					doCopy(resultAry, cnt,destPath,msg);
+					doCopy(resultAry, cnt+1,destPath,msg);
 					freeDestPath(destPath,msg);
 					free(selected);
 				  }
@@ -870,7 +873,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
 						else{cnt++;}
 					}
 					getDestPath(destPath,msg,"이동할 경로를 입력하세요: ");
-					doMove(resultAry, cnt,destPath,msg);
+					doMove(resultAry, cnt+1,destPath,msg);
 					freeDestPath(destPath,msg);
 					free(selected);
 				  }
@@ -894,7 +897,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
 						if(resultAry[cnt]==NULL){break;}
 						else{cnt++;}
 					}
-					doRemove(resultAry, cnt,msg);
+					doRemove(resultAry, cnt+1,msg);
 					free(selected);
 				  }
 
@@ -918,7 +921,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
 						else{cnt++;}
 					}
 					getDestPath(destPath,msg,"새로운 파일명/디렉토리명을  입력하세요: ");
-					doRename(resultAry, cnt,destPath,msg);
+					doRename(resultAry, cnt+1,destPath,msg);
 					freeDestPath(destPath,msg);
 					free(selected);
 				  }

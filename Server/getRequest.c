@@ -1,11 +1,11 @@
 #include "getRequest.h"	
 
 int getRequest(int cSock, char **type, char **path, char **ip){
-	printf("getRequest진입\n");
+	//printf("getRequest진입\n");
 	char buf[BUFSIZ]="";
 	int nRead=read(cSock, buf, sizeof(buf));
        
-		printf("nRead:%d\n", nRead);
+		//printf("nRead:%d\n", nRead);
 	   	if(nRead<0){
             perror("read");
             return -1;
