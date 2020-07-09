@@ -1,19 +1,22 @@
 #ifndef SERVER_START_H_
 #define SERVER_START_H_
 
- #include <sys/types.h>
- #include <sys/socket.h>
- #include <pthread.h>
- #include <sys/epoll.h>
- #include <stdio.h>
- #include <unistd.h>
- #include <errno.h>
- #include <netinet/in.h>
- #include <netinet/ip.h>
- #include <arpa/inet.h>
+ #include<sys/types.h>
+ #include<sys/socket.h>
+ #include<pthread.h>
+ #include<sys/epoll.h>
+ #include<stdio.h>
+ #include<unistd.h>
+ #include<errno.h>
+ #include<netinet/in.h>
+ #include<netinet/ip.h>
+ #include<arpa/inet.h>
  #include<time.h>
+ #include<ncurses.h>
  #include "getRequest.h"
  #include "response.h"
+ #include "listOpen.h"
+ #include "myListOpen.h"
 
  #define err_quit(msg) __quit(msg,__LINE__)
  #define LISTENQ (10)
