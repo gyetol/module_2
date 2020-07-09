@@ -611,6 +611,7 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
                 break;
 				
             case KEYBOARD_ENTER:
+// 				mvprintw(1,1,"FTP_Main_Page: enter눌림");
                 if ( (selectingMenu == MENU_FIRSTWINODW)||(selectingMenu == MENU_SECONDWINDOW)||
                         (selectingMenu == MENU_THIRDWINDOW)||(selectingMenu == MENU_FOURTHWINDOW)){
                     return selectingMenu;
@@ -912,5 +913,6 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
                 return MAKE_DIR_KEY;
         }
     }
+
     return MENU_FTP_PAGE;
 }
