@@ -360,42 +360,21 @@ int doRemove(char **srcPath, int len, char **msg){
 		return -1;
 	}
 
-	char answer;
+	int answer;
 	const char *check= "do you want to remove?(y/n)";
 
 	while(1){
-		/*
-		printf("%s\n",check);
-		myflush();
-		answer = getchar();
-		if(answer == 'y' || answer == 'Y'){
-			break;
-		}
-		else if(answer == 'n' || answer == 'N'){
-			return 0;
-		}
-		else{myflush();} */
 
 		mvprintw(FTP_HEIGHT-1,1, check);
 		refresh();
-		myflush();	
-		//mvscanw(FTP_HEIGHT-1,49,"%s",*answer);
 		keypad(stdscr,TRUE);
-		answer =getch();
-
-
-	/*	
-		if( (strcmp(answer,"y")==0) || (strcmp(answer,"Y")==0) ){
-			break;
-		}
-		else if( (strcmp(answer,"n")==0) || (strcmp(answer, "N")==0) ){
-			break;
-		}
-		else{myflush();}*/
-
+			answer=getch();
+			mvprintw(FTP_HEIGHT-1,1,"%c",(char)answer);
+			refresh();
 
 		if(answer==89 || answer ==121){
 			mvprintw(FTP_HEIGHT-1,1,"success");
+			refresh();
 			break;
 		}
 		else if (answer == 78 || answer == 110){
