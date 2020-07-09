@@ -34,14 +34,11 @@ void* responseThread(void * arg){
 	return res;
 }
 
-void *serverStart(void *arg){
-	int *res;
-	if(arg==NULL){
+int serverStart(char *ip){
+	if(ip==NULL){
 		perror("serverIp");
-		*res=-1;
-		return res;
+		return -1;
 	}
-	char* ip=(char *)arg;
 ///////////////////////////////////		ncurses	init start   	///////////////////////////////////////////////////////////
 	start_color();
  initscr();
@@ -167,7 +164,6 @@ void *serverStart(void *arg){
 
               //  printf("[server]%s(client) is  connected... and cSock is %d\n", inet_ntoa(caddr.sin_addr), csock);	
 			//	printf("connect당시의 cSock : %d\n", csock);
-				getchar();
 				event.events = EPOLLIN;
 				event.data.fd = csock;
 				int epollRes=epoll_ctl(efd, EPOLL_CTL_ADD, csock, &event);
@@ -184,8 +180,7 @@ void *serverStart(void *arg){
 					    epollRes=epoll_ctl(efd, EPOLL_CTL_ADD, csock, &event);
 						if(i==9&&epollRes==-1){
 							perror("epoll_ctl_add");
-						    *res=-1;
-							return res;
+							return -1;
 						}
 					}
 				}
@@ -236,15 +231,11 @@ if(*tret_s==0)
     break;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
-					getchar();	
 				}
 				printf("도달");
-				getchar();
 			}
 		}//for문 괄호
-	
 	}//while1괄호
-	getch();
 	delwin(upwin);
 	delwin(logwin);
 	delwin(leftwin);
@@ -252,6 +243,5 @@ if(*tret_s==0)
 	delwin(consolewin);
 	endwin();
 	close(ssock);
-	*res=0;
-	return res;
+	return 0;
 }
