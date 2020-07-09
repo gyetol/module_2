@@ -12,6 +12,12 @@ void* keypadThread(void *arg){
 	mvwprintw(windows->consolewin, 3, 1, ">> now I should make keypad in this thread for input");
 	refresh();
 	wrefresh(windows->consolewin);
+	if(keyPad(windows)==-1)
+	{
+		perror("keyPad");
+		*res=-1;
+		return res;
+	}
 	*res=0;
 	return res;
 }
@@ -40,6 +46,7 @@ void *serverStart(void *arg){
 	start_color();
  initscr();
  cbreak();//raw();
+
  WINDOW *upwin = newwin(3, 80, 0, 0);
  wborder(upwin, 0, 0, 0, 0, 0, 0, 0, 0);
  mvwprintw(upwin,1, 1, "fileDanzi");
@@ -77,6 +84,7 @@ void *serverStart(void *arg){
 ////////////////////////////////////	 ncurses init finish	 /////////////////////////////////////////////////////////
 
 	int ssock=socket(PF_INET,SOCK_STREAM,0);
+	if(ssock==-1)
 		err_quit("socket");
 	struct sockaddr_in saddr={0,};
 	saddr.sin_family=AF_INET;
