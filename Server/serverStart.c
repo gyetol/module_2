@@ -9,7 +9,6 @@ void* keypadThread(void *arg){
 	int *res=calloc(1, sizeof(int));
 	Windows* windows=(Windows*)arg;
 	mvwprintw(windows->consolewin, 2, 4, "keypadThread create success");
-	mvwprintw(windows->consolewin, 3, 1, ">> now I should make keypad in this thread for input");
 	refresh();
 	wrefresh(windows->consolewin);
 	if(keyPad(windows)==-1)
