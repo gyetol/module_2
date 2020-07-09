@@ -5,7 +5,16 @@ void __quit(const char * msg,int line){
 	perror(buf);
 	exit(1);
 }
-
+void* keypadThread(void *arg){
+	int *res=calloc(1, sizeof(int));
+	Windows* windows=(Windows*)arg;
+	mvwprintw(windows->consolewin, 2, 4, "keypadThread create success");
+	mvwprintw(windows->consolewin, 3, 1, ">> now I should make keypad in this thread for input");
+	refresh();
+	wrefresh(windows->consolewin);
+	*res=0;
+	return res;
+}
 void* responseThread(void * arg){
 	int *res=calloc(1, sizeof(int));
 	ResponseInfo* resInfo=(ResponseInfo*)arg;
@@ -27,7 +36,8 @@ void *serverStart(void *arg){
 		return res;
 	}
 	char* ip=(char *)arg;
- start_color();
+///////////////////////////////////		ncurses	init start   	///////////////////////////////////////////////////////////
+	start_color();
  initscr();
  cbreak();//raw();
  WINDOW *upwin = newwin(3, 80, 0, 0);
@@ -58,17 +68,16 @@ void *serverStart(void *arg){
  refresh();
  wrefresh(rightwin);
 
- WINDOW *consolewin=newwin(5, 80, 17, 0);
- wborder(consolewin, 0, 0, ' ', 0, ' ', ' ', 0, 0);
+ WINDOW *consolewin=newwin(5, 80, 18, 0);
+ wborder(consolewin, 0, 0, 0, 0, 0, 0, 0, 0);
  mvwprintw(consolewin, 1, 1,"console");
  mvwprintw(consolewin, 2, 1, ">>");
  refresh();
  wrefresh(consolewin);
+////////////////////////////////////	 ncurses init finish	 /////////////////////////////////////////////////////////
 
 	int ssock=socket(PF_INET,SOCK_STREAM,0);
-	if(ssock==-1)
 		err_quit("socket");
-
 	struct sockaddr_in saddr={0,};
 	saddr.sin_family=AF_INET;
 	saddr.sin_port=htons(DATA_PORT); 
@@ -115,6 +124,20 @@ void *serverStart(void *arg){
 		err_quit("epoll_ctl");
 
 	struct epoll_event events[EPOLL_SIZ];
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+        //keypad thread create for console window
+        Windows windows;
+        windows.upwin=upwin;
+        windows.logwin=logwin;
+        windows.leftwin=leftwin;
+        windows.rightwin=rightwin;
+        windows.consolewin=consolewin;
+
+        int *tret_s=0;
+        pthread_t tid_s;
+        if(pthread_create(&tid_s,NULL,keypadThread, &windows)==EAGAIN)
+            err_quit("pthread_create");
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 	while(1){
 		getchar();
 		int nEvent=epoll_wait(efd,events,128,-1);
@@ -122,6 +145,7 @@ void *serverStart(void *arg){
 			err_quit("epoll_wait");
 		else if(nEvent==0)
 			continue;
+
 		for(int i=0;i<nEvent;i++){
 			if(events[i].data.fd==ssock) {
 				struct sockaddr_in caddr = {0,};
@@ -132,6 +156,7 @@ void *serverStart(void *arg){
  mvwprintw(logwin,2, 1, "[server]%s(client) is connected...", inet_ntoa(caddr.sin_addr));
  refresh();
  wrefresh(logwin);
+
               //  printf("[server]%s(client) is  connected... and cSock is %d\n", inet_ntoa(caddr.sin_addr), csock);	
 			//	printf("connect당시의 cSock : %d\n", csock);
 				getchar();
@@ -193,6 +218,16 @@ void *serverStart(void *arg){
 						free(tret);
 						break;
 					}
+
+	//////////////////////////////////////////////				//keypad 쓰레드 기다리기
+if(pthread_join(tid_s, (void**)&tret_s)!=0)
+    err_quit("pthread_join");
+if(*tret_s==0)
+{
+    free(tret_s);
+    break;
+}
+///////////////////////////////////////////////////////////////////////////////////////////
 					getchar();	
 				}
 				printf("도달");
