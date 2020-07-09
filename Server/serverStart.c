@@ -1,5 +1,4 @@
 #include "serverStart.h"
-
 void __quit(const char * msg,int line){
 	char buf[BUFSIZ];
 	sprintf(buf,"%s(%d)",msg,line);
@@ -46,7 +45,27 @@ void *serverStart(void *arg){
 
 	if(listen(ssock,LISTENQ)==-1)
 		err_quit("listen");
-	 printf("[server] is running : %s\n\n", ip);
+
+    ////////////log파일 기록
+	char buf[100]="echo '[server] is running :";
+    strcat(buf, ip);
+    strcat(buf, " ' >>./log/");
+	strcat(buf, "2020_07_08");
+	strcat(buf, ".txt");
+    system(buf);
+    ////////////log파일 기록
+/*	time_t tt;
+	time(&tt);
+	struct tm *tm;
+	tm = gmtime(&tt);
+	printf("%d년 / %d월 / %d일 ",tm->tm_year+1900,tm->tm_mon+1,tm->tm_mday);
+*/
+
+ // 1. 하드코딩으로 53라인 날짜 해놓은거 실제 그날 날짜로 바꿔야됨
+//	 (그러기위해 함수 얻는 중이었음 이떄 7월 말고 07월로 나오는 형식 지정자 찾아야됨)
+//  2. 완료되면 더 추가해야할 로그들 찾아서 위와 같이 시스템 함수로 추가	
+
+printf("[server] is running : %s\n\n", ip);
 	int efd=epoll_create(1); 
 	if(efd==-1)
 		err_quit("epoll_create");
