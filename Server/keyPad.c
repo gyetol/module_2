@@ -55,40 +55,42 @@ int keyPad(Windows *windows){
 		switch(ch)
 		{
 			case 32:
-				if(spaceCnt!=3)
+				if(spaceCnt!=4)
 					spaceCnt++;
 				else
 					spaceCnt=1;
 
 				freeColor(win);
 				if(spaceCnt==1)
+					;
+				if(spaceCnt==2)
 				{
-					wborder(win[3], ' ', ' ', ' ', ' ',' ',' ',' ',' ');
+					wborder(win[3], 0, 0, ' ', 0, 0, 0, 0, 0);
 					wbkgd(win[3],COLOR_PAIR(2));
-				}
-				else if(spaceCnt==2)
-				{
-					wborder(win[3], ' ', ' ', 0, ' ',' ',' ',' ',' ');
-					wbkgd(win[3],COLOR_PAIR(2));
-
-					wborder(win[2], ' ', ' ', ' ', ' ',' ',' ',' ',' ');
-					wbkgd(win[2],COLOR_PAIR(2));
-
-					wborder(win[1], ' ', ' ', ' ', ' ',' ',' ',' ',' ');
-					wbkgd(win[1],COLOR_PAIR(2));
 				}
 				else if(spaceCnt==3)
 				{
-					wborder(win[3], ' ', ' ', 0, ' ',' ',' ',' ',' ');
+					wborder(win[3], 0, 0, ' ', 0, 0, 0, 0, 0);
 					wbkgd(win[3],COLOR_PAIR(2));
 
-					wborder(win[2], ' ', ' ', ' ', ' ',' ',' ',' ',' ');
+					wborder(win[2], ' ', 0, 0, 0, 0, 0, 0, 0);
 					wbkgd(win[2],COLOR_PAIR(2));
 
-					wborder(win[1], ' ', ' ', ' ', ' ',' ',' ',' ',' ');
+					wborder(win[1], 0, ' ', 0,0, 0, 0, 0,0);
 					wbkgd(win[1],COLOR_PAIR(2));
+				}
+				else if(spaceCnt==4)
+				{
+					wborder(win[3], 0, 0, ' ', 0, 0, 0, 0, 0);
+					wbkgd(win[3],COLOR_PAIR(2));
+					
+					 wborder(win[2], ' ', 0, 0, 0, 0, 0, 0, 0);
+					 wbkgd(win[2],COLOR_PAIR(2));
 
-					wborder(win[0], ' ', ' ', ' ', 0,' ',' ',' ',' ');
+ 					 wborder(win[1], 0, ' ', 0,0, 0, 0, 0,0);
+ 					 wbkgd(win[1],COLOR_PAIR(2));
+
+					wborder(win[0], 0, 0, 0, ' ', 0,0, 0, 0);
 					wbkgd(win[0],COLOR_PAIR(2));
 				}
 				refresh();
