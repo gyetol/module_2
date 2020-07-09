@@ -1,5 +1,9 @@
 #include "sendRequest.h"
 
+/*
+int listDownload(int sock,char * ip,const char * cmd){
+*/
+
 int listDownload(int sock, char *ip){
 // 	printf("\n(listDownload)listDownload들어옴\n");
 // 	printf("(listDownload)받은 ip:%s\n",ip);
