@@ -38,11 +38,34 @@ int serverStart(char *ip){
 		perror("serverIp");
 		return -1;
 	}
+
+////////////////////////////////////     color init start    ///////////////////////////////////////////////////////////////
+
+  initscr();
+  cbreak();
+
+  start_color();
+
+  if(can_change_color())
+  {
+      init_color(COLOR_WHITE, 999, 999, 893);
+      init_color(COLOR_YELLOW, 999,999,400);
+      init_color(COLOR_MAGENTA, 756, 537, 415);
+      //    init_color(COLOR_YELLOW, 999, 999, 980);
+      //내가 원하던 색깔 편집기능 되는지 확인+편집 동시에
+  }
+  init_pair(1, COLOR_BLACK, COLOR_WHITE);
+  init_pair(2, COLOR_BLACK, COLOR_YELLOW);
+  init_pair(3, COLOR_BLACK, COLOR_MAGENTA);
+  wbkgd(stdscr,COLOR_PAIR(1));
+  
+
+///////////////////////////////////    color init finish     ///////////////////////////////////////////////////////////////
+
 ///////////////////////////////////		screen	init start   	///////////////////////////////////////////////////////////
- initscr();
- cbreak();//raw();
 
  WINDOW *upwin = newwin(3, 80, 0, 0);
+ wbkgd(upwin,COLOR_PAIR(1));
  wborder(upwin, 0, 0, 0, 0, 0, 0, 0, 0);
  mvwprintw(upwin,1, 1, "fileDanzi");
  mvwprintw(upwin, 1, 64, "%s", ip);
@@ -50,20 +73,23 @@ int serverStart(char *ip){
  wrefresh(upwin);
 
  WINDOW *logwin=newwin(5, 80, 3, 0);
+ wbkgd(logwin,COLOR_PAIR(1));
  wborder(logwin, 0, 0, 0, ' ', 0, 0, ' ', ' ');
  mvwprintw(logwin,1, 1, "[server] is running : %s...", ip);
  refresh();
  wrefresh(logwin);
 
  WINDOW *leftwin=newwin(11, 40, 8, 0);
+ wbkgd(leftwin,COLOR_PAIR(1));
  myListOpen(leftwin);
  wborder(leftwin, 0, 0, 0, 0, 0, 0, 0, 0);
  refresh(); 
  wrefresh(leftwin);
 
  WINDOW *rightwin=newwin(11, 40, 8, 40);
- scrollok(rightwin, TRUE);
- wscrl(rightwin, 100);
+ wbkgd(rightwin,COLOR_PAIR(1));
+// scrollok(rightwin, TRUE);
+// wscrl(rightwin, 100);
  listOpen(rightwin);
  wborder(rightwin, 0, 0, 0, 0, 0, 0, 0, 0); 
  refresh();
@@ -71,6 +97,7 @@ int serverStart(char *ip){
 
  
  WINDOW *consolewin=newwin(5, 80, 19, 0);
+ wbkgd(consolewin,COLOR_PAIR(1));
  wborder(consolewin, 0, 0, 0, 0, 0, 0, 0, 0);
  mvwprintw(consolewin, 1, 1,"console");
  mvwprintw(consolewin, 2, 1, ">>");
@@ -78,25 +105,6 @@ int serverStart(char *ip){
  wrefresh(consolewin);
 ////////////////////////////////////	 screen init finish	 /////////////////////////////////////////////////////////
 
-////////////////////////////////////     color init start 	 /////////////////////////////////////////////////////////
- start_color();
- 
- if(can_change_color())
- {
-	 init_color(COLOR_WHITE, 999, 999, 893);
-     init_color(COLOR_YELLOW, 999,999,400);
-	 init_color(COLOR_MAGENTA, 756, 537, 415); 
-	 //    init_color(COLOR_YELLOW, 999, 999, 980);
-	 //내가 원하던 색깔 편집기능 되는지 확인+편집 동시에
- }
- init_pair(1, COLOR_BLACK, COLOR_WHITE);
- init_pair(2, COLOR_BLACK, COLOR_YELLOW);
- init_pair(3, COLOR_BLACK, COLOR_MAGENTA);
- //attron(COLOR_PAIR(1));
- //printw("wdsdsfsdfsdfsdfsr");
- //attroff(COLOR_PAIR(1));
-
-///////////////////////////////////    color init finish     ///////////////////////////////////////////////////////
 	int ssock=socket(PF_INET,SOCK_STREAM,0);
 	if(ssock==-1)
 		err_quit("socket");
@@ -161,10 +169,14 @@ int serverStart(char *ip){
             err_quit("pthread_create");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 	while(1){
-		getchar();
 		int nEvent=epoll_wait(efd,events,128,-1);
-		if(nEvent<0)
-			err_quit("epoll_wait");
+		if(nEvent<0){
+			if(errno==EINTR) //키패드 쓰레드에서 system함수 사용시 커널같이써서인지 epoll wait interrupt 에러나므로 
+				continue;	//방해 들어왔을 경우 다시 위로 가서 기다린다는 의미로 사용
+			else 
+				err_quit("epoll_wait");
+		}
+
 		else if(nEvent==0)
 			continue;
 

@@ -48,13 +48,48 @@ int keyPad(Windows *windows){
 	refresh();
 	wrefresh(currentwin);
 	keypad(stdscr, TRUE);
-	char command[80]={0, };
+	//char command[80]="echo 'hoho' > ./ho.txt";
+	char command[152]="";
 	int spaceCnt=0;
-	while((ch=getch())!='x')
+	while((ch=getch())!=27) //콘솔창에 x라는 문자 쓰는일 많아서 esc누르면 나가게했음
 	{
 		switch(ch)
 		{
-			case 32:
+			case 10: //엔터입력시 현재 win창에 따라 다르게 동작
+				spaceCnt=0;
+				freeColor(win);
+			  if(now==1) //leftwin에서 엔터쳤을 경우 업로드, 결과는 logwin에 출력 + 로그파일에도 출력
+				{
+					;
+				}
+				else if(now==2)//rightwin에서 엔터쳤을 경우 다운로드 혹은 아무일도 일어나지 않게, 결과는 logwin에 출력 + 로그파일에도 출력
+				{
+					;
+				}
+				else if(now==3)//consolewin에서 엔터쳤을 경우 커널에 명령어 전달, 결과는 logwin에 출력 + 로그파일에도 출력??
+				{
+					//wmove(win[3], 2, 4);
+					//wclear(win[3]);
+					wdeleteln(win[3]);
+					winsertln(win[3]);
+					line=1;
+					cursor=4;
+					cursor2=4;
+					//mvwprintw(win[3],1, 1,"console");
+					mvwprintw(win[3], 2, 1, ">> ");
+					wborder(win[3],' ', ' ',' ',' ',' ',' ',' ',' ');
+					wbkgd(win[3], COLOR_PAIR(2));
+					refresh();
+					wrefresh(win[3]);
+					system(command);
+					wmove(win[3],2,3);
+					refresh();
+					wrefresh(currentwin);
+				}
+				refresh();
+				wrefresh(currentwin);
+				break;
+			case 43:  //+입력시 꿀단지 차오르게함
 				if(spaceCnt!=4)
 					spaceCnt++;
 				else
@@ -165,7 +200,7 @@ int keyPad(Windows *windows){
 				refresh();
 				wrefresh(prevwin);
 				wrefresh(currentwin);
-				
+				command[cursor+cursor2-8]=' ';
 				if(line==1){
 					if(cursor!=4)
 							cursor--;
@@ -208,7 +243,7 @@ int keyPad(Windows *windows){
  				refresh();
  				wrefresh(prevwin);
 				wrefresh(currentwin);
-			 	
+				command[cursor+cursor2-8]=(char)ch;
 				 if(line==1){
 					mvwprintw(windows->consolewin, 2, cursor, "%c", (char)ch);
 	
