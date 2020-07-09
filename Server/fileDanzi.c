@@ -231,24 +231,14 @@ int main(int argc, char **argv){
 			return -1;
 		}
 	
-		//존재하는 사용자임이 확인되었으면 쓰레드 분리 후
-		//한쪽에선 로컬 명령어 받고 한쪽에선 서버 가동시키기
-		pthread_t tid;
-		if(pthread_create(&tid, NULL, serverStart, ip)==-1)
+		int res=serverStart(ip);
+		if(res==-1)
 		{
-			perror("pthread_create");
+			perror("serverStart");
 			return -1;
 		}
-	/*	if(serverMain()==-1){
-			perror("serverMain");
-			return -1;
-		}*/
-		if(pthread_join(tid, NULL)==-1)
-		{
-			perror("thread join failed");
-			return -1;
-		}
-
+		else if(res==0)
+			return 0;
 	}
 		return 0;
 	}

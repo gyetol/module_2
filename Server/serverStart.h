@@ -36,5 +36,5 @@ typedef struct{
  }ResponseInfo;
 
 
- void* serverStart(void* arg);
+int serverStart(char * ip);
 #endif
