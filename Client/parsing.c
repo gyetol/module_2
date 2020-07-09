@@ -5,7 +5,7 @@ typedef struct Array{
  	int next;
 }Array;
 
-int main(){
+/*int main(){	
 	Array* directories;
 	Array* files;
 
@@ -20,7 +20,7 @@ int main(){
 	free(directories);
 	free(files);
 	//혜린언니의 원래 코드
-	/*
+
 	char *directories[DIRECTORY_SIZE];
  	int dNext=0;
 	char *files[FILE_SIZE];
@@ -33,9 +33,9 @@ int main(){
 	for(int i=0;i<fNext;i++){
      printf("%s\n", files[i]);
  	}
-	*/
+	
 	return 0;
-}
+}*/
 
 
 

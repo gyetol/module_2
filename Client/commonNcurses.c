@@ -118,10 +118,10 @@ int Help_Page(){
     mvprintw(12, 5, "M");
     mvprintw(13, 5, "R");
     mvprintw(14, 7, "N");
-	mvprintw(15, 13, "F");
+	mvprintw(15, 13,"F");
     mvprintw(16, 6, "P");
     mvprintw(17, 7, "V");
-    mvprintw(18, 10, "E");
+    mvprintw(18, 10,"E");
     mvprintw(19, 8, "A");
     mvprintw(20, 5, "H");
     mvprintw(21, 7, "K");
@@ -131,7 +131,7 @@ int Help_Page(){
 
 	wrefresh(hWin);
 	refresh();
-	
+
 	if (key = getch()){
 		return MENU_MAIN;
 	}
@@ -143,7 +143,7 @@ int Help_Page(){
 /// to show main menu
 /// input1 : ip Address space to store
 /// return : menunum
-////////////////////////////////////////////////////////////
+/////
 int IP_insert_Page(char**ip){
     werase(stdscr); // Clear Window
     curs_set(0); // Not need Cursor pointer
@@ -159,7 +159,7 @@ int IP_insert_Page(char**ip){
 
     attron(COLOR_PAIR(MAIN1));
     mvprintw(3, 34, "FILE DANZI");
-    mvprintw(7, 32, "cute FTP Cleint");
+    mvprintw(7, 32, "SIMPLE & CUTE FTP Service");
 
     attron(COLOR_PAIR(MAIN2));
     mvprintw(16, 16, "INSERT SERVER'S IP ADDRESS (press enter key)");
