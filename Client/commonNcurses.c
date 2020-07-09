@@ -587,14 +587,14 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
                     selectingMenu = MENU_THIRDWINDOW;
                 }
                 break;
-				/*
+				
             case KEYBOARD_ENTER:
                 if ( (selectingMenu == MENU_FIRSTWINODW)||(selectingMenu == MENU_SECONDWINDOW)||
                         (selectingMenu == MENU_THIRDWINDOW)||(selectingMenu == MENU_FOURTHWINDOW)){
                     return selectingMenu;
                 }
                 break;
-				*/
+				
             case IP_MANAGE_KEY:
                 return MENU_IP_MANAGE;
             case HELP_KEY:
@@ -779,11 +779,11 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
                 break;
             case KEYBOARD_BACKSPACE:
                 return MENU_FTP_PAGE;
-			case KEYBORD_ENTER:
+			case KEYBOARD_ENTER:
 				//위의 두 화면에서 enter가 입력되었을 경우에만 해당 함수를 탈출
-				if(thisMenu==MENU_FIRSTWINDOW||thisMenu==MENU_SECONDWINDOW){
+				if(selectingMenu==MENU_FIRSTWINODW||selectingMenu==MENU_SECONDWINDOW){
 					if(selectedCnt==1)
-						return MENU_INPUT_DIR;
+						return MENU_INTO_DIR;
 				}
 				break;
             case EXIT_KEY:
