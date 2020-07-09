@@ -5,22 +5,26 @@ int keyPad(Windows *windows){
 		perror("windows");
 		return -1;
 	}
-	getch();
-    mvwprintw(windows->consolewin, 2, 1, ">> keyPad called                                      ");
+    mvwprintw(windows->consolewin, 2, 1, ">>                                            ");
+	wmove(windows->consolewin, 2, 4);
 	refresh();
 	wrefresh(windows->consolewin);
 
 	int ch;
+    noecho();
 	WINDOW* win[4];
 	win[0]=windows->logwin;
 	win[1]=windows->leftwin;
 	win[2]=windows->rightwin;
 	win[3]=windows->consolewin;
 	int now=3;
+	int cursor=4;
+	int cursor2=4;
+	int line=1;
 	WINDOW *currentwin=win[now];
 	WINDOW *prevwin=win[2];
-	noecho();
 	keypad(stdscr, TRUE);
+	char command[80]={0, };
 	while((ch=getch())!='x')
 	{
 		switch(ch)
@@ -62,15 +66,66 @@ int keyPad(Windows *windows){
 				wrefresh(currentwin);
 				break;
 			case KEY_UP:	
-				mvwprintw(windows->consolewin, 2, 1, "keyup");
+				mvwprintw(windows->consolewin, 2, 4, "keyup");
 				break;
 			case KEY_DOWN:
-				mvwprintw(windows->consolewin, 2, 1, "keydown");
+				mvwprintw(windows->consolewin, 2, 4, "keydown");
 				break;
-			default:
-				mvwprintw(windows->consolewin, 2, 1, "nonset key");
+			case KEY_BACKSPACE: //delete문자 했을 경우 (backspace)
+			
+				if(line==1){
+					if(cursor!=4)
+							cursor--;
+
+					mvwprintw(windows->consolewin, 2, cursor, " "); 
+					wmove(windows->consolewin, 2, cursor);
+				}
+				else if(line==2){
+					if(cursor2!=4)
+						{
+							if(cursor2==76)
+								mvwprintw(windows->consolewin, 3, 76," ");
+							cursor2--;
+					  		mvwprintw(windows->consolewin, 3, cursor2, " ");
+							wmove(windows->consolewin, 3, cursor2);
+						}
+					else
+						{
+							mvwprintw(windows->consolewin, 3, 2, " ");
+							mvwprintw(windows->consolewin, 3, 1, " ");
+							mvwprintw(windows->consolewin, 2, 76," ");
+							line=1;
+							wmove(windows->consolewin, 2, cursor);
+						}				
+				}
+				break;
+			default:  //add문자 했을 경우
+
+				if(line==1){
+					mvwprintw(windows->consolewin, 2, cursor, "%c", (char)ch);
+	
+						if(cursor!=76)
+							{
+								cursor++;
+							    wmove(windows->consolewin, 2, cursor);
+							}
+						else{
+								line=2;
+								mvwprintw(windows->consolewin, 3, 1, ">>");
+								wmove(windows->consolewin, 3, cursor2);
+							}
+	            }				
+				else if(line==2){
+					mvwprintw(windows->consolewin, 3, cursor2, "%c", (char)ch);
+						if(cursor2!=76)
+							{
+								cursor2++;
+								wmove(windows->consolewin, 3, cursor2);
+							}
+				}
 				break;
 		}
+		//noecho();
 		refresh();
 		wrefresh(windows->consolewin);
 	}
