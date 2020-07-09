@@ -4,8 +4,13 @@ typedef struct Array{
 	char * array[ARR_SIZ];
  	int next;
 }Array;
+<<<<<<< HEAD
+
+/*int main(){	
+=======
 /*
 int main(){
+>>>>>>> develop
 	Array* directories;
 	Array* files;
 
@@ -20,7 +25,7 @@ int main(){
 	free(directories);
 	free(files);
 
-//혜린언니의 원래 코드
+
 	
 	char *directories[DIRECTORY_SIZE];
  	int dNext=0;
