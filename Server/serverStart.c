@@ -278,5 +278,6 @@ int serverStart(char *ip){
 	delwin(consolewin);
 	endwin();
 	close(ssock);
+	system("^C");
 	return 0;
 }
