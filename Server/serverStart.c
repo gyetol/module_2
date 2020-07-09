@@ -39,8 +39,7 @@ int serverStart(char *ip){
 		perror("serverIp");
 		return -1;
 	}
-///////////////////////////////////		ncurses	init start   	///////////////////////////////////////////////////////////
-	start_color();
+///////////////////////////////////		screen	init start   	///////////////////////////////////////////////////////////
  initscr();
  cbreak();//raw();
 
@@ -51,35 +50,52 @@ int serverStart(char *ip){
  refresh();
  wrefresh(upwin);
 
- WINDOW *logwin=newwin(6, 80, 3, 0);
- wborder(logwin, 0, 0, 0, 0, 0, 0, 0, 0);
+ WINDOW *logwin=newwin(5, 80, 3, 0);
+ wborder(logwin, 0, 0, 0, ' ', 0, 0, ' ', ' ');
  mvwprintw(logwin,1, 1, "[server] is running : %s...", ip);
  refresh();
  wrefresh(logwin);
 
- WINDOW *leftwin=newwin(10, 40, 7, 0);
- wborder(leftwin, 0, 0, 0, 0, 0, 0, 0, 0);
+ WINDOW *leftwin=newwin(11, 40, 8, 0);
  myListOpen(leftwin);
- refresh();
+ wborder(leftwin, 0, 0, 0, 0, 0, 0, 0, 0);
+ refresh(); 
  wrefresh(leftwin);
 
- WINDOW *rightwin=newwin(10, 40, 7, 40);
+ WINDOW *rightwin=newwin(11, 40, 8, 40);
  scrollok(rightwin, TRUE);
  wscrl(rightwin, 100);
- wborder(rightwin, 0, 0, 0, 0, 0, 0, 0, 0);
- //mvwprintw(leftwin, 1, 1, "des");
  listOpen(rightwin);
+ wborder(rightwin, 0, 0, 0, 0, 0, 0, 0, 0); 
  refresh();
  wrefresh(rightwin);
 
- WINDOW *consolewin=newwin(5, 80, 18, 0);
+ 
+ WINDOW *consolewin=newwin(5, 80, 19, 0);
  wborder(consolewin, 0, 0, 0, 0, 0, 0, 0, 0);
  mvwprintw(consolewin, 1, 1,"console");
  mvwprintw(consolewin, 2, 1, ">>");
  refresh();
  wrefresh(consolewin);
-////////////////////////////////////	 ncurses init finish	 /////////////////////////////////////////////////////////
+////////////////////////////////////	 screen init finish	 /////////////////////////////////////////////////////////
 
+////////////////////////////////////     color init start 	 /////////////////////////////////////////////////////////
+ start_color();
+ 
+ if(can_change_color())
+ {
+	 init_color(COLOR_WHITE, 999, 999, 893);
+     init_color(COLOR_YELLOW, 999,999,400);
+   //    init_color(COLOR_YELLOW, 999, 999, 980);
+	 //내가 원하던 색깔 편집기능 되는지 확인+편집 동시에
+ }
+ init_pair(1, COLOR_BLACK, COLOR_WHITE);
+ init_pair(2, COLOR_BLACK, COLOR_YELLOW);
+ //attron(COLOR_PAIR(1));
+ //printw("wdsdsfsdfsdfsdfsr");
+ //attroff(COLOR_PAIR(1));
+
+///////////////////////////////////    color init finish     ///////////////////////////////////////////////////////
 	int ssock=socket(PF_INET,SOCK_STREAM,0);
 	if(ssock==-1)
 		err_quit("socket");
