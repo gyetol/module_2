@@ -176,13 +176,27 @@ int keyPad(Windows *windows){
 				break;
 			case KEY_UP:
 				spaceCnt=0;	
-				freeColor(win);
-				mvwprintw(windows->consolewin, 2, 4, "^");
+				if(now==1||now==2)
+			    {
+					wscrl(currentwin,-1);
+					//scroll(currentwin);
+					refresh();
+					wrefresh(currentwin);
+				}
+				if(now==3)
+					mvwprintw(windows->consolewin, 2, 4, "^");
 				break;
 			case KEY_DOWN:
 				spaceCnt=0;
-				freeColor(win);
-				mvwprintw(windows->consolewin, 2, 4, "v");
+				if(now==1||now==2)
+				{
+					wscrl(currentwin,1);
+					//scroll(currentwin);
+					refresh();
+					wrefresh(currentwin);
+				}
+				if(now==3)
+					mvwprintw(windows->consolewin, 2, 4, "v");
 				break;
 			case KEY_BACKSPACE: //delete문자 했을 경우 (backspace)
 				 spaceCnt=0;
