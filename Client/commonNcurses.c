@@ -890,6 +890,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
             case REMOVE_FILE_KEY:
 				  {	int i;
 					int k;
+					int res;
 					int cnt=0;
 				  	char * resultAry[100];
 					char *destPath=".";
@@ -903,7 +904,9 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
 						if(resultAry[cnt]==NULL){break;}
 						else{cnt++;}
 					}
-					doRemove(resultAry, cnt+1,msg);
+					res=doRemove(resultAry, cnt+1,msg);
+					if(res==0){break;}
+
 					free(selected);
 				  }
 
@@ -913,6 +916,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
             case RENAME_FILE_KEY:
 				  {	int i;
 					int k;
+					int res;
 					int cnt=0;
 				  	char * resultAry[100];
 					char *destPath=".";
@@ -926,8 +930,9 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
 						if(resultAry[cnt]==NULL){break;}
 						else{cnt++;}
 					}
-					getDestPath(destPath,msg,"새로운 파일명/디렉토리명을  입력하세요: ");
-					doRename(resultAry, cnt+1,destPath,msg);
+					getDestPath(destPath,msg,"insert new file or dir name: ");
+					res=doRename(resultAry, cnt+1,destPath,msg);
+					if(res==0){break;}
 					freeDestPath(destPath,msg);
 					free(selected);
 				  }
