@@ -13,20 +13,15 @@ int main(){
 
 	//parsing("list.txt",&directories,&files);
 
-	chdir("/home/linux/module2/home");
-	printf("chdir success\n");
-	char path[1024];
-	getcwd(path,1024);
-	printf("current path:%s\n",path);
+	chdir("/home/linux/module2/Client");
 	myListOpen();
-	printf("myListOpen Success\n");
+	printf("chdir success\n");
  	parsing("myList.txt", &directories,&files);
-	printf("parsing success\n");
-	printf("directories 출력\n");
+	printf("directories(%d) 출력\n",directories->next);
    	for(int i=0;i<directories->next;i++){
        printf("%s\n", directories->array[i]);
    	}
-	printf("files 출력\n");
+	printf("files(%d) 출력\n",files->next);
 	for(int i=0;i<files->next;i++){
      printf("%s\n", files->array[i]);
  	}
@@ -49,7 +44,6 @@ int main(){
 	return 0;
 }
 */
-
 
 int parsing(const char *path,Array** directories,Array** files){
 //int parsing(char *path,char **directories, char **files, int *dNext, int *fNext){
