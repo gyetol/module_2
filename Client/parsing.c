@@ -1,55 +1,66 @@
 #include "parsing.h"
+#include "myListOpen.h"
 
 typedef struct Array{
 	char * array[ARR_SIZ];
  	int next;
 }Array;
 
-/*int main(){	
+/*
+int main(){	
 	Array* directories;
 	Array* files;
 
-	parsing("list.txt",&directories,&files);
- 	//parsing("myList.txt", directories, files, &dNext, &fNext);
-  	for(int i=0;i<directories->next;i++){
-     printf("%s\n", directories->array[i]);
- 	}
+	//parsing("list.txt",&directories,&files);
+
+	chdir("/home/linux/module2/home");
+	printf("chdir success\n");
+	char path[1024];
+	getcwd(path,1024);
+	printf("current path:%s\n",path);
+	myListOpen();
+	printf("myListOpen Success\n");
+ 	parsing("myList.txt", &directories,&files);
+	printf("parsing success\n");
+	printf("directories 출력\n");
+   	for(int i=0;i<directories->next;i++){
+       printf("%s\n", directories->array[i]);
+   	}
+	printf("files 출력\n");
 	for(int i=0;i<files->next;i++){
      printf("%s\n", files->array[i]);
  	}
 	free(directories);
 	free(files);
-
-
 	
-	char *directories[DIRECTORY_SIZE];
- 	int dNext=0;
-	char *files[FILE_SIZE];
-	int fNext=0;
-	parsing("list.txt",directories, files, &dNext, &fNext);
- 	parsing("myList.txt", directories, files, &dNext, &fNext);
-  	for(int i=0;i<dNext;i++){
-     printf("%s\n", directories[i]);
- 	}
-	for(int i=0;i<fNext;i++){
-     printf("%s\n", files[i]);
- 	}
+// 	char *directories[DIRECTORY_SIZE];
+//  	int dNext=0;
+// 	char *files[FILE_SIZE];
+// 	int fNext=0;
+// 	parsing("list.txt",directories, files, &dNext, &fNext);
+//  	parsing("myList.txt", directories, files, &dNext, &fNext);
+//   	for(int i=0;i<dNext;i++){
+//      printf("%s\n", directories[i]);
+//  	}
+// 	for(int i=0;i<fNext;i++){
+//      printf("%s\n", files[i]);
+//  	}
 	
 	return 0;
-}*/
-
+}
+*/
 
 
 int parsing(const char *path,Array** directories,Array** files){
 //int parsing(char *path,char **directories, char **files, int *dNext, int *fNext){
-/*
-	char * directories[10];
-	int dNext=0;
-	char * files[10];
-	int fNext=0;
-	Array* dirs=calloc(1,sizeof(Array));
-	Array* fs=calloc(1,sizeof(Array));
-*/
+
+// 	char * directories[10];
+// 	int dNext=0;
+// 	char * files[10];
+// 	int fNext=0;
+
+// 	Array* dirs=calloc(1,sizeof(Array));
+// 	Array* fs=calloc(1,sizeof(Array));
 
 	Array* dirs =calloc(1,sizeof(Array));
 	Array* fs = calloc(1,sizeof(Array));
@@ -69,7 +80,6 @@ int parsing(const char *path,Array** directories,Array** files){
 		}
 		else if (nRead==0)
 			break;
-	
 		char *savePtr, *saveStr;
 		char *ptr=strtok_r(buf, "\n", &savePtr);
 		ptr=strtok_r(NULL, "\n", &savePtr);
@@ -82,16 +92,19 @@ int parsing(const char *path,Array** directories,Array** files){
 			}
 			if(type=='d'){
 				dirs->array[dirs->next]=str;
-				printf("%s\n",dirs->array[dirs->next]);
 				(dirs->next)++;
+// 				printf("(parsing)dirs->next=%d\n",dirs->next);
 			}
 			else if(type=='-'){
 				fs->array[fs->next]=str;
-				fs->next++;
+				(fs->next)++;
+// 				printf("(parsing)fs->next=%d\n",fs->next);
 			}
 			else
 				break;
 			ptr=strtok_r(NULL, "\n", &savePtr);
+
+// 			getchar();
 		}
 	}
 	*directories=dirs;
