@@ -177,12 +177,12 @@ int keyPad(Windows *windows){
 			case KEY_UP:
 				spaceCnt=0;	
 				freeColor(win);
-				mvwprintw(windows->consolewin, 2, 4, "keyup");
+				mvwprintw(windows->consolewin, 2, 4, "^");
 				break;
 			case KEY_DOWN:
 				spaceCnt=0;
 				freeColor(win);
-				mvwprintw(windows->consolewin, 2, 4, "keydown");
+				mvwprintw(windows->consolewin, 2, 4, "v");
 				break;
 			case KEY_BACKSPACE: //delete문자 했을 경우 (backspace)
 				 spaceCnt=0;
