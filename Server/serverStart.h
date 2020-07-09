@@ -19,7 +19,6 @@
  #define LISTENQ (10)
  #define EPOLL_SIZ (128)
  #define DATA_PORT (20629)
- #define CONTROL_PORT (20630)
 
 typedef struct {
      char * type;
