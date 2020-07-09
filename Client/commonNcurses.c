@@ -538,7 +538,7 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
     while (1) {
         attron(COLOR_PAIR(MAIN1));
         print_Title_Block(mode);
-                 print_Path_Block(pathOfLeft, pathOfRight);
+		print_Path_Block(pathOfLeft, pathOfRight);
 
         attron(COLOR_PAIR(MAIN2));
         print_Log_Block(sampleFile, 10);
@@ -645,14 +645,14 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
 /// input : mode (MODE_CLIENT or MODE_SERVER), path1, path2
 /// return : selectMenu
 ////////////////////////////////////////////////////////////
-int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * selected, int aryCount, char * pathOfLeft, char * pathOfRight, ResInfo *resInfo,char **msg){
+int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** selectedArrPtr, int aryCount, char * pathOfLeft, char * pathOfRight, ResInfo *resInfo,char **msg){
     int startPoint = 0;
     int cursor = startPoint;
     char * nullStr;
     int x;
     int y;
     int totalCount;
-    selected = calloc(aryCount,sizeof(int));
+    int *selected = calloc(aryCount,sizeof(int));//NULL체크 해야함
     char key;
 	int selectedCnt=0;
 
@@ -758,7 +758,9 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
             }
         }
 
-        refresh();
+//         mvprintw(1,1,"ENTER입력");  
+		refresh();
+		
         key = getchar();
 
         switch (key) {
@@ -785,12 +787,23 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
 
                 break;
             case KEYBOARD_LEFT:
+ 				mvprintw(1,1,"LEFT입력");
+				refresh();
+				getchar();
                 memset(selected, 0, aryCount);
                 selected[0]=cursor;//this is insert
+				*selectedArrPtr=selected;
                 return MENU_OUT_DIR;
             case KEYBOARD_RIGHT:
+ 				mvprintw(1,1,"ENTER입력");
+				refresh();
                 memset(selected, 0, aryCount);
-                selected[0]=cursor;//this is insert
+ 				mvprintw(2,1,"memset완료");
+				refresh();
+			    selected[0]=cursor;//this is insert
+ 				mvprintw(3,1,"selected[0]=%d",selected[0]);
+				refresh();
+				*selectedArrPtr=selected;
                 return MENU_INTO_DIR;
             case KEYBOARD_SPACEBAR:
                 if (selected[cursor] == 0) {
@@ -801,8 +814,12 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
                 }
                 break;
             case KEYBOARD_BACKSPACE:
+				*selectedArrPtr=selected;
+
+
                 return MENU_FTP_PAGE;
             case EXIT_KEY:
+				*selectedArrPtr=selected;
 				  return MENU_FTP_PAGE; // 4분할 화면 중 하나에 있을 시 , exit키는 ftp_page로 이동
                // return MENU_EXIT;
             case COPY_FILE_KEY:
@@ -826,6 +843,8 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
 					freeDestPath(destPath,msg);
 					free(selected);
 				  }
+
+				*selectedArrPtr=selected;
                 return COPY_FILE_KEY;
 
             case MOVE_FILE_KEY:
@@ -849,6 +868,8 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
 					freeDestPath(destPath,msg);
 					free(selected);
 				  }
+
+				*selectedArrPtr=selected;
                 return MOVE_FILE_KEY;
 
             case REMOVE_FILE_KEY:
@@ -870,6 +891,8 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
 					doRemove(resultAry, cnt,msg);
 					free(selected);
 				  }
+
+				*selectedArrPtr=selected;
                 return REMOVE_FILE_KEY;
 
             case RENAME_FILE_KEY:
@@ -893,26 +916,35 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
 					freeDestPath(destPath,msg);
 					free(selected);
 				  }
+
+				*selectedArrPtr=selected;
                 return UP_AND_DOWN_FILE_KEY;
 
             case IP_MANAGE_KEY:
+				*selectedArrPtr=selected;
                 return MENU_IP_MANAGE;
             case MOVE_DIR_KEY:
+				*selectedArrPtr=selected;
                 return MOVE_DIR_KEY;
             case REMOVE_DIR_KEY:
+				*selectedArrPtr=selected;
                 return REMOVE_DIR_KEY;
             case RENAME_DIR_KEY:
+				*selectedArrPtr=selected;
                 return RENAME_DIR_KEY;
             case HELP_KEY:
+				*selectedArrPtr=selected;
                 return MENU_HELP;
 
             case MAKE_DIR_KEY:
 				{
 					doMkdir(msg);
 				}
+				*selectedArrPtr=selected;
                 return MAKE_DIR_KEY;
         }
     }
 
+	*selectedArrPtr=selected;
     return MENU_FTP_PAGE;
 }
