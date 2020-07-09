@@ -1,6 +1,7 @@
 //
 // Created by linux on 6/30/20.
 //
+
 #include <unistd.h>
 #include <sys/types.h>
 #include <ifaddrs.h>                                                                          
@@ -30,6 +31,7 @@ char * sampleFiles[] = {
 };
 
 
+/*
 void help(){
 	 printf("\n
          Usage : PUT IP ADDRESS WHERE YOU WANT TO CONNECT + ENTER KEY\n
@@ -49,11 +51,7 @@ void help(){
 
                        \n");
 }
-
-typedef struct ResInfo{
-	int sock;
-	char * ip;
-}ResInfo;
+*/
 
 
 char *getMyIp(){
@@ -102,7 +100,6 @@ int main(){
         switch (thisMenu) {
             case MENU_MAIN :
                 thisMenu = IP_insert_Page(&ipAddress);
-
                 break;
             case MENU_FIRSTWINODW :
 				myListOpen();
@@ -110,14 +107,14 @@ int main(){
                 thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, myDirectories->array, selected, myDirectories->next, clientPath, serverPath,&resInfo,&msg);
 				break;
             case MENU_SECONDWINDOW :
-				myListOpen();
-				parsing("myList.txt",&myDirectories,&myFiles);//myListOpen
-                thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, myFiles->array, selected, myFiles->next, clientPath, serverPath,&resInfo,&msg);
-				break;
-            case MENU_THIRDWINDOW :
 				listDownload(resInfo.sock,resInfo.ip);
 				parsing("list.txt",&directories,&files);//myListOpen
                 thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, directories->array, selected, directories->next, clientPath, serverPath,&resInfo,&msg);
+				break;
+            case MENU_THIRDWINDOW :
+				listOpen();
+				parsing("myList.txt",&myDirectories,&myFiles);//myListOpen
+                thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, myFiles->array, selected, myFiles->next, clientPath, serverPath,&resInfo,&msg);
 				break;
             case MENU_FOURTHWINDOW :
 				listDownload(resInfo.sock,resInfo.ip);
@@ -142,10 +139,10 @@ int main(){
                 //
                 break;
             case MENU_HELP:
-                //
+                Help_Page();
                 break;
-            case MENU_BOOKMARKS:
-                //
+            case MAIN_HELP:
+                Help_Page();
                 break;
             case MENU_HISTORY:
                 //

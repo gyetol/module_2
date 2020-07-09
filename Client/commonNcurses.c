@@ -9,15 +9,19 @@
 #include <pthread.h>
 
 
+//struct 
+typedef struct Array{
+	char * array[ARR_SIZ];
+	int next;
+}Array;
+
 ///////////////////////SAMPLE FILES/////////////////////////////////////////
-/*
 char * sampleFile[] = {
         "this is file 1", "this is file 2", "this is file 3", "this is file 4",
         "this is file 5", "this is file 6", "this is file 7", "this is file 8",
         "this is file 9", "this is file 10", "this is file 11", "this is file 12",
         "this is file 13", "this is file 14", "this is file 15", "this is file 16"
 };
-*/
 ///////////////////////////////////////////////////////////////////////////
 
 
@@ -34,7 +38,7 @@ void init_scr()
     ///first:index
     ///second:text
     ///color:background
-    init_pair(MAIN1, COLOR_BLACK, COLOR_YELLOW);
+	init_pair(MAIN1, COLOR_BLACK, COLOR_YELLOW);
     init_pair(MAIN2, COLOR_BLACK, COLOR_WHITE);
     init_pair(CLIENTBAR, COLOR_BLACK, COLOR_YELLOW);
     init_pair(SELECTED, COLOR_BLACK, COLOR_YELLOW);
@@ -124,7 +128,7 @@ int IP_insert_Page(char**ip){
     char key; // User Input
     char ipAddress[IPADDRESSLENGTH] = "";
 
-    int selectingMenu = MENU_BOOKMARKS;
+    int selectingMenu = MAIN_HELP;
 
     WINDOW *upMenu = NULL;
     WINDOW *middleWindow = NULL;
@@ -157,7 +161,7 @@ int IP_insert_Page(char**ip){
 
         attron(A_STANDOUT | A_UNDERLINE); // selected effect
         switch(selectingMenu){
-            case MENU_BOOKMARKS :
+            case MAIN_HELP :
                 mvprintw(22, 15, "HELP");
                 break;
             case MENU_HISTORY :
@@ -175,29 +179,29 @@ int IP_insert_Page(char**ip){
 
         switch(key) {
             case KEYBOARD_UP:
-                if (selectingMenu == MENU_HELP || selectingMenu == MENU_EXIT || selectingMenu == MENU_HISTORY) {
+                if (selectingMenu == MAIN_HELP || selectingMenu == MENU_EXIT || selectingMenu == MENU_HISTORY) {
                     selectingMenu = MENU_IP_INSERT;
                 }
                 break;
             case KEYBOARD_DOWN:
                 if (selectingMenu == MENU_IP_INSERT) {
-                    selectingMenu = MENU_HELP;
+                    selectingMenu = MAIN_HELP;
                 }
                 break;
             case KEYBOARD_RIGHT:
-                if (selectingMenu == MENU_HELP)
+                if (selectingMenu == MAIN_HELP)
                     selectingMenu = MENU_HISTORY;
                 else if (selectingMenu == MENU_HISTORY)
                     selectingMenu = MENU_EXIT;
                 else if (selectingMenu == MENU_EXIT)
-                    selectingMenu = MENU_HELP;
+                    selectingMenu = MAIN_HELP;
                 break;
             case KEYBOARD_LEFT :
                 if (selectingMenu == MENU_HISTORY)
-                    selectingMenu = MENU_HELP;
+                    selectingMenu = MAIN_HELP;
                 else if (selectingMenu == MENU_EXIT)
                     selectingMenu = MENU_HISTORY;
-                else if (selectingMenu == MENU_HELP)
+                else if (selectingMenu == MAIN_HELP)
                     selectingMenu = MENU_EXIT;
                 break;
             case KEYBOARD_BACKSPACE:
@@ -224,7 +228,7 @@ int IP_insert_Page(char**ip){
                     delwin(middleWindow);
                     delwin(downMenu);
                     return selectingMenu;
-                } else if (selectingMenu == MENU_HELP){
+                } else if (selectingMenu == MAIN_HELP){
                     *ip=ipAddress;
                     delwin(upMenu);
                     delwin(middleWindow);
@@ -516,10 +520,10 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
 
         attron(COLOR_PAIR(MAIN2));
         print_Log_Block(sampleFile, 10);
-        print_Sub_Block(MODE_FIRST, myDirectories->array, 10);
-        print_Sub_Block(MODE_SECOND, myFiles->array, 10);
-        print_Sub_Block(MODE_THIRD, directories->array, 10);
-        print_Sub_Block(MODE_FOURTH, files->array, 10);
+        print_Sub_Block(MODE_FIRST, myDirectories->array, myDirectories->next);
+        print_Sub_Block(MODE_SECOND, directories->array, directories->next);
+        print_Sub_Block(MODE_THIRD, myFiles->array, myFiles->next);
+        print_Sub_Block(MODE_FOURTH, files->array, files->next);
 
         attron(A_STANDOUT | A_UNDERLINE); // selected effect
         switch (selectingMenu) {
@@ -583,12 +587,14 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
                     selectingMenu = MENU_THIRDWINDOW;
                 }
                 break;
+				/*
             case KEYBOARD_ENTER:
                 if ( (selectingMenu == MENU_FIRSTWINODW)||(selectingMenu == MENU_SECONDWINDOW)||
                         (selectingMenu == MENU_THIRDWINDOW)||(selectingMenu == MENU_FOURTHWINDOW)){
                     return selectingMenu;
                 }
                 break;
+				*/
             case IP_MANAGE_KEY:
                 return MENU_IP_MANAGE;
             case HELP_KEY:
@@ -625,6 +631,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
     int totalCount;
     selected = calloc(aryCount,sizeof(int));
     char key;
+	int selectedCnt=0;
 
     switch (selectingMenu) {
         case MENU_FIRSTWINODW:
@@ -765,12 +772,20 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
             case KEYBOARD_SPACEBAR:
                 if (selected[cursor] == 0) {
                     selected[cursor] = 1;
+					selectedCnt++;
                 } else {
                     selected[cursor] = 0;
                 }
                 break;
             case KEYBOARD_BACKSPACE:
                 return MENU_FTP_PAGE;
+			case KEYBORD_ENTER:
+				//위의 두 화면에서 enter가 입력되었을 경우에만 해당 함수를 탈출
+				if(thisMenu==MENU_FIRSTWINDOW||thisMenu==MENU_SECONDWINDOW){
+					if(selectedCnt==1)
+						return MENU_INPUT_DIR;
+				}
+				break;
             case EXIT_KEY:
 				  return MENU_FTP_PAGE; // 4분할 화면 중 하나에 있을 시 , exit키는 ftp_page로 이동
                // return MENU_EXIT;
