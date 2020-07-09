@@ -23,6 +23,15 @@ int keyPad(Windows *windows){
 	int line=1;
 	WINDOW *currentwin=win[now];
 	WINDOW *prevwin=win[2];
+	wborder(windows->upwin, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+	wbkgd(windows->upwin, COLOR_PAIR(3));
+	refresh();
+	wrefresh(windows->upwin);
+
+	wborder(currentwin, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+	wbkgd(currentwin, COLOR_PAIR(2));
+	refresh();
+	wrefresh(currentwin);
 	keypad(stdscr, TRUE);
 	char command[80]={0, };
 	while((ch=getch())!='x')
@@ -72,7 +81,20 @@ int keyPad(Windows *windows){
 				mvwprintw(windows->consolewin, 2, 4, "keydown");
 				break;
 			case KEY_BACKSPACE: //delete문자 했을 경우 (backspace)
-			
+				 prevwin=currentwin;
+				 now=3;
+				currentwin=win[now];
+				if(prevwin==windows->logwin)
+   				 wborder(prevwin, 0, 0, 0, ' ', 0, 0, ' ', ' ');
+				else
+    				wborder(prevwin, 0, 0, 0, 0, 0, 0, 0, 0);
+				wborder(currentwin, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+				wbkgd(prevwin, COLOR_PAIR(1));
+				wbkgd(currentwin, COLOR_PAIR(2));
+				refresh();
+				wrefresh(prevwin);
+				wrefresh(currentwin);
+				
 				if(line==1){
 					if(cursor!=4)
 							cursor--;
@@ -100,8 +122,21 @@ int keyPad(Windows *windows){
 				}
 				break;
 			default:  //add문자 했을 경우
-
-				if(line==1){
+				 prevwin=currentwin;
+     			 now=3;
+ 				 currentwin=win[now];
+ 				if(prevwin==windows->logwin)
+     				wborder(prevwin, 0, 0, 0, ' ', 0, 0, ' ', ' ');
+ 				else
+     				wborder(prevwin, 0, 0, 0, 0, 0, 0, 0, 0);
+				wborder(currentwin, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+ 				wbkgd(prevwin, COLOR_PAIR(1));
+ 				wbkgd(currentwin, COLOR_PAIR(2));
+ 				refresh();
+ 				wrefresh(prevwin);
+				wrefresh(currentwin);
+			 	
+				 if(line==1){
 					mvwprintw(windows->consolewin, 2, cursor, "%c", (char)ch);
 	
 						if(cursor!=76)

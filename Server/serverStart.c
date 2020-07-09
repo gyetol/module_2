@@ -85,11 +85,13 @@ int serverStart(char *ip){
  {
 	 init_color(COLOR_WHITE, 999, 999, 893);
      init_color(COLOR_YELLOW, 999,999,400);
-   //    init_color(COLOR_YELLOW, 999, 999, 980);
+	 init_color(COLOR_MAGENTA, 756, 537, 415); 
+	 //    init_color(COLOR_YELLOW, 999, 999, 980);
 	 //내가 원하던 색깔 편집기능 되는지 확인+편집 동시에
  }
  init_pair(1, COLOR_BLACK, COLOR_WHITE);
  init_pair(2, COLOR_BLACK, COLOR_YELLOW);
+ init_pair(3, COLOR_BLACK, COLOR_MAGENTA);
  //attron(COLOR_PAIR(1));
  //printw("wdsdsfsdfsdfsdfsr");
  //attroff(COLOR_PAIR(1));
