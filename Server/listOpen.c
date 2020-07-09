@@ -1,6 +1,6 @@
 #include "listOpen.h"
 
-int main(void){
+int listOpen(void){
 	int chNum=0;
     int fd = open("./list_sample.txt",O_RDONLY,0444);	
 	system("/bin/mkdir home");

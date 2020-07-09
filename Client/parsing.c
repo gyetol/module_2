@@ -4,8 +4,13 @@ typedef struct Array{
 	char * array[ARR_SIZ];
  	int next;
 }Array;
+<<<<<<< HEAD
 
 /*int main(){	
+=======
+/*
+int main(){
+>>>>>>> develop
 	Array* directories;
 	Array* files;
 
@@ -19,8 +24,9 @@ typedef struct Array{
  	}
 	free(directories);
 	free(files);
-	//혜린언니의 원래 코드
 
+
+	
 	char *directories[DIRECTORY_SIZE];
  	int dNext=0;
 	char *files[FILE_SIZE];
@@ -41,12 +47,18 @@ typedef struct Array{
 
 int parsing(const char *path,Array** directories,Array** files){
 //int parsing(char *path,char **directories, char **files, int *dNext, int *fNext){
-//	char * directories[10];
-//	int dNext=0;
-//	char * files[10];
-//	int fNext=0;
+/*
+	char * directories[10];
+	int dNext=0;
+	char * files[10];
+	int fNext=0;
 	Array* dirs=calloc(1,sizeof(Array));
 	Array* fs=calloc(1,sizeof(Array));
+*/
+
+	Array* dirs =calloc(1,sizeof(Array));
+	Array* fs = calloc(1,sizeof(Array));
+
 
 	int fd=open(path, O_RDONLY| O_CREAT, 444);
 	if(fd<0){
