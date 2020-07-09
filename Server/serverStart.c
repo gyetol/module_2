@@ -64,6 +64,14 @@ int serverStart(char *ip){
 
 ///////////////////////////////////		screen	init start   	///////////////////////////////////////////////////////////
 
+  WINDOW *front=newwin(24, 80, 0, 0);
+  wbkgd(front, COLOR_PAIR(2));
+  mvwprintw(front,9,30, "%s","           v");
+  mvwprintw(front,10,30,"%s","fileDanzi (ll):");
+  refresh();
+  wrefresh(front); 
+  getch();
+
  WINDOW *upwin = newwin(3, 80, 0, 0);
  wbkgd(upwin,COLOR_PAIR(1));
  wborder(upwin, 0, 0, 0, 0, 0, 0, 0, 0);
