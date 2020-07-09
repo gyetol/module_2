@@ -1,6 +1,36 @@
 .:
+total 148
+drwxrwxr-x 3 linux linux  4096 Jul  8 19:07 .
+drwxrwxr-x 8 linux linux  4096 Jul  8 17:50 ..
+-rw-rw-r-- 1 linux linux    24 Jul  8 17:50 account.txt
+-rwxrwxr-x 1 linux linux 27512 Jul  8 19:06 fileDanzi
+-rw-rw-r-- 1 linux linux  4939 Jul  8 18:16 fileDanzi.c
+-rw-rw-r-- 1 linux linux   473 Jul  8 17:50 fileDanzi.h
+-rw-rw-r-- 1 linux linux  1422 Jul  8 17:50 fileUpload.c
+-rw-rw-r-- 1 linux linux   144 Jul  8 17:50 fileUpload.h
+-rw-rw-r-- 1 linux linux   864 Jul  8 17:50 getRequest.c
+-rw-rw-r-- 1 linux linux   268 Jul  8 17:50 getRequest.h
+-rw-rw-r-- 1 linux linux   673 Jul  8 17:50 help.c
+-rw-rw-r-- 1 linux linux    31 Jul  8 17:50 help.h
+-rw-rw-r-- 1 linux linux  2644 Jul  8 17:50 listOpen.c
+-rw-rw-r-- 1 linux linux   200 Jul  8 17:50 listOpen.h
+-rwxrwxr-x 1 linux linux     0 Jul  8 19:07 list.txt
+drwxrwxr-x 2 linux linux  4096 Jul  8 18:09 log
+-rwxrwxr-x 1 linux linux   168 Jul  8 17:54 log.sh
+-rw-rw-r-- 1 linux linux    91 Jul  8 17:50 myListOpen.c
+-rw-rw-r-- 1 linux linux   105 Jul  8 17:50 myListOpen.h
+-rw-rw-r-- 1 linux linux  1725 Jul  8 17:50 parsing.c
+-rw-rw-r-- 1 linux linux     0 Jul  8 17:50 request.txt
+-rw-rw-r-- 1 linux linux  2559 Jul  8 17:50 response.c
+-rw-rw-r-- 1 linux linux   263 Jul  8 17:50 response.h
+-rw-rw-r-- 1 linux linux   146 Jul  8 17:50 serverMain.c
+-rw-rw-r-- 1 linux linux   109 Jul  8 17:50 serverMain.h
+-rw-rw-r-- 1 linux linux  5451 Jul  8 19:06 serverStart.c
+-rw-r--r-- 1 linux linux 16384 Jul  8 19:07 .serverStart.c.swp
+-rw-rw-r-- 1 linux linux   674 Jul  8 18:08 serverStart.h
+
+./log:
 total 16
-drwxrwxr-x 2 linux linux 4096 Jul  7 19:18 .
-drwxrwxr-x 4 linux linux 4096 Jul  7 19:49 ..
--rw-rw-r-- 1 linux linux   39 Jul  7 19:18 fileDanzi2.txt
--rw-rw-r-- 1 linux linux   28 Jul  7 19:18 fileDanzi.txt
+drwxrwxr-x 2 linux linux 4096 Jul  8 18:09 .
+drwxrwxr-x 3 linux linux 4096 Jul  8 19:07 ..
+-rw-rw-r-- 1 linux linux 4716 Jul  8 19:06 2020_07_08.txt

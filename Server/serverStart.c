@@ -27,6 +27,44 @@ void *serverStart(void *arg){
 		return res;
 	}
 	char* ip=(char *)arg;
+ start_color();
+ initscr();
+ cbreak();//raw();
+ WINDOW *upwin = newwin(3, 80, 0, 0);
+ wborder(upwin, 0, 0, 0, 0, 0, 0, 0, 0);
+ mvwprintw(upwin,1, 1, "fileDanzi");
+ mvwprintw(upwin, 1, 64, "%s", ip);
+ refresh();
+ wrefresh(upwin);
+
+ WINDOW *logwin=newwin(6, 80, 3, 0);
+ wborder(logwin, 0, 0, 0, 0, 0, 0, 0, 0);
+ mvwprintw(logwin,1, 1, "[server] is running : %s...", ip);
+ refresh();
+ wrefresh(logwin);
+
+ WINDOW *leftwin=newwin(10, 40, 7, 0);
+ wborder(leftwin, 0, 0, 0, 0, 0, 0, 0, 0);
+ myListOpen(leftwin);
+ refresh();
+ wrefresh(leftwin);
+
+ WINDOW *rightwin=newwin(10, 40, 7, 40);
+ scrollok(rightwin, TRUE);
+ wscrl(rightwin, 100);
+ wborder(rightwin, 0, 0, 0, 0, 0, 0, 0, 0);
+ //mvwprintw(leftwin, 1, 1, "des");
+ listOpen(rightwin);
+ refresh();
+ wrefresh(rightwin);
+
+ WINDOW *consolewin=newwin(5, 80, 17, 0);
+ wborder(consolewin, 0, 0, ' ', 0, ' ', ' ', 0, 0);
+ mvwprintw(consolewin, 1, 1,"console");
+ mvwprintw(consolewin, 2, 1, ">>");
+ refresh();
+ wrefresh(consolewin);
+
 	int ssock=socket(PF_INET,SOCK_STREAM,0);
 	if(ssock==-1)
 		err_quit("socket");
@@ -50,7 +88,7 @@ void *serverStart(void *arg){
 	char buf[100]="echo '[server] is running :";
     strcat(buf, ip);
     strcat(buf, " ' >>./log/");
-	strcat(buf, "2020_07_08");
+	strcat(buf, "2020_07_09");
 	strcat(buf, ".txt");
     system(buf);
     ////////////log파일 기록
@@ -65,7 +103,7 @@ void *serverStart(void *arg){
 //	 (그러기위해 함수 얻는 중이었음 이떄 7월 말고 07월로 나오는 형식 지정자 찾아야됨)
 //  2. 완료되면 더 추가해야할 로그들 찾아서 위와 같이 시스템 함수로 추가	
 
-printf("[server] is running : %s\n\n", ip);
+//printf("[server] is running : %s\n\n", ip);
 	int efd=epoll_create(1); 
 	if(efd==-1)
 		err_quit("epoll_create");
@@ -86,15 +124,16 @@ printf("[server] is running : %s\n\n", ip);
 			continue;
 		for(int i=0;i<nEvent;i++){
 			if(events[i].data.fd==ssock) {
-                getchar();
 				struct sockaddr_in caddr = {0,};
                 int caddr_len = sizeof(caddr);
                 int csock = accept(ssock, (struct sockaddr *) &caddr, &caddr_len);
-				printf("accept당시의 cSock : %d\n", csock);
                 if (csock < 0)
                     err_quit("accept");
-                printf("[server]%s(client) is  connected... and cSock is %d\n", inet_ntoa(caddr.sin_addr), csock);	
-				printf("connect당시의 cSock : %d\n", csock);
+ mvwprintw(logwin,2, 1, "[server]%s(client) is connected...", inet_ntoa(caddr.sin_addr));
+ refresh();
+ wrefresh(logwin);
+              //  printf("[server]%s(client) is  connected... and cSock is %d\n", inet_ntoa(caddr.sin_addr), csock);	
+			//	printf("connect당시의 cSock : %d\n", csock);
 				getchar();
 				event.events = EPOLLIN;
 				event.data.fd = csock;
@@ -162,6 +201,13 @@ printf("[server] is running : %s\n\n", ip);
 		}//for문 괄호
 	
 	}//while1괄호
+	getch();
+	delwin(upwin);
+	delwin(logwin);
+	delwin(leftwin);
+	delwin(rightwin);
+	delwin(consolewin);
+	endwin();
 	close(ssock);
 	*res=0;
 	return res;
