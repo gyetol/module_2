@@ -43,10 +43,10 @@ typedef struct Array Array;
 //location
 //  1   2
 //  3   4
-#define MODE_FIRST 11
-#define MODE_SECOND 12
-#define MODE_THIRD 13
-#define MODE_FOURTH 14
+#define MODE_FIRST 91
+#define MODE_SECOND 92
+#define MODE_THIRD 93
+#define MODE_FOURTH 94
 
 //these are special keys
 #define KEYBOARD_UP 65
@@ -67,8 +67,10 @@ typedef struct Array Array;
 #define MENU_HELP 5
 #define MENU_IP_MANAGE 6
 #define MENU_FTP_PAGE 7
-#define MENU_INTO_DIR 8
-#define MENU_OUT_DIR 9
+#define MENU_INTO_MYDIR 8
+#define MENU_INTO_SERVDIR 9 
+#define MENU_OUT_MYDIR 10
+#define MENU_OUT_SERVDIR 11
 
 #define MENU_FIRSTWINODW 21
 #define MENU_SECONDWINDOW 22

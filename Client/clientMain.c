@@ -67,8 +67,8 @@ int main(){
 	Array* directories=NULL;//서버 디렉토리 정보
 	Array* files=NULL;//서버 세부 정보
 
-	char clientPath[1024]="/home/linux/module2";//로컬 세부정보가 보여주는 디렉토리 경로
-	char serverPath[1024]="/home";//서버 세부정보가 보여주는 디렉토리 경로
+	char clientPath[512]="/home/linux/module2";//로컬 세부정보가 보여주는 디렉토리 경로
+	char serverPath[512]="/home";//서버 세부정보가 보여주는 디렉토리 경로
 	char * msg={0,};//오류 메세지 저장하는 out-parameter
 
 	ResInfo resInfo={0,};//sock,ip정보 저장하는 정보 관리 구조체
@@ -76,8 +76,9 @@ int main(){
 	int index;//현재 선택된 친구의 index저장하는 변수
 	char** destination=NULL;//
 
-	char pBuf[1024];//현재 위치하는 경로
-	getcwd(pBuf,sizeof(pBuf));//현재 경로 뽑아내는 함수
+	char pBuf[512];//현재 위치하는 경로
+	char originPath[512]={0,};//현재 위치하는 경로
+	getcwd(originPath,sizeof(originPath));//현재 경로 뽑아내는 함수
 
     while (thisMenu != MENU_EXIT){
         switch (thisMenu) {
@@ -88,7 +89,7 @@ int main(){
 				chdir(clientPath);
 				myListOpen();
 // 				mvprintw(1,1,pBuf);
-				chdir(pBuf);
+				chdir(originPath);
  				free(myDirectories);
  				free(myFiles);
 				parsing("myList.txt",&myDirectories,&myFiles);//myListOpen
@@ -104,7 +105,7 @@ int main(){
             case MENU_THIRDWINDOW :
 				chdir(clientPath);
 				myListOpen();
-				chdir(pBuf);
+				chdir(originPath);
 				free(myDirectories);
 				free(myFiles);
 				parsing("myList.txt",&myDirectories,&myFiles);//myListOpen
@@ -130,7 +131,7 @@ int main(){
 				free(files);
 				chdir(clientPath);
 				myListOpen();
-				chdir(pBuf);
+				chdir(originPath);
 				parsing("myList.txt",&myDirectories,&myFiles);//myListOpen
 				//printf server side list
 				listDownload(resInfo.sock,resInfo.ip);
@@ -149,18 +150,9 @@ int main(){
             case MENU_HISTORY:
                 //
                 break;
-			case MENU_INTO_DIR:
-// 				mvprintw(1,30,"back to clientMain");
-// 				refresh();
-// 				getchar();
+			case MENU_INTO_MYDIR:
 				index=selected[0];
-// 				mvprintw(2,30,"index=%d",index);
-// 				refresh();
-// 				getchar();
 				destination=&(myDirectories->array[index]);
-// 				mvprintw(3,30,"destination=%s",*destination);
-// 				refresh();
-// 				getchar();
 				if(strcmp(*destination,".")==0){
 					memset(clientPath,0,strlen(clientPath));
 					strcpy(clientPath,pBuf);
@@ -180,9 +172,6 @@ int main(){
  				refresh();
  				getchar();
 				chdir(clientPath);
-// 				mvprintw(1,60,"chdir성공");
-// 				refresh();
-// 				getchar();
 				strcpy(clientPath,*destination);
  				mvprintw(3,60,"cp=%s strcpy성공",clientPath);
  				refresh();
@@ -190,16 +179,45 @@ int main(){
  				free(myDirectories);
 				free(myFiles);
 				parsing("myList.txt",&myDirectories,&myFiles);
-// 				mvprintw(5,60,"파싱 성공");
-// 				refresh();
-// 				getchar();
 				print_Sub_Block(MODE_CLIENT,myFiles->array,myFiles->next);
-// 				mvprintw(6,60,"print_Sub_Block성공");
-// 				refresh();
-// 				getchar();
 				thisMenu=MENU_THIRDWINDOW;
 				break;
-			case MENU_OUT_DIR:
+			case MENU_INTO_SERVDIR:
+				/*
+				index=selected[0];
+				destination=&(directories->array[index]);
+				if(strcmp(*destination,".")==0){
+					memset(clientPath,0,strlen(clientPath));
+					strcpy(clientPath,pBuf);
+				}
+				else if(strcmp(*destination,"..")==0){
+					chdir("..");
+					getcwd(pBuf,sizeof(pBuf));
+					chdir(clientPath);
+					memset(clientPath,0,strlen(clientPath));
+					strcpy(clientPath,pBuf);
+				}
+				else{
+					strcat(clientPath,"/");
+					strcat(clientPath,*destination);
+				}
+ 				mvprintw(2,60,"cp=%s",clientPath);
+ 				refresh();
+ 				getchar();
+				chdir(clientPath);
+				strcpy(clientPath,*destination);
+ 				mvprintw(3,60,"cp=%s strcpy성공",clientPath);
+ 				refresh();
+ 				getchar();
+ 				free(directories);
+				free(files);
+				parsing("list.txt",&directories,&files);
+				print_Sub_Block(MODE_CLIENT,files->array,files->next);
+				*/
+				thisMenu=MENU_FOURTHWINDOW;
+				break;
+
+			case MENU_OUT_MYDIR:
 				mvprintw(2,1,"LEFT INSERT");
 				refresh();
 				getchar();
