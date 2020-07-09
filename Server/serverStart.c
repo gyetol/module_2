@@ -1,7 +1,7 @@
 #include "serverStart.h"
 void __quit(const char * msg,int line){
 	char buf[BUFSIZ];
-	sprintf(buf,"%s(%d)",msg,line);
+	//sprintf(buf,"%s(%d)",msg,line);
 	perror(buf);
 	exit(1);
 }
@@ -28,7 +28,7 @@ void* responseThread(void * arg){
 		*res=1;
 		return res;
 	}
-	printf("response 함수 갔다오기 성공\n");
+	//printf("response 함수 갔다오기 성공\n");
 	*res=0;
 	return res;
 }
@@ -63,6 +63,14 @@ int serverStart(char *ip){
 ///////////////////////////////////    color init finish     ///////////////////////////////////////////////////////////////
 
 ///////////////////////////////////		screen	init start   	///////////////////////////////////////////////////////////
+
+  WINDOW *front=newwin(24, 80, 0, 0);
+  wbkgd(front, COLOR_PAIR(2));
+  mvwprintw(front,9,30, "%s","           v");
+  mvwprintw(front,10,30,"%s","fileDanzi (ll):");
+  refresh();
+  wrefresh(front); 
+  getch();
 
  WINDOW *upwin = newwin(3, 80, 0, 0);
  wbkgd(upwin,COLOR_PAIR(1));
@@ -187,12 +195,12 @@ int serverStart(char *ip){
                 int csock = accept(ssock, (struct sockaddr *) &caddr, &caddr_len);
                 if (csock < 0)
                     err_quit("accept");
- mvwprintw(logwin,2, 1, "[server]%s(client) is connected...", inet_ntoa(caddr.sin_addr));
+ mvwprintw(logwin,2, 1, "[server] %s(client) is connected...", inet_ntoa(caddr.sin_addr));
  refresh();
  wrefresh(logwin);
 
-              //  printf("[server]%s(client) is  connected... and cSock is %d\n", inet_ntoa(caddr.sin_addr), csock);	
-			//	printf("connect당시의 cSock : %d\n", csock);
+              // printf("[server]%s(client) is  connected... and cSock is %d\n", inet_ntoa(caddr.sin_addr), csock);	
+			  // printf("connect당시의 cSock : %d\n", csock);
 				event.events = EPOLLIN;
 				event.data.fd = csock;
 				int epollRes=epoll_ctl(efd, EPOLL_CTL_ADD, csock, &event);
@@ -213,15 +221,14 @@ int serverStart(char *ip){
 						}
 					}
 				}
-				printf("wait success\n");
+				//printf("wait success\n");
             }
 			else{
 				if(events[i].events==EPOLLIN){
 				    //this is for client
-					printf("[server] client send request ...\n");
+					mvwprintw(logwin,3,1,"[server] client send request ...\n");
 					int cSock=events[i].data.fd; 
-					printf("cSock=%d", cSock);
-					getchar();
+					//printf("cSock=%d", cSock);
 					char * type;
 					char * path;
 					char * ip;
@@ -233,11 +240,13 @@ int serverStart(char *ip){
 						resInfo.reqInfo.path=path;
 						resInfo.reqInfo.ip=ip;
 						resInfo.sock=cSock;
-						printf("type : %s, path : %s, ip : %s\n", type, path, ip);
+						//printf("type : %s, path : %s, ip : %s\n", type, path, ip);
 						if(strcmp(type,"quit")==0)
 						{
+						   
 							if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
 							  err_quit("epoll_ctl");
+							mvwprintw(logwin,3,1,"[ client ] : %s disconnected", *ip);
 							break;
 						}
 					   int * tret=0;
@@ -262,7 +271,7 @@ int serverStart(char *ip){
 						}
 ///////////////////////////////////////////////////////////////////////////////////////////
 					}
-					printf("도달");
+					//printf("도달");
 				}
 				else{
 					if(epoll_ctl(efd,EPOLL_CTL_DEL,events[i].data.fd,NULL)==-1)
