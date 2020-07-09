@@ -1,7 +1,6 @@
 #include "listOpen.h"
 
 int listOpen(WINDOW *rightwin){
-	mvwprintw(rightwin, 1, 1, "rightwin");
   int chNum=0;
     int fd = open("./list.txt",O_RDONLY,0444);	
 	if(access("./home", -0)==-1)
@@ -22,7 +21,6 @@ int listOpen(WINDOW *rightwin){
 		else if (nRead==0){
 			break;
 		}
-	}
 		char *savePtr;
 		char *saveExtract;
 		char *saveStr;
@@ -39,19 +37,25 @@ int listOpen(WINDOW *rightwin){
 					char *name=extract;
 					if(ptr[0]=='d')
 					{
-						wprintw(rightwin, "+%s",name);
+						wprintw(rightwin, " DIR    %s",name);
 						refresh();
 						wrefresh(rightwin);
+						winsertln(rightwin);
+						wprintw(rightwin,"\r");
+						
 					}
 					else if(ptr[0]=='-')
 					{
-						wprintw(rightwin, "-%s",name);
+						wprintw(rightwin, " FILE    %s",name);
 						refresh();
 						wrefresh(rightwin);
+						winsertln(rightwin);
+						wprintw(rightwin, "\r");
 					}
 			ptr=strtok_r(NULL, "\n", &savePtr);
 			}
 		}
+}
 		chdir("..");
 		close(fd);
 		return 0;

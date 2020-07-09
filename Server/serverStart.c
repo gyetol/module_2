@@ -50,13 +50,13 @@ int serverStart(char *ip){
   {
       init_color(COLOR_WHITE, 999, 999, 893);
       init_color(COLOR_YELLOW, 999,999,400);
-      init_color(COLOR_MAGENTA, 756, 537, 415);
+      init_color(COLOR_RED, 756, 537, 415);
       //    init_color(COLOR_YELLOW, 999, 999, 980);
       //내가 원하던 색깔 편집기능 되는지 확인+편집 동시에
   }
   init_pair(1, COLOR_BLACK, COLOR_WHITE);
   init_pair(2, COLOR_BLACK, COLOR_YELLOW);
-  init_pair(3, COLOR_BLACK, COLOR_MAGENTA);
+  init_pair(3, COLOR_BLACK, COLOR_RED);
   wbkgd(stdscr,COLOR_PAIR(1));
   
 
@@ -89,6 +89,7 @@ int serverStart(char *ip){
 
  WINDOW *leftwin=newwin(11, 40, 8, 0);
  wbkgd(leftwin,COLOR_PAIR(1));
+ scrollok(leftwin, TRUE);
  myListOpen(leftwin);
  wborder(leftwin, 0, 0, 0, 0, 0, 0, 0, 0);
  refresh(); 
@@ -96,8 +97,7 @@ int serverStart(char *ip){
 
  WINDOW *rightwin=newwin(11, 40, 8, 40);
  wbkgd(rightwin,COLOR_PAIR(1));
-// scrollok(rightwin, TRUE);
-// wscrl(rightwin, 100);
+ scrollok(rightwin, TRUE);
  listOpen(rightwin);
  wborder(rightwin, 0, 0, 0, 0, 0, 0, 0, 0); 
  refresh();
@@ -240,13 +240,16 @@ int serverStart(char *ip){
 						resInfo.reqInfo.path=path;
 						resInfo.reqInfo.ip=ip;
 						resInfo.sock=cSock;
-						//printf("type : %s, path : %s, ip : %s\n", type, path, ip);
+						//mvwprintw(logwin,3,1,"type : %s, path : %s, ip : %s\n", type, path, ip);
+						//refresh();
+						//wrefresh(logwin);
 						if(strcmp(type,"quit")==0)
 						{
-						   
-							if(epoll_ctl(efd,EPOLL_CTL_DEL,cSock,NULL)==-1)
-							  err_quit("epoll_ctl");
+							if(epoll_ctl(efd,EPOLL_CTL_DEL,events[i].data.fd,NULL)==-1)
+							  	err_quit("epoll_ctl");
 							mvwprintw(logwin,3,1,"[ client ] : %s disconnected", *ip);
+							refresh();
+							wrefresh(logwin);
 							break;
 						}
 					   int * tret=0;
