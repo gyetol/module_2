@@ -62,66 +62,88 @@ void init_IP_insert_Page(WINDOW *upWindow, WINDOW *middleWindow, WINDOW *downWin
     downWindow = subwin(stdscr, 3, FTP_WIDE, 21, 0);
     wbkgd(downWindow, COLOR_PAIR(MAIN1));
 }
+ ////////////////////////////////////////////////////////////
+ /// to prepare Help Page
+ /// input : all windows to make Help Page
+ /// return : void
+ ///////////////////////////////////////////////////////////
+ void init_Help_Page(WINDOW *helpWindow){
+
+     helpWindow = subwin(stdscr, FTP_HEIGHT, FTP_WIDE, 0, 0);
+     wbkgd(helpWindow, COLOR_PAIR(MAIN1));
+
+}
 
 /////////////////////////////////////////////////////////////
 ///to show help page
 // return : void
 ////////////////////////////////////////////////////////////
-void Help_Page(){
+int Help_Page(){
 	werase(stdscr); //clear Window
 	curs_set(0); //Not need Cursor pointer
 	
-	WINDOW *help = NULL;
+	WINDOW *hWin = NULL;
+    int key;
 
-	attron(COLOR_PAIR(MAIN1));
-	mvprintw(3, 34, "HELP PAGE");
+    init_Help_Page(hWin);
+    //	attron(COLOR_PAIR(MAIN1));
+	mvprintw(1, 30, "< HELP PAGE >");
 
-    attron(COLOR_PAIR(MAIN2));
-	mvprintw(7, 2, "Usage : PUT IP ADDRESS WHERE YOU WANT TO CONNECT + ENTER KEY ");
-    mvprintw(9, 2, "If you want to move the cursor -> use Arrow key");
-	mvprintw(10, 2, "If you want to select the menu -> use Enter key");
+	mvprintw(2, 2, "Usage : PUT IP ADDRESS + ENTER KEY ");
+    mvprintw(3, 2, "If you want to move the cursor -> use Arrow key");
+	mvprintw(4, 2, "If you want to select the menu -> use Enter key");
 	
-	mvprintw(14, 30, "--------------- MENU USAGE ---------------");
-	mvprintw(15, 2, "HISTORY : 'History'page shows the record history where you logged in before");
-	mvprintw(16, 2, "EXIT : Terminate the FileDanzi FTP Service");
+	mvprintw(6, 25, "---- MENU USAGE ----");
+	mvprintw(7, 2, "HISTORY : 'History'page shows the record history where you logged in before");
+	mvprintw(8, 2, "EXIT : Terminate the FileDanzi FTP Service");
 
-	mvprintw(21, 30, "--------------- COMMAND KEY USAGE ------------");
-	mvprintw(22, 2, "1. Copyfile : Select the file or files what you want to copy and press the 'c' key");
-	mvprintw(23, 2, "2. Movefile : Select the file or files what you want to move and press the 'm' key");
-	mvprintw(24, 2, "3. RemoveFile : Select the file or files what you want to delete and press the 'r' key");
-	mvprintw(25, 2, "3. ReNamefile : Select the file or files what you want to rename and press the 'n' key");
-	mvprintw(26, 2, "4. DownloadFile : Select the file or files what you want to download and press the 'f' key");
-	mvprintw(27, 2, "5. IPManage : ");
-	mvprintw(28, 2, "6. MoVeDir : Select the directory what you want to move and press the 'v' key");
-	mvprintw(29, 2, "7. RemovEDir : Select the directory what you want to remove nad press the 'e' key");
-	mvprintw(30, 2, "8. RenAmeDir : Select the directory what you want to rename and press the 'a' key");
-	mvprintw(31, 2, "9. Help : Manual page for client how to use  FileDanzi FTP Server and press the 'h' key");
-	mvprintw(32, 2, "10.MaKeFolder : Make new folder for manage client file system and press the 'k' key");
-	mvprintw(33, 2, "11. EXit : Terminate the FileDanzi FTP Server and press the 'x' key");
+	mvprintw(10, 20, "---- COMMAND KEY USAGE ----");
+	mvprintw(11, 2, "1. Copyfile : Select the file or files to copy and press the 'c' key");
+	mvprintw(12, 2, "2. Movefile : Select the file or files to move and press the 'm' key");
+	mvprintw(13, 2, "3. RemoveFile : Select the file or files to delete and press the 'r' key");
+	mvprintw(14, 2, "3. ReNamefile : Select the file or files to rename and press the 'n' key");
+	mvprintw(15, 2, "4. DownloadFile : Select the file or files to download and press the 'f' key");
+	mvprintw(16, 2, "5. IPManage : ");
+	mvprintw(17, 2, "6. MoVeDir : Select the directory to move and press the 'v' key");
+	mvprintw(18, 2, "7. RemovEDir : Select the directory to remove nad press the 'e' key");
+	mvprintw(19, 2, "8. RenAmeDir : Select the directory to rename and press the 'a' key");
+	mvprintw(20, 2, "9. Help : Manual page FileDanzi FTP Server and press the 'h' key");
+	mvprintw(21, 2, "10.MaKeFolder : Make new folder for manage filesystem 'k' key");
+	mvprintw(22, 2, "11.EXit : Terminate the FileDanzi FTP Server to press the 'x' key");
     
+	
 	//underline
     attron(A_UNDERLINE);
-    mvprintw(22, 2, "C");
-    mvprintw(23, 2, "M");
-    mvprintw(24, 2, "R");
-    mvprintw(25, 4, "N");
-	mvprintw(26, 10, "F");
-    mvprintw(27, 3, "P");
-    mvprintw(28, 4, "V");
-    mvprintw(29, 7, "E");
-    mvprintw(30, 5, "A");
-    mvprintw(31, 2, "H");
-    mvprintw(32, 4, "K");
-    mvprintw(33, 3, "X");
+    mvprintw(11, 5, "C");
+    mvprintw(12, 5, "M");
+    mvprintw(13, 5, "R");
+    mvprintw(14, 7, "N");
+	mvprintw(15, 13,"F");
+    mvprintw(16, 6, "P");
+    mvprintw(17, 7, "V");
+    mvprintw(18, 10,"E");
+    mvprintw(19, 8, "A");
+    mvprintw(20, 5, "H");
+    mvprintw(21, 7, "K");
+    mvprintw(22, 6, "X");
 
     attroff(A_UNDERLINE);
 
+	wrefresh(hWin);
+	refresh();
+
+	if (key = getch()){
+		return MENU_MAIN;
+	}
+	delwin(hWin);
+
 }
-/////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
 /// to show main menu
 /// input1 : ip Address space to store
 /// return : menunum
-////////////////////////////////////////////////////////////
+/////
 int IP_insert_Page(char**ip){
     werase(stdscr); // Clear Window
     curs_set(0); // Not need Cursor pointer
@@ -137,7 +159,7 @@ int IP_insert_Page(char**ip){
 
     attron(COLOR_PAIR(MAIN1));
     mvprintw(3, 34, "FILE DANZI");
-    mvprintw(7, 32, "cute FTP Cleint");
+    mvprintw(7, 32, "SIMPLE & CUTE FTP Service");
 
     attron(COLOR_PAIR(MAIN2));
     mvprintw(16, 16, "INSERT SERVER'S IP ADDRESS (press enter key)");
@@ -587,14 +609,14 @@ int FTP_Main_Page(int mode, char * pathOfLeft, char *pathOfRight,ResInfo *resInf
                     selectingMenu = MENU_THIRDWINDOW;
                 }
                 break;
-				/*
+				
             case KEYBOARD_ENTER:
                 if ( (selectingMenu == MENU_FIRSTWINODW)||(selectingMenu == MENU_SECONDWINDOW)||
                         (selectingMenu == MENU_THIRDWINDOW)||(selectingMenu == MENU_FOURTHWINDOW)){
                     return selectingMenu;
                 }
                 break;
-				*/
+				
             case IP_MANAGE_KEY:
                 return MENU_IP_MANAGE;
             case HELP_KEY:
@@ -779,13 +801,15 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int * select
                 break;
             case KEYBOARD_BACKSPACE:
                 return MENU_FTP_PAGE;
-			case KEYBORD_ENTER:
+
+			case KEYBOARD_ENTER:
+
 				//위의 두 화면에서 enter가 입력되었을 경우에만 해당 함수를 탈출
-				if(thisMenu==MENU_FIRSTWINDOW||thisMenu==MENU_SECONDWINDOW){
+				if(selectingMenu==MENU_FIRSTWINODW||selectingMenu==MENU_SECONDWINDOW){
 					if(selectedCnt==1)
-						return MENU_INPUT_DIR;
+						return MENU_INTO_DIR;
 				}
-				break;
+				break;*/
             case EXIT_KEY:
 				  return MENU_FTP_PAGE; // 4분할 화면 중 하나에 있을 시 , exit키는 ftp_page로 이동
                // return MENU_EXIT;

@@ -2,7 +2,7 @@
 
 int listOpen(WINDOW *rightwin){
 	mvwprintw(rightwin, 1, 1, "rightwin");
-	int chNum=0;
+  int chNum=0;
     int fd = open("./list.txt",O_RDONLY,0444);	
 	if(access("./home", -0)==-1)
 		system("/bin/mkdir home");
