@@ -1,5 +1,5 @@
 #include "commandFunc.h"
-
+#include "commonNcurses.h"
 
 int putSrcPath(char **srcPath,char **msg){
 	
@@ -38,13 +38,16 @@ int getDestPath(char *destPath, char **msg, const char *checkMsg){
 		return -1;
 	}
 	char buf[255];
-	char *temp=NULL;
-	printf("%s\n",checkMsg);
-	fgets(buf,sizeof(buf),stdin);
-	buf[strlen(buf)-1]='\0';
-	 temp= malloc(sizeof(buf));
-	 strcpy(temp,buf);
-	 destPath=temp;
+	char *tmp=NULL;
+	mvprintw(FTP_HEIGHT-1,12, checkMsg);
+	refresh();
+	mvscanw(FTP_HEIGHT-1,49,"%s",tmp);
+	//printf("%s\n",checkMsg);
+	//fgets(buf,sizeof(buf),stdin);
+	//buf[strlen(buf)-1]='\0';
+	// tmp= malloc(sizeof(buf));
+	 strcpy(tmp,buf);
+	 destPath=tmp;
 	*msg = "getting path is done";
 
 	return 0;

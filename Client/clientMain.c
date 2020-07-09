@@ -55,7 +55,8 @@ char *getMyIp(){
 int main(){
     init_scr();
     int sock = 0;
-    char * ipAddress = "";
+    //char * ipAddress = "";
+	char * ipAddress = NULL;
     int thisMenu = MENU_MAIN;
     int * selected =NULL;
 	char * myIp;
@@ -117,7 +118,7 @@ int main(){
                 thisMenu = print_Selected_Page(MODE_CLIENT, thisMenu, files->array, selected, files->next, clientPath, serverPath,&resInfo,&msg);
                 break;
             case MENU_IP_INSERT :
-				clientStart("192.168.30.22",&sock);
+				clientStart(ipAddress,&sock);
 				myIp=getMyIp();
 				mvprintw(0,0,"myIP:%s",myIp);
 				resInfo.ip=myIp;
