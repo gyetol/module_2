@@ -76,11 +76,10 @@ int doRename(char **srcPath, int len, char *destPath ,char **msg){
 		return -1;
 	}
 
-	int answer;
-	const char *check = "do you want to rename?(y/n)";
+	char answer;
+	const char *check = "정말로 이름을 바꾸시겠습니까?(y/n)";
 
 	while(1){
-		/*
 		printf("%s\n",check);
 		myflush();
 		answer =getchar();
@@ -90,36 +89,15 @@ int doRename(char **srcPath, int len, char *destPath ,char **msg){
 		else if(answer == 'n' || answer == 'N'){
 			return 0;
 		}
-		else{myflush();}*/
-		mvprintw(FTP_HEIGHT-1,1,check);
-		refresh();
-		keypad(stdscr,TRUE);
-		answer =getch();
-		mvprintw(FTP_HEIGHT-1,1,"%c",(char)answer);
-		refresh();
-
- if(answer == 89 || answer == 121){
-             mvprintw(FTP_HEIGHT-1,1,"success                          ");
-             refresh();
-             break;
-         }
-         else if(answer == 78 || answer == 110){
-             return 0;
-         }
-         else{myflush();}
-     }
-
-
-
-
-
+		else{myflush();}
+	}
 	pid_t pid[1];
 	int childStatus;
 
-	for(int i =0; i<1; i++){
+	for(int i =0; i<len; i++){
         pid[i]=fork();
         if(pid[i]==0){
-            if(execl("/bin/mv","mv",*(srcPath+i),"newFile","-i",NULL)==-1){
+            if(execl("/bin/mv","mv",*(srcPath+i),destPath,"-i",NULL)==-1){
                 perror("execl");
                 *msg = "error occurrence!";
                 return -1;
@@ -128,7 +106,7 @@ int doRename(char **srcPath, int len, char *destPath ,char **msg){
         }
 
     }
-    for(int i = 0; i<1; i++){
+    for(int i = 0; i<len; i++){
         pid_t terminatedChild = wait(&childStatus);
         if(WIFEXITED(childStatus)){
             printf("child %d has terminated : %d\n", terminatedChild, WEXITSTATUS(childStatus));
@@ -151,7 +129,7 @@ int doRename(char **srcPath, int len, char *destPath ,char **msg){
 // msg: we can write message in it
 
 int doCopy(char **srcPath, int len, char *destPath, char **msg){
-//printf("docopy 진입\n");
+printf("docopy 진입\n");
 	if(srcPath == NULL || destPath == NULL){
 		*msg = "argument is null";
 	myflush();
@@ -165,12 +143,12 @@ int doCopy(char **srcPath, int len, char *destPath, char **msg){
 		*msg = "can't copy '.' or '..' directory";
 		return -1;
 	}
-//	printf(".또는 ..검사 완료\n");
+	printf(".또는 ..검사 완료\n");
 	char answer;
-	const char *check = "do you want to copy?(y/n)";
+	const char *check = "정말로 복사하시겠습니까?(y/n)";
 
 	while(1){
-		//printf("while문 진입완료\n");
+		printf("while문 진입완료\n");
 		printf("%s\n",check);
 		myflush();
 		answer = getchar();
@@ -181,20 +159,17 @@ int doCopy(char **srcPath, int len, char *destPath, char **msg){
 			return 0;
 		}
 		else{myflush();}
-		//printf("while문 완료\n");
+		printf("while문 완료\n");
 	}
 
-	//printf("while문 탈출완료\n");
-	char *newFiles="tt(1)";
-
-
+	printf("while문 탈출완료\n");
 	pid_t pid[len];
 	int childStatus;
 
 	for(int i =0; i<len; i++){
 		pid[i]=fork();
 		if(pid[i]==0){
-			if(execl("/bin/cp","cp",newFiles,".","-b",NULL)==-1){
+			if(execl("/bin/cp","cp",*(srcPath+i),destPath,"-b",NULL)==-1){
 				perror("execl");
 				*msg = "error occurrence!";
 				return -1;
@@ -202,7 +177,7 @@ int doCopy(char **srcPath, int len, char *destPath, char **msg){
 			exit(EXIT_SUCCESS);
 		}
 	}
-	//printf("for문 첫번째 완료\n");
+	printf("for문 첫번째 완료\n");
 	for(int i =0; i<len; i++){
 		pid_t terminatedChild = wait(&childStatus);
 		if(WIFEXITED(childStatus)){
@@ -212,10 +187,10 @@ int doCopy(char **srcPath, int len, char *destPath, char **msg){
 			printf("child %d has terminated abnormally\n", terminatedChild);
 		}
 	}
-	//printf("for문 두번째 완료\n");
+	printf("for문 두번째 완료\n");
 	
 	*msg = "copying is done";
-	//printf("함수종료직전\n");
+	printf("함수종료직전\n");
 	return 0;
 }
 
@@ -243,7 +218,7 @@ int doMove(char **srcPath, int len,char *destPath, char **msg){
 	}
 
 	char answer;
-	const char *check = "do you want to move file?(y/n)";
+	const char *check = "정말로 이동하시겠습니까?(y/n)";
 
 	while(1){
 		printf("%s\n",check);
@@ -361,12 +336,12 @@ int doMkdir(char **msg){
 	refresh();
 */
 
-	char *newFile[3] ={"a.c","b.c","c.c"};
+	char *newFile[2] ={"a.c","list.txt"};
 
-		pid_t pid[3];
+		pid_t pid[2];
 		int childStatus;
 
-		for(int i=0; i<3; i++){
+		for(int i=0; i<2; i++){
 			pid[i]=fork();
 			if(pid[i]==0){
 				if(execl("/usr/bin/touch","touch",newFile[i],NULL)==-1){
@@ -377,7 +352,7 @@ int doMkdir(char **msg){
 				exit(EXIT_SUCCESS);
 			}
 		}
-		for(int i=0; i<3; i++){
+		for(int i=0; i<2; i++){
 			pid_t terminatedChild = wait(&childStatus);
 			if(WIFEXITED(childStatus)){
 				printf("child %d has terminated : %d\n", terminatedChild, WEXITSTATUS(childStatus));

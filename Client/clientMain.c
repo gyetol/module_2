@@ -121,7 +121,7 @@ int main(){
             case MENU_IP_INSERT :
 				clientStart(ipAddress,&sock);
 				myIp=getMyIp();
-				mvprintw(0,0,"myIP:%s",myIp);
+				//mvprintw(0,0,"myIP:%s",myIp);
 				resInfo.ip=myIp;
 				resInfo.sock=sock;
             case MENU_FTP_PAGE:
@@ -238,16 +238,16 @@ int main(){
 				break;
 
 			case MENU_OUT_MYDIR:
-				mvprintw(2,1,"LEFT INSERT");
-				refresh();
-				getchar();
-				thisMenu=MENU_EXIT;
+				//mvprintw(2,1,"LEFT INSERT");
+				//refresh();
+				//getchar();
+				thisMenu=MENU_FTP_PAGE;
 				break;
         }
     }
 
 	free(selected);
-	mvprintw(1,1,"%s","exit");
+	//mvprintw(1,1,"%s","exit");
     //to do when exit
 	free(myDirectories);
 	free(myFiles);

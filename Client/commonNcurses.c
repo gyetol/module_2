@@ -18,8 +18,8 @@ typedef struct Array{
 ///////////////////////SAMPLE FILES/////////////////////////////////////////
 char * sampleFile[] = {
         "this is file 1", "this is file 2", "this is file 3", "this is file 4",
-        "this is file 5", "this is file 6", "this is file 7", "this is file 8",
-        "this is file 9", "this is file 10", "this is file 11", "this is file 12",
+        "this is file 5", "this is file 6", "this is file 7", "(192.168.30.17)server connected..",
+        " ", " ", "this is file 11", "this is file 12",
         "this is file 13", "this is file 14", "this is file 15", "this is file 16"
 };
 ///////////////////////////////////////////////////////////////////////////
@@ -803,14 +803,14 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
                 return MENU_OUT_DIR;
 				*/
             case KEYBOARD_RIGHT:
- 				mvprintw(1,1,"ENTER입력");
-				refresh();
+ 				//mvprintw(1,1,"ENTER입력");
+				//refresh();
                 memset(selected, 0, aryCount);
- 				mvprintw(2,1,"memset완료");
-				refresh();
+ 				//mvprintw(2,1,"memset완료");
+				//refresh();
 			    selected[0]=cursor;//this is insert
- 				mvprintw(3,1,"selected[0]=%d",selected[0]);
-				refresh();
+ 				//mvprintw(3,1,"selected[0]=%d",selected[0]);
+				//refresh();
 				*selectedArrPtr=selected;
 				if(selectingMenu==MENU_FIRSTWINODW)
 					return MENU_INTO_MYDIR;
@@ -911,7 +911,7 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
 				  }
 
 				*selectedArrPtr=selected;
-                return REMOVE_FILE_KEY;
+				return MENU_FTP_PAGE;
 
             case RENAME_FILE_KEY:
 				  {	int i;
@@ -930,15 +930,15 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
 						if(resultAry[cnt]==NULL){break;}
 						else{cnt++;}
 					}
-					getDestPath(destPath,msg,"insert new file or dir name: ");
+					//getDestPath(destPath,msg,"insert new file or dir name: ");
 					res=doRename(resultAry, cnt+1,destPath,msg);
 					if(res==0){break;}
-					freeDestPath(destPath,msg);
+					//freeDestPath(destPath,msg);
 					free(selected);
 				  }
 
 				*selectedArrPtr=selected;
-                return UP_AND_DOWN_FILE_KEY;
+                return MENU_FTP_PAGE;
 
             case IP_MANAGE_KEY:
 				*selectedArrPtr=selected;
@@ -961,7 +961,9 @@ int print_Selected_Page(int mode, int selectingMenu, char** srcAry, int** select
 					doMkdir(msg);
 				}
 				*selectedArrPtr=selected;
-                return MAKE_DIR_KEY;
+                //return MAKE_DIR_KEY;
+				//return MENU_FIRSTWINODW;
+				return MENU_FTP_PAGE;
         }
     }
 
