@@ -153,6 +153,20 @@ int main(){
 			case MENU_INTO_MYDIR:
 				index=selected[0];
 				destination=&(myDirectories->array[index]);
+				if(strcmp(*destination,"..")==0){
+					chdir("..");
+					getcwd(pBuf,sizeof(pBuf));
+					chdir(originPath);
+					memset(clientPath,0,strlen(clientPath));
+					strncpy(clientPath,pBuf,strlen(pBuf)+1);
+				}
+				else if(strcmp(*destination,".")==0){
+					;
+				}
+				else{
+					strcat(clientPath,*destination);
+				}
+				/*
 				if(strcmp(*destination,".")==0){
 					memset(clientPath,0,strlen(clientPath));
 					strcpy(clientPath,pBuf);
@@ -168,14 +182,20 @@ int main(){
 					strcat(clientPath,"/");
 					strcat(clientPath,*destination);
 				}
- 				mvprintw(2,60,"cp=%s",clientPath);
- 				refresh();
- 				getchar();
+				*/
+// 				mvprintw(2,60,"cp=%s",clientPath);
+// 				refresh();
+// 				getchar();
 				chdir(clientPath);
 				strcpy(clientPath,*destination);
- 				mvprintw(3,60,"cp=%s strcpy성공",clientPath);
- 				refresh();
- 				getchar();
+// 				mvprintw(3,60,"cp=%s strcpy성공",clientPath);
+// 				refresh();
+// 				getchar();
+
+				   chdir(clientPath);
+				   myListOpen();
+				   chdir(originPath);
+
  				free(myDirectories);
 				free(myFiles);
 				parsing("myList.txt",&myDirectories,&myFiles);
