@@ -2,11 +2,12 @@
 
 int listOpen(WINDOW *rightwin){
   int chNum=0;
-    int fd = open("./list.txt",O_RDONLY,0444);	
 	if(access("./home", -0)==-1)
 		system("/bin/mkdir home");
 	chdir("./home");
+	system("/bin/ls -alR > ./list.txt");
 	chNum++;
+	 int fd = open("./list.txt",O_RDONLY,0444);
 	if(fd==-1){
 		perror("open");
 		return -1;

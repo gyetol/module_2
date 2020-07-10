@@ -1,36 +1,53 @@
 .:
-total 148
-drwxrwxr-x 3 linux linux  4096 Jul  8 19:07 .
-drwxrwxr-x 8 linux linux  4096 Jul  8 17:50 ..
--rw-rw-r-- 1 linux linux    24 Jul  8 17:50 account.txt
--rwxrwxr-x 1 linux linux 27512 Jul  8 19:06 fileDanzi
--rw-rw-r-- 1 linux linux  4939 Jul  8 18:16 fileDanzi.c
--rw-rw-r-- 1 linux linux   473 Jul  8 17:50 fileDanzi.h
--rw-rw-r-- 1 linux linux  1422 Jul  8 17:50 fileUpload.c
--rw-rw-r-- 1 linux linux   144 Jul  8 17:50 fileUpload.h
--rw-rw-r-- 1 linux linux   864 Jul  8 17:50 getRequest.c
--rw-rw-r-- 1 linux linux   268 Jul  8 17:50 getRequest.h
--rw-rw-r-- 1 linux linux   673 Jul  8 17:50 help.c
--rw-rw-r-- 1 linux linux    31 Jul  8 17:50 help.h
--rw-rw-r-- 1 linux linux  2644 Jul  8 17:50 listOpen.c
--rw-rw-r-- 1 linux linux   200 Jul  8 17:50 listOpen.h
--rwxrwxr-x 1 linux linux     0 Jul  8 19:07 list.txt
-drwxrwxr-x 2 linux linux  4096 Jul  8 18:09 log
--rwxrwxr-x 1 linux linux   168 Jul  8 17:54 log.sh
--rw-rw-r-- 1 linux linux    91 Jul  8 17:50 myListOpen.c
--rw-rw-r-- 1 linux linux   105 Jul  8 17:50 myListOpen.h
--rw-rw-r-- 1 linux linux  1725 Jul  8 17:50 parsing.c
--rw-rw-r-- 1 linux linux     0 Jul  8 17:50 request.txt
--rw-rw-r-- 1 linux linux  2559 Jul  8 17:50 response.c
--rw-rw-r-- 1 linux linux   263 Jul  8 17:50 response.h
--rw-rw-r-- 1 linux linux   146 Jul  8 17:50 serverMain.c
--rw-rw-r-- 1 linux linux   109 Jul  8 17:50 serverMain.h
--rw-rw-r-- 1 linux linux  5451 Jul  8 19:06 serverStart.c
--rw-r--r-- 1 linux linux 16384 Jul  8 19:07 .serverStart.c.swp
--rw-rw-r-- 1 linux linux   674 Jul  8 18:08 serverStart.h
+total 228
+drwxrwxr-x 4 linux linux  4096 Jul 10 10:43 .
+drwxrwxr-x 8 linux linux  4096 Jul 10 10:22 ..
+-rw-r--r-- 1 linux linux    74 Jul 10 10:05 account.txt
+-rwxrwxr-x 1 linux linux 36608 Jul 10 10:43 fileDanzi
+-rw-rw-r-- 1 linux linux  4630 Jul 10 02:54 fileDanzi.c
+-rw-rw-r-- 1 linux linux   449 Jul 10 01:21 fileDanzi.h
+-rw-rw-r-- 1 linux linux  1429 Jul 10 03:19 fileUpload.c
+-rw-rw-r-- 1 linux linux   144 Jul 10 01:25 fileUpload.h
+-rw-rw-r-- 1 linux linux   868 Jul 10 07:07 getRequest.c
+-rw-rw-r-- 1 linux linux   268 Jul  9 09:50 getRequest.h
+-rw-rw-r-- 1 linux linux   673 Jul  9 09:50 help.c
+-rw-rw-r-- 1 linux linux    31 Jul  9 09:50 help.h
+drwxr-xr-x 2 linux linux  4096 Jul 10 10:42 home
+-rw-rw-r-- 1 linux linux 12288 Jul 10 01:21 .ho.swp
+-rw-rw-r-- 1 linux linux  7582 Jul 10 07:07 keyPad.c
+-rw-rw-r-- 1 linux linux   108 Jul 10 01:21 keyPad.h
+-rw-rw-r-- 1 linux linux  1323 Jul 10 10:43 listOpen.c
+-rw-rw-r-- 1 linux linux   253 Jul  9 12:29 listOpen.h
+-rwxrwxr-x 1 linux linux     0 Jul 10 10:44 list.txt
+drwxrwxr-x 2 linux linux  4096 Jul 10 00:01 log
+-rwxrwxr-x 1 linux linux   656 Jul  9 12:29 log.sh
+-rw-rw-r-- 1 linux linux  1740 Jul 10 07:07 myListOpen.c
+-rw-rw-r-- 1 linux linux   257 Jul 10 07:07 myListOpen.h
+-rw-r--r-- 1 linux linux  2420 Jul 10 10:44 myList.txt
+-rw-rw-r-- 1 linux linux  1725 Jul  9 09:50 parsing.c
+-rw-rw-r-- 1 linux linux     0 Jul  9 09:50 request.txt
+-rw-rw-r-- 1 linux linux  2552 Jul 10 07:07 response.c
+-rw-rw-r-- 1 linux linux   263 Jul  9 09:50 response.h
+-rw-rw-r-- 1 linux linux 12624 Jul 10 07:07 safe
+-rwxrwxr-x 1 linux linux 23088 Jul  9 12:29 server
+-rw-rw-r-- 1 linux linux  8605 Jul 10 10:41 serverStart.c
+-rw-rw-r-- 1 linux linux   741 Jul  9 15:57 serverStart.h
+-rw-rw-r-- 1 linux linux     5 Jul  9 23:19 test.txt
+-rwxrwxr-x 1 linux linux  8576 Jul 10 03:19 upLoad
+-rw-rw-r-- 1 linux linux   139 Jul  9 15:09 windows.h
+
+./home:
+total 24
+drwxr-xr-x 2 linux linux 4096 Jul 10 10:42 .
+drwxrwxr-x 4 linux linux 4096 Jul 10 10:43 ..
+-rw-rw-r-- 1 linux linux    5 Jul 10 10:36 a.c
+-rw-rw-r-- 1 linux linux    9 Jul 10 10:36 b.c
+-rw-rw-r-- 1 linux linux    7 Jul 10 10:36 c.c
+-rw-r--r-- 1 linux linux  296 Jul 10 10:40 list.txt
 
 ./log:
-total 16
-drwxrwxr-x 2 linux linux 4096 Jul  8 18:09 .
-drwxrwxr-x 3 linux linux 4096 Jul  8 19:07 ..
--rw-rw-r-- 1 linux linux 4716 Jul  8 19:06 2020_07_08.txt
+total 44
+drwxrwxr-x 2 linux linux  4096 Jul 10 00:01 .
+drwxrwxr-x 4 linux linux  4096 Jul 10 10:43 ..
+-rw-rw-r-- 1 linux linux 20644 Jul 10 10:36 2020_07_09.txt
+-rw-r--r-- 1 linux linux  5130 Jul 10 10:44 2020_07_10.txt

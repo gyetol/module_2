@@ -226,9 +226,6 @@ int serverStart(char *ip){
 			else{
 				if(events[i].events==EPOLLIN){
 				    //this is for client
-					mvwprintw(logwin,3,1,"[server] client send request ...\n");
-					refresh();
-					wrefresh(logwin);
 					int cSock=events[i].data.fd; 
 					//printf("cSock=%d", cSock);
 					char * type;
@@ -242,6 +239,10 @@ int serverStart(char *ip){
 						resInfo.reqInfo.path=path;
 						resInfo.reqInfo.ip=ip;
 						resInfo.sock=cSock;
+  						mvwprintw(logwin,3,1,"[server] client request type : %s\n",type);
+  						refresh();
+  						wrefresh(logwin);
+						
 						//mvwprintw(logwin,3,1,"type : %s, path : %s, ip : %s\n", type, path, ip);
 						//refresh();
 						//wrefresh(logwin);
