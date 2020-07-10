@@ -239,7 +239,7 @@ int serverStart(char *ip){
 						resInfo.reqInfo.path=path;
 						resInfo.reqInfo.ip=ip;
 						resInfo.sock=cSock;
-  						mvwprintw(logwin,3,1,"[server] client request type : %s\n",type);
+  						mvwprintw(logwin,3,1,"[server] client request type : %s",type);
   						refresh();
   						wrefresh(logwin);
 						
