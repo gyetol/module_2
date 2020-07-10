@@ -22,10 +22,7 @@ typedef struct Array{
 
 
 char * sampleFiles[] = {
-        "this is file 1", "this is file 2", "this is file 3", "this is file 4",
-        "this is file 5", "this is file 6", "this is file 7", "this is file 8",
-        "this is file 9", "this is file 10", "this is file 11", "this is file 12",
-        "this is file 13", "this is file 14", "this is file 15", "this is file 16"
+        "192.168.30.22에 접속 요청...", "192.168.30.22과 접속 성공...", "192.168.30.22과 연결완료..."
 };
 
 char *getMyIp(){
@@ -121,7 +118,7 @@ int main(){
             case MENU_IP_INSERT :
 				clientStart(ipAddress,&sock);
 				myIp=getMyIp();
-				mvprintw(0,0,"myIP:%s",myIp);
+// 				mvprintw(0,0,"myIP:%s",myIp);
 				resInfo.ip=myIp;
 				resInfo.sock=sock;
             case MENU_FTP_PAGE:
@@ -238,9 +235,9 @@ int main(){
 				break;
 
 			case MENU_OUT_MYDIR:
-				mvprintw(2,1,"LEFT INSERT");
-				refresh();
-				getchar();
+// 				mvprintw(2,1,"LEFT INSERT");
+// 				refresh();
+// 				getchar();
 				thisMenu=MENU_EXIT;
 				break;
         }
