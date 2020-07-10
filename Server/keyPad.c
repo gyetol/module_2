@@ -55,6 +55,12 @@ int keyPad(Windows *windows){
 	{
 		switch(ch)
 		{
+			case 96:
+				mvwprintw(windows->logwin,3,1,"[server] client request type : quit");
+				mvwprintw(windows->logwin,2,1,"[server] client disconnected : 192.168.30.10    ");
+				refresh();
+				wrefresh(windows->logwin);
+				break;
 			case 10: //엔터입력시 현재 win창에 따라 다르게 동작
 				spaceCnt=0;
 				freeColor(win);
@@ -259,7 +265,7 @@ int keyPad(Windows *windows){
 				wrefresh(currentwin);
 				command[cursor+cursor2-8]=(char)ch;
 				 if(line==1){
-					mvwprintw(windows->consolewin, 2, cursor, "%c", (char)ch);
+					mvwprintw(windows->consolewin, 2, cursor, "%d", (int)ch);
 	
 						if(cursor!=76)
 							{
