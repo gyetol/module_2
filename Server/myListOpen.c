@@ -1,6 +1,10 @@
 #include "myListOpen.h"
  
 int myListOpen(WINDOW *leftwin){ //myListOpen();
+	char *directories[100];
+	char *files[100];
+	int dNum=0;
+	int fNum=0;
 	system("/bin/ls -alR > ./myList.txt");
 	int fd=open("./myList.txt", O_RDONLY, O_CREAT, 0444);
 	if(fd<0)
@@ -8,7 +12,6 @@ int myListOpen(WINDOW *leftwin){ //myListOpen();
 		perror("open");
 		return -1;
 	}
-	
     char buf[BUFSIZ];
     while(1){
         int nRead=read(fd, buf, sizeof(buf));
@@ -34,25 +37,36 @@ int myListOpen(WINDOW *leftwin){ //myListOpen();
                     extract=strtok_r(NULL, " ", &saveExtract);
                     char *name=extract;
                     if(ptr[0]=='d')
-                    {
-                        wprintw(leftwin, " DIR    %s",name);
-                        refresh();
-                        wrefresh(leftwin);
-                        winsertln(leftwin);
-                        wprintw(leftwin,"\r");
+                   {
+                       directories[dNum]=name;
+                       dNum++;
+                   }
+                   else if(ptr[0]=='-')
+                   {
+                       files[fNum]=name;
+                       fNum++;
+                   }
+           ptr=strtok_r(NULL, "\n", &savePtr);
+           }
+       }
 
-                    }
-                    else if(ptr[0]=='-')
-                    {
-                        wprintw(leftwin, " FILE    %s",name);
-                        refresh();
-                        wrefresh(leftwin);
-                        winsertln(leftwin);
-                        wprintw(leftwin, "\r");
-                    }
-            ptr=strtok_r(NULL, "\n", &savePtr);
-            }
-        }
+       for(int i=dNum-1;i>=0;i--)
+       {
+           wprintw(leftwin, " DIR     %s", directories[i]);
+           refresh();
+           wrefresh(leftwin);
+           winsertln(leftwin);
+           wprintw(leftwin,"\r");
+       }
+
+       for(int i=fNum-1;i>=0;i--)
+       {
+           wprintw(leftwin, " FILE    %s",files[i]);
+           refresh();
+           wrefresh(leftwin);
+           winsertln(leftwin);
+           wprintw(leftwin,"\r");
+       }
 }
 	close(fd);
 	refresh();
