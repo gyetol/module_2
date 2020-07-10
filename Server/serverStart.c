@@ -156,7 +156,7 @@ int serverStart(char *ip){
 		err_quit("epoll_create");
 
 	struct epoll_event event; 
-	event.events=EPOLLIN||EPOLLOUT;
+	event.events=EPOLLIN|EPOLLOUT;
 	event.data.fd=ssock;
 	if(epoll_ctl(efd,EPOLL_CTL_ADD,ssock,&event)==-1)
 		err_quit("epoll_ctl");
@@ -188,16 +188,20 @@ int serverStart(char *ip){
 		else if(nEvent==0)
 			continue;
 
-		for(int i=0;i<nEvent;i++){
+ char * type;
+ char * path;
+ char * ip;
+	
+		 for(int i=0;i<nEvent;i++){
 			if(events[i].data.fd==ssock) {
 				struct sockaddr_in caddr = {0,};
                 int caddr_len = sizeof(caddr);
                 int csock = accept(ssock, (struct sockaddr *) &caddr, &caddr_len);
                 if (csock < 0)
                     err_quit("accept");
- mvwprintw(logwin,2, 1, "[server] %s(client) is connected...", inet_ntoa(caddr.sin_addr));
- refresh();
- wrefresh(logwin);
+ 				mvwprintw(logwin,2, 1, "[server] %s(client) is connected...", inet_ntoa(caddr.sin_addr));
+ 				refresh();
+ 				wrefresh(logwin);
 
               // printf("[server]%s(client) is  connected... and cSock is %d\n", inet_ntoa(caddr.sin_addr), csock);	
 			  // printf("connect당시의 cSock : %d\n", csock);
@@ -226,12 +230,11 @@ int serverStart(char *ip){
 			else{
 				if(events[i].events==EPOLLIN){
 				    //this is for client
-					mvwprintw(logwin,3,1,"[server] client send request ...\n");
 					int cSock=events[i].data.fd; 
 					//printf("cSock=%d", cSock);
-					char * type;
+				/*	char * type;
 					char * path;
-					char * ip;
+					char * ip;*/
 					ResponseInfo resInfo={0,};
 					while(1){
 						if(getRequest(cSock,&type,&path,&ip)==-1)
@@ -240,14 +243,18 @@ int serverStart(char *ip){
 						resInfo.reqInfo.path=path;
 						resInfo.reqInfo.ip=ip;
 						resInfo.sock=cSock;
+  						mvwprintw(logwin,3,1,"[server] client request type : %s",type);
+  						refresh();
+  						wrefresh(logwin);
+						
 						//mvwprintw(logwin,3,1,"type : %s, path : %s, ip : %s\n", type, path, ip);
 						//refresh();
 						//wrefresh(logwin);
 						if(strcmp(type,"quit")==0)
 						{
-							if(epoll_ctl(efd,EPOLL_CTL_DEL,events[i].data.fd,NULL)==-1)
-							  	err_quit("epoll_ctl");
-							mvwprintw(logwin,3,1,"[ client ] : %s disconnected", *ip);
+							//if(epoll_ctl(efd,EPOLL_CTL_DEL,events[i].data.fd,NULL)==-1)
+							//  	err_quit("epoll_ctl");
+							mvwprintw(logwin,2,1,"[ client ] : %s disconnected", *ip);
 							refresh();
 							wrefresh(logwin);
 							break;
@@ -267,7 +274,7 @@ int serverStart(char *ip){
 	//////////////////////////////////////////////				//keypad 쓰레드 기다리기
 						if(pthread_join(tid_s, (void**)&tret_s)!=0)
 							err_quit("pthread_join");
-						if(*tret_s==0)
+							if(*tret_s==0)
 						{
 							free(tret_s);
 							break;
@@ -277,8 +284,10 @@ int serverStart(char *ip){
 					//printf("도달");
 				}
 				else{
-					if(epoll_ctl(efd,EPOLL_CTL_DEL,events[i].data.fd,NULL)==-1)
-					  err_quit("epoll_ctl");
+					mvwprintw(logwin, 3,1,"[server] client request type : %s",type);
+					mvwprintw(logwin, 2,1,"[server] client disconnected : %s",ip);
+					//if(epoll_ctl(efd,EPOLL_CTL_DEL,events[i].data.fd,NULL)==-1)
+					//  err_quit("epoll_ctl");
 				}
 			}
 		}//for문 괄호
