@@ -1,12 +1,23 @@
 #include "listOpen.h"
 
 int listOpen(WINDOW *rightwin){
-  int chNum=0;
-    int fd = open("./list.txt",O_RDONLY,0444);	
+	if(rightwin==NULL)
+	{
+		perror("rightwin");
+		return -1;
+
+	}
+	char *directories[100];
+	char *files[100];
+	int dNum=0;
+	int fNum=0;
+  	int chNum=0;
 	if(access("./home", -0)==-1)
 		system("/bin/mkdir home");
 	chdir("./home");
+	system("/bin/ls -alR > ./list.txt");
 	chNum++;
+	 int fd = open("./list.txt",O_RDONLY,0444);
 	if(fd==-1){
 		perror("open");
 		return -1;
@@ -37,26 +48,37 @@ int listOpen(WINDOW *rightwin){
 					char *name=extract;
 					if(ptr[0]=='d')
 					{
-						wprintw(rightwin, " DIR    %s",name);
-						refresh();
-						wrefresh(rightwin);
-						winsertln(rightwin);
-						wprintw(rightwin,"\r");
-						
+						directories[dNum]=name;
+						dNum++;
 					}
 					else if(ptr[0]=='-')
 					{
-						wprintw(rightwin, " FILE    %s",name);
-						refresh();
-						wrefresh(rightwin);
-						winsertln(rightwin);
-						wprintw(rightwin, "\r");
+					    files[fNum]=name;
+						fNum++;
 					}
 			ptr=strtok_r(NULL, "\n", &savePtr);
 			}
 		}
+
+		for(int i=dNum-1;i>=0;i--)
+		{
+			wprintw(rightwin, " DIR     %s", directories[i]);
+			refresh();
+			wrefresh(rightwin);
+			winsertln(rightwin);
+			wprintw(rightwin,"\r");
+		}
+
+		for(int i=fNum-1;i>=0;i--)
+		{
+			wprintw(rightwin, " FILE    %s",files[i]);
+			refresh();
+			wrefresh(rightwin);
+			winsertln(rightwin);
+			wprintw(rightwin,"\r");
+		}
 }
-		chdir("..");
-		close(fd);
+			chdir("..");
+			close(fd);
 		return 0;
 	}
