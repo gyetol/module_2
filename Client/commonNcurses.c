@@ -21,6 +21,7 @@ char * sampleFile[] = {
         "this is file 5", "this is file 6", "this is file 7", "this is file 8",
         "this is file 9", "this is file 10", "this is file 11", "this is file 12",
         "this is file 13", "this is file 14", "this is file 15", "this is file 16"
+	//"192.168.30.22 server에 접송중..."
 };
 ///////////////////////////////////////////////////////////////////////////
 
