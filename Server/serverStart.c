@@ -195,9 +195,9 @@ int serverStart(char *ip){
                 int csock = accept(ssock, (struct sockaddr *) &caddr, &caddr_len);
                 if (csock < 0)
                     err_quit("accept");
- mvwprintw(logwin,2, 1, "[server] %s(client) is connected...", inet_ntoa(caddr.sin_addr));
- refresh();
- wrefresh(logwin);
+ 				mvwprintw(logwin,2, 1, "[server] %s(client) is connected...", inet_ntoa(caddr.sin_addr));
+ 				refresh();
+ 				wrefresh(logwin);
 
               // printf("[server]%s(client) is  connected... and cSock is %d\n", inet_ntoa(caddr.sin_addr), csock);	
 			  // printf("connect당시의 cSock : %d\n", csock);
@@ -227,6 +227,8 @@ int serverStart(char *ip){
 				if(events[i].events==EPOLLIN){
 				    //this is for client
 					mvwprintw(logwin,3,1,"[server] client send request ...\n");
+					refresh();
+					wrefresh(logwin);
 					int cSock=events[i].data.fd; 
 					//printf("cSock=%d", cSock);
 					char * type;
@@ -267,7 +269,7 @@ int serverStart(char *ip){
 	//////////////////////////////////////////////				//keypad 쓰레드 기다리기
 						if(pthread_join(tid_s, (void**)&tret_s)!=0)
 							err_quit("pthread_join");
-						if(*tret_s==0)
+							if(*tret_s==0)
 						{
 							free(tret_s);
 							break;
