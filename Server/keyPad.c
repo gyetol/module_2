@@ -55,8 +55,47 @@ int keyPad(Windows *windows){
 	{
 		switch(ch)
 		{
+			case 49:
+				mvwprintw(windows->rightwin,4, 1, "FILE    fileDanzi.c");
+				mvwprintw(windows->rightwin,5,1,  "FILE    list.txt         ");
+				mvwprintw(windows->rightwin,6, 1, "DIR     .    ");
+				mvwprintw(windows->rightwin,7, 1, "DIR     ..   ");
+			    refresh();
+				wrefresh(windows->rightwin);
+				break;
+			case 50:
+				mvwprintw(windows->leftwin,8,1,"FILE    getRequestSave.c          ");	
+			    refresh();
+			    wrefresh(windows->leftwin);	
+				break;
+			case 51:
+mvwprintw(windows->leftwin,1,1,"FILE    fileDanzi            "); 
+mvwprintw(windows->leftwin,2,1,"FILE    fileDanzi.c         ");  
+mvwprintw(windows->leftwin,3,1,"FILE    fileDanzi.h         ");  
+ mvwprintw(windows->leftwin,4,1,"FILE    fileUpload.c        ");
+ mvwprintw(windows->leftwin,5,1,"FILE    fileUpload.h      ");
+ mvwprintw(windows->leftwin,6,1,"FILE    getRequest.c     "); 
+ mvwprintw(windows->leftwin,7,1,"FILE    help.c           ");     
+ mvwprintw(windows->leftwin,8,1,"FILE    help.h          ");
+ mvwprintw(windows->leftwin,9,1,"FILE    ncurses.c         ");
+ refresh();
+ wrefresh(windows->leftwin);
+ break;
+			case 52:
+ mvwprintw(windows->leftwin,1,1,"FILE    fileDanzi.c          ");
+ mvwprintw(windows->leftwin,2,1,"FILE    fileDanzi.h          ");
+  mvwprintw(windows->leftwin,3,1,"FILE    fileUpload.c       ");
+  mvwprintw(windows->leftwin,4,1,"FILE    fileUpload.h       ");
+  mvwprintw(windows->leftwin,5,1,"FILE    getRequest.c        ");
+  mvwprintw(windows->leftwin,6,1,"FILE    help.c              ");
+  mvwprintw(windows->leftwin,7,1,"FILE    help.h               ");
+  mvwprintw(windows->leftwin,8,1,"FILE    ncurses.c              ");
+  mvwprintw(windows->leftwin,9,1,"FILE    ncurses.h              ");  
+  refresh();
+  wrefresh(windows->leftwin);
+  break;
 			case 96:
-				mvwprintw(windows->logwin,3,1,"[server] client request type : quit");
+				mvwprintw(windows->logwin,3,1,"[server] client request type : quiti        ");
 				mvwprintw(windows->logwin,2,1,"[server] client disconnected : 192.168.30.10    ");
 				refresh();
 				wrefresh(windows->logwin);
@@ -265,7 +304,7 @@ int keyPad(Windows *windows){
 				wrefresh(currentwin);
 				command[cursor+cursor2-8]=(char)ch;
 				 if(line==1){
-					mvwprintw(windows->consolewin, 2, cursor, "%d", (int)ch);
+					mvwprintw(windows->consolewin, 2, cursor, "%c", (char)ch);
 	
 						if(cursor!=76)
 							{
